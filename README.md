@@ -89,6 +89,7 @@ import { Link } from 'react-router-dom';
 <table>
     <thead>
         <tr>
+            <th>Component</th>
             <th>Name</th>
             <th>Type</th>
             <th>Description</th>
@@ -97,6 +98,7 @@ import { Link } from 'react-router-dom';
     </thead>
     <tbody>
         <tr>
+            <td rowspan=4>ProSidebar</td>
             <td>collapsed</td>
             <td>boolean</td>
             <td>Set the collapsed status of the sidebar </td>
@@ -120,66 +122,22 @@ import { Link } from 'react-router-dom';
             <td>Set the url of the image to use in the background</td>
             <td><code>-</code></td>
         </tr>
-    </tbody>
-</table>
-
-### Menu
-
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Default</th>
-        </tr>
-    </thead>
-     <tbody>
-        <tr>
+         <tr>
+            <td rowspan=1>Menu</td>
             <td>iconShape</td>
             <td>string</td>
             <td>Set the shape of the icon : <code>square</code> | <code>round</code> | <code>circle</code> </td>
             <td><code>-</code></td>
         </tr>  
-    </tbody>
-
-</table>
-
-### MenuItem
-
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Default</th>
-        </tr>
-    </thead>
-     <tbody>
-        <tr>
+         <tr>
+            <td rowspan=1>MenuItem</td>
             <td>icon</td>
             <td>ReactNode</td>
             <td>Set the icon for the menu item </td>
             <td><code>-</code></td>
         </tr>  
-    </tbody>
-
-</table>
-
-### SubMenu
-
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Default</th>
-        </tr>
-    </thead>
-     <tbody>
-        <tr>
+         <tr>
+            <td rowspan=2>SubMenu</td>
             <td>icon</td>
             <td>ReactNode</td>
             <td>Set the icon for submenu title </td>
@@ -192,7 +150,6 @@ import { Link } from 'react-router-dom';
             <td><code>-</code></td>
         </tr>  
     </tbody>
-
 </table>
 
 ## License
