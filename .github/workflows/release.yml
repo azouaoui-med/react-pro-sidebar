@@ -3,7 +3,7 @@ name: npm release
 on:
   release:
     types:
-      - created
+      - published
 
 jobs:
   build:
