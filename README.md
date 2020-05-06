@@ -42,7 +42,7 @@ import 'react-pro-sidebar/dist/css/styles.css';
 </ProSidebar>;
 ```
 
-If you are using sass then you can import the styles directly into your scss file
+If you are using sass then you can import the `styles.scss` directly into your scss file
 
 ```scss
 @import '../node_modules/react-pro-sidebar/dist/scss/styles.scss';
@@ -84,8 +84,6 @@ import { Link } from 'react-router-dom';
 
 ## API
 
-### ProSidebar
-
 <table>
     <thead>
         <tr>
@@ -101,53 +99,53 @@ import { Link } from 'react-router-dom';
             <td rowspan=4>ProSidebar</td>
             <td>collapsed</td>
             <td>boolean</td>
-            <td>Set the collapsed status of the sidebar </td>
+            <td>collapsed status of the sidebar </td>
             <td><code>false</code></td>
         </tr>
         <tr>
             <td>rtl</td>
             <td>boolean</td>
-            <td>Set RTL direction</td>
+            <td>RTL direction</td>
             <td><code>false</code></td>
         </tr>
         <tr>
             <td>width</td>
             <td>number | string</td>
-            <td>Set the width of the sidebar</td>
+            <td>Width of the sidebar</td>
             <td><code>270px</code></td>
         </tr>
         <tr>
             <td>image</td>
             <td>string</td>
-            <td>Set the url of the image to use in the background</td>
-            <td><code>-</code></td>
+            <td>Url of the image to use in the sidebar background</td>
+            <td>-</td>
         </tr>
          <tr>
             <td rowspan=1>Menu</td>
             <td>iconShape</td>
             <td>string</td>
-            <td>Set the shape of the icon : <code>square</code> | <code>round</code> | <code>circle</code> </td>
-            <td><code>-</code></td>
+            <td>Shape of the menu icons : <code>square</code> | <code>round</code> | <code>circle</code></td>
+            <td>-</td>
         </tr>  
          <tr>
             <td rowspan=1>MenuItem</td>
             <td>icon</td>
             <td>ReactNode</td>
-            <td>Set the icon for the menu item </td>
-            <td><code>-</code></td>
-        </tr>  
-         <tr>
-            <td rowspan=2>SubMenu</td>
-            <td>icon</td>
-            <td>ReactNode</td>
-            <td>Set the icon for submenu title </td>
-            <td><code>-</code></td>
+            <td>Icon for the menu item </td>
+            <td>-</td>
         </tr>  
         <tr>
+            <td rowspan=2>SubMenu</td>
             <td>title</td>
             <td>string | ReactNode</td>
-            <td>Set the submenu title </td>
-            <td><code>-</code></td>
+            <td>Title for the submenu </td>
+            <td>-</td>
+        </tr>  
+         <tr>
+            <td>icon</td>
+            <td>ReactNode</td>
+            <td>Icon for submenu</td>
+            <td>-</td>
         </tr>  
     </tbody>
 </table>
