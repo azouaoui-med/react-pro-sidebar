@@ -7,7 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- update readme : merge API tables into one single table
+### Changed
+
+- Update readme
+  - Merge API tables into one single table use prop instead of name
+  - Add description on how to use nested sub-menus
+
+### Fixed
+
+- Fix overflow of the sidebar content
 
 ## [0.1.0-beta.1] - 2020-05-06
 

@@ -6,6 +6,7 @@
   text-align: left;
   transition: width 0.3s;
   position: relative;
+  overflow-y: auto;
   > img.sidebar-bg {
     width: 100%;
     height: 100%;

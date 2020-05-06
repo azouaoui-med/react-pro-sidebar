@@ -9,7 +9,7 @@ function Layout({ setLocale }) {
   const intl = useIntl();
   const [rtl, setRtl] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
-  const [image, setImage] = useState(false);
+  const [image, setImage] = useState(true);
 
   const handleCollapsedChange = (checked) => {
     setCollapsed(checked);

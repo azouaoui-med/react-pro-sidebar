@@ -1,8 +1,12 @@
-# [React Pro Sidebar](https://azouaoui-med.github.io/react-pro-sidebar)
+# [React Pro Sidebar](https://www.npmjs.com/package/react-pro-sidebar)
 
-[![npm][npm-image]][npm-url] [![License](https://badgen.net/npm/license/react-pro-sidebar)](https://www.npmjs.com/package/react-pro-sidebar)
+[![npm][version]][npm-url]
+[![License][license]][npm-url]
+[![Peer][peer]][npm-url]
 
-[npm-image]: https://img.shields.io/npm/v/react-pro-sidebar.svg?style=flat-square
+[version]: https://img.shields.io/npm/v/react-pro-sidebar.svg?style=flat-square
+[license]: https://img.shields.io/github/license/azouaoui-med/react-pro-sidebar?style=flat-square
+[peer]: https://img.shields.io/npm/dependency-version/react-pro-sidebar/peer/react?style=flat-square
 [npm-url]: https://www.npmjs.com/package/react-pro-sidebar
 
 React sidebar library with dropdown menus and unlimited number of nested submenus
@@ -69,6 +73,21 @@ $icon-size: 35px;
 @import '../node_modules/react-pro-sidebar/dist/scss/styles.scss';
 ```
 
+## Using nested sub-menus
+
+You can have as many nested menu-items and sub-menus as you like, and the syntax is very simple
+
+```jsx
+<Menu iconShape="square">
+  <SubMenu title="Components" icon={<FaGem />}>
+    <MenuItem>Component 1</MenuItem>
+    <SubMenu title="Sub Component 1" icon={<FaHeart />}>
+      {/* you can have more nested submenus ... */}
+    </SubMenu>
+  </SubMenu>
+</Menu>
+```
+
 ## Using React Router Dom
 
 Here is an example on how to use [react router dom](https://github.com/ReactTraining/react-router) in the menu item
@@ -88,7 +107,7 @@ import { Link } from 'react-router-dom';
     <thead>
         <tr>
             <th>Component</th>
-            <th>Name</th>
+            <th>Prop</th>
             <th>Type</th>
             <th>Description</th>
             <th>Default</th>
