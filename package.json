@@ -1,0 +1,84 @@
+{
+  "name": "react-pro-sidebar",
+  "version": "0.1.0-beta.1",
+  "description": "React sidebar library with dropdown menus and unlimit number of nested submenus",
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "files": [
+    "dist"
+  ],
+  "repository": "https://github.com/azouaoui-med/react-pro-sidebar.git",
+  "author": "Mohamed AZOUAOUI <azouaoui.med@gmail.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "rollup -c",
+    "start": "rollup -c -w",
+    "start:demo": "cross-env PORT=4747 yarn --cwd ./demo start",
+    "start:all": "concurrently \" yarn start\" \" yarn start:demo\"",
+    "deploy:demo": "yarn --cwd ./demo build && gh-pages -d demo/build",
+    "lint": "eslint src/**/*.{tsx,ts}",
+    "lint:fix": "yarn lint --fix"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^11.1.0",
+    "@rollup/plugin-node-resolve": "^7.1.3",
+    "@types/react": "^16.9.34",
+    "@typescript-eslint/eslint-plugin": "^2.30.0",
+    "@typescript-eslint/parser": "^2.30.0",
+    "concurrently": "^5.2.0",
+    "cross-env": "^6.0.3",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-airbnb-typescript": "^7.2.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-import-resolver-typescript": "^2.0.0",
+    "eslint-plugin-flowtype": "^4.7.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^4.0.0",
+    "gh-pages": "^2.2.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.2",
+    "prettier": "^2.0.5",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.7.6",
+    "rollup-plugin-copy": "^3.3.0",
+    "rollup-plugin-peer-deps-external": "^2.2.2",
+    "rollup-plugin-sass": "^1.2.2",
+    "rollup-plugin-scss": "^2.4.0",
+    "rollup-plugin-typescript2": "^0.27.0",
+    "typescript": "^3.8.3"
+  },
+  "keywords": [
+    "react-component",
+    "react",
+    "component",
+    "sidebar",
+    "menu",
+    "submenu",
+    "collapsed",
+    "rtl"
+  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx}": [
+      "yarn lint:fix"
+    ]
+  },
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "react-slidedown": "^2.4.5"
+  }
+}

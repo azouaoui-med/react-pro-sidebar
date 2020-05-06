@@ -1,0 +1,32 @@
+.pro-sidebar {
+  background: $sidebar-bg-color;
+  color: $sidebar-color;
+  height: 100%;
+  width: 270px;
+  text-align: left;
+  transition: width 0.3s;
+  position: relative;
+  > img.sidebar-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    position: absolute;
+    opacity: 0.3;
+    left: 0;
+    top: 0;
+  }
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  &.collapsed {
+    width: 80px;
+  }
+
+  &.rtl {
+    text-align: right;
+  }
+}

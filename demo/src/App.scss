@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+$sidebar-bg-color: #1d1d1d;
+$submenu-bg-color: rgba(255, 255, 255, 0.05);
+$submenu-bg-color-collapsed: rgba(29, 29, 29, 0.95);
+$sidebar-color: #adadad;
+$highlight-color: #d8d8d8;
+$icon-bg-color: rgba(255, 255, 255, 0.05);
+$icon-size: 35px;
+
+@import '../node_modules/react-pro-sidebar/dist/scss/styles.scss';
+body {
+  height: 100vh;
+  color: #353535;
+  font-family: 'Roboto', sans-serif;
+}
+
+#root {
+  height: 100%;
+}
+
+.app {
+  height: 100%;
+  display: flex;
+
+  main {
+    padding: 24px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    header {
+      margin-bottom: 40px;
+      border-bottom: 1px solid #efefef;
+    }
+
+    footer {
+      margin-top: auto;
+      color: #888;
+      text-align: center;
+      a {
+        text-decoration: none;
+        color: #888;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .block {
+    display: flex;
+    margin-bottom: 24px;
+    font-size: 14px;
+    color: #545454;
+    > span {
+      margin-left: 10px;
+    }
+  }
+  &.rtl {
+    flex-direction: row-reverse;
+    text-align: right;
+    .block {
+      flex-direction: row-reverse;
+      > span {
+        margin-left: 0;
+        margin-right: 10px;
+      }
+    }
+  }
+}
