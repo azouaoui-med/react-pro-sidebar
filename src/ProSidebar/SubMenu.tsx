@@ -7,10 +7,11 @@ export interface Props {
   icon?: React.ReactNode;
   title?: React.ReactNode;
   defaultOpen?: boolean;
+  open?: boolean;
 }
 
 const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
-  { children, icon, className, title, defaultOpen = false, ...rest },
+  { children, icon, className, title, defaultOpen = false, open, ...rest },
   ref,
 ) => {
   const [closed, setClosed] = useState(!defaultOpen);
@@ -24,7 +25,9 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
   return (
     <li
       ref={subMenuRef}
-      className={classNames('pro-menu-item pro-sub-menu', className, { open: !closed })}
+      className={classNames('pro-menu-item pro-sub-menu', className, {
+        open: typeof open === 'undefined' ? !closed : open,
+      })}
     >
       <div
         {...rest}
@@ -44,7 +47,10 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
           <span className="pro-arrow" />
         </span>
       </div>
-      <SlideDown closed={closed} className="pro-inner-list-item">
+      <SlideDown
+        closed={typeof open === 'undefined' ? closed : !open}
+        className="pro-inner-list-item"
+      >
         <ul>{children}</ul>
       </SlideDown>
     </li>
