@@ -154,7 +154,7 @@ import { Link } from 'react-router-dom';
             <td>-</td>
         </tr>  
         <tr>
-            <td rowspan=2>SubMenu</td>
+            <td rowspan=3>SubMenu</td>
             <td>title</td>
             <td>string | ReactNode</td>
             <td>Title for the submenu </td>
@@ -165,6 +165,12 @@ import { Link } from 'react-router-dom';
             <td>ReactNode</td>
             <td>Icon for submenu</td>
             <td>-</td>
+        </tr>  
+         <tr>
+            <td>defaultOpen</td>
+            <td>boolean</td>
+            <td>Set if the submenu is open by default</td>
+            <td><code>false</code></td>
         </tr>  
     </tbody>
 </table>

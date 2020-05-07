@@ -6,17 +6,16 @@ export interface Props {
   className?: string;
   icon?: React.ReactNode;
   title?: React.ReactNode;
+  defaultOpen?: boolean;
 }
 
 const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
-  { children, icon, className, title, ...rest },
+  { children, icon, className, title, defaultOpen = false, ...rest },
   ref,
 ) => {
-  const [height, setHeight] = useState<number | string>(0);
-  const [closed, setClosed] = useState(true);
+  const [closed, setClosed] = useState(!defaultOpen);
 
   const handleToggleSubMenu = () => {
-    setHeight(height === 0 ? 'auto' : 0);
     setClosed(!closed);
   };
 
@@ -25,7 +24,7 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
   return (
     <li
       ref={subMenuRef}
-      className={classNames('pro-menu-item pro-sub-menu', className, { open: height !== 0 })}
+      className={classNames('pro-menu-item pro-sub-menu', className, { open: !closed })}
     >
       <div
         {...rest}
