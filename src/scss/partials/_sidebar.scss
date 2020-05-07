@@ -2,7 +2,7 @@
   background: $sidebar-bg-color;
   color: $sidebar-color;
   height: 100%;
-  width: 270px;
+  width: $sidebar-width;
   text-align: left;
   transition: width 0.3s;
   position: relative;
@@ -16,14 +16,19 @@
     left: 0;
     top: 0;
   }
-  ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+  > .pro-sidebar-inner {
+    height: 100%;
+    overflow-y: auto;
+    position: relative;
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
   }
 
   &.collapsed {
-    width: 80px;
+    width: $sidebar-collapsed-width;
   }
 
   &.rtl {

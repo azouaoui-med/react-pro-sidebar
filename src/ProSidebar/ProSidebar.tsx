@@ -24,7 +24,7 @@ const ProSidebar: React.ForwardRefRenderFunction<unknown, Props> = (
       style={{ width }}
     >
       {image ? <img src={image} alt="sidebar background" className="sidebar-bg" /> : null}
-      {children}
+      <div className="pro-sidebar-inner">{children}</div>
     </div>
   );
 };
