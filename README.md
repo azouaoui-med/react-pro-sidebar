@@ -64,6 +64,8 @@ Your `custom.scss` file should look something like this
 // Your variable overrides
 $sidebar-bg-color: #1d1d1d;
 $sidebar-color: #adadad;
+$sidebar-width: 270px;
+$sidebar-collapsed-width: 80px;
 $highlight-color: #d8d8d8;
 $submenu-bg-color: #2b2b2b;
 $submenu-bg-color-collapsed: #2b2b2b;
@@ -147,11 +149,17 @@ import { Link } from 'react-router-dom';
             <td>-</td>
         </tr>  
          <tr>
-            <td rowspan=1>MenuItem</td>
+            <td rowspan=2>MenuItem</td>
             <td>icon</td>
             <td>ReactNode</td>
             <td>Icon for the menu item </td>
             <td>-</td>
+        </tr>  
+         <tr>
+            <td>active</td>
+            <td>boolean</td>
+            <td>Set active menu items </td>
+            <td><code>false</code></td>
         </tr>  
         <tr>
             <td rowspan=4>SubMenu</td>

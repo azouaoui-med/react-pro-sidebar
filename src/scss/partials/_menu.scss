@@ -54,6 +54,9 @@
     }
     .pro-menu-item {
       font-size: 15px;
+      &.active {
+        color: $highlight-color;
+      }
 
       > .pro-inner-item {
         position: relative;

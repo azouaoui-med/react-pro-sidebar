@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add prop to submenu component to set the open value
+- Add prop to menuItem component to set the active value
 
 ### Fixed
 
