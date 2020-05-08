@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import Switch from 'react-switch';
-import { FaTachometerAlt, FaHeart, FaGem, FaList, FaProjectDiagram } from 'react-icons/fa';
+import { FaTachometerAlt, FaHeart, FaGem, FaList, FaProjectDiagram, FaBars } from 'react-icons/fa';
 import sidebarBg from './bg1.jpg';
 
 function Layout({ setLocale }) {
@@ -10,6 +10,7 @@ function Layout({ setLocale }) {
   const [rtl, setRtl] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [image, setImage] = useState(true);
+  const [toggled, setToggled] = useState(false);
 
   const handleCollapsedChange = (checked) => {
     setCollapsed(checked);
@@ -23,8 +24,13 @@ function Layout({ setLocale }) {
     setImage(checked);
   };
 
+  const handleToggleSidebar = (value) => {
+    setToggled(value);
+  };
+
   return (
-    <div className={`app ${rtl ? 'rtl' : ''}`}>
+    <div className={`app ${rtl ? 'rtl' : ''} ${toggled ? 'toggled' : ''}`}>
+      <div className="overlay" onClick={() => handleToggleSidebar(false)} />
       <aside>
         <ProSidebar image={image ? sidebarBg : false} rtl={rtl} collapsed={collapsed}>
           <Menu iconShape="circle">
@@ -56,11 +62,28 @@ function Layout({ setLocale }) {
         </ProSidebar>
       </aside>
       <main>
+        <div className="btn-toggle" onClick={() => handleToggleSidebar(true)}>
+          <FaBars />
+        </div>
         <header>
           <h1> {intl.formatMessage({ id: 'title' })}</h1>
           <p>{intl.formatMessage({ id: 'description' })}</p>
+          <iframe
+            src="https://ghbtns.com/github-btn.html?user=azouaoui-med&repo=react-pro-sidebar&type=star&count=true&size=small"
+            frameborder="0"
+            scrolling="0"
+            width="85px"
+            height="30px"
+          ></iframe>
+          <iframe
+            src="https://ghbtns.com/github-btn.html?user=azouaoui-med&repo=react-pro-sidebar&type=fork&count=true&size=small"
+            frameborder="0"
+            scrolling="0"
+            width="100px"
+            height="30px"
+          ></iframe>
         </header>
-        <div className="block">
+        <div className="block ">
           <Switch
             height={16}
             width={30}

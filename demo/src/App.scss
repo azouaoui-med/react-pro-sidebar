@@ -22,7 +22,34 @@ body {
 .app {
   height: 100%;
   display: flex;
+  position: relative;
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.32);
+    display: none;
+  }
 
+  .btn-toggle {
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    background: #353535;
+    color: #fff;
+    text-align: center;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    display: none;
+  }
+  aside {
+    height: 100%;
+  }
   main {
     padding: 24px;
     flex-grow: 1;
@@ -65,6 +92,44 @@ body {
       > span {
         margin-left: 0;
         margin-right: 10px;
+      }
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    overflow-x: hidden;
+    .btn-toggle {
+      display: flex;
+    }
+    aside {
+      position: absolute;
+      z-index: 1111;
+      left: -270px;
+      transition: left 0.3s;
+    }
+    &.toggled {
+      .overlay {
+        display: block;
+      }
+      aside {
+        left: 0;
+      }
+    }
+
+    &.rtl {
+      .btn-toggle {
+        margin-left: auto;
+      }
+      aside {
+        left: auto;
+        right: -270px;
+        transition: right 0.3s;
+      }
+      &.toggled {
+        aside {
+          left: auto;
+          right: 0;
+        }
       }
     }
   }
