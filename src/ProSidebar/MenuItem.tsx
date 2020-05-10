@@ -5,11 +5,12 @@ export interface Props {
   className?: string;
   icon?: React.ReactNode;
   active?: boolean;
+  prefix?: React.ReactNode;
   suffix?: React.ReactNode;
 }
 
 const MenuItem: React.ForwardRefRenderFunction<unknown, Props> = (
-  { children, className, icon, active, suffix, ...rest },
+  { children, className, icon, active, prefix, suffix, ...rest },
   ref,
 ) => {
   const menuItemRef: LegacyRef<HTMLLIElement> = (ref as any) || React.createRef<HTMLLIElement>();
@@ -23,6 +24,7 @@ const MenuItem: React.ForwardRefRenderFunction<unknown, Props> = (
           </span>
         ) : null}
 
+        {prefix ? <span className="prefix-wrapper">{prefix}</span> : null}
         <span className="pro-item-content">{children}</span>
         {suffix ? <span className="suffix-wrapper">{suffix}</span> : null}
       </div>

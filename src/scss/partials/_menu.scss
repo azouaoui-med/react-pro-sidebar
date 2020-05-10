@@ -63,6 +63,12 @@
         opacity: 1;
         transition: opacity 0.2s;
       }
+      .prefix-wrapper {
+        display: flex;
+        margin-right: 5px;
+        opacity: 1;
+        transition: opacity 0.2s;
+      }
 
       > .pro-inner-item {
         position: relative;
@@ -213,7 +219,8 @@
       > ul {
         > .pro-menu-item {
           > .pro-inner-item {
-            > .suffix-wrapper {
+            > .suffix-wrapper,
+            > .prefix-wrapper {
               opacity: 0;
             }
           }
@@ -277,6 +284,10 @@
   &.rtl {
     .pro-menu {
       .pro-menu-item {
+        .prefix-wrapper {
+          margin-right: 0;
+          margin-left: 5px;
+        }
         > .pro-inner-item {
           flex-direction: row-reverse;
           padding: 8px 20px 8px 35px;
