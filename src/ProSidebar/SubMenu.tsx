@@ -8,10 +8,11 @@ export interface Props {
   title?: React.ReactNode;
   defaultOpen?: boolean;
   open?: boolean;
+  suffix?: React.ReactNode;
 }
 
 const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
-  { children, icon, className, title, defaultOpen = false, open, ...rest },
+  { children, icon, className, title, defaultOpen = false, open, suffix, ...rest },
   ref,
 ) => {
   const [closed, setClosed] = useState(!defaultOpen);
@@ -43,6 +44,7 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
           </span>
         ) : null}
         <span className="pro-item-content">{title}</span>
+        {suffix ? <span className="suffix-wrapper">{suffix}</span> : null}
         <span className="pro-arrow-wrapper">
           <span className="pro-arrow" />
         </span>

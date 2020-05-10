@@ -24,6 +24,7 @@
   .pro-menu {
     padding-top: 10px;
     padding-bottom: 10px;
+
     > ul {
       > .pro-sub-menu {
         > .pro-inner-list-item {
@@ -56,6 +57,11 @@
       font-size: 15px;
       &.active {
         color: $highlight-color;
+      }
+
+      .suffix-wrapper {
+        opacity: 1;
+        transition: opacity 0.2s;
       }
 
       > .pro-inner-item {
@@ -206,6 +212,11 @@
     .pro-menu {
       > ul {
         > .pro-menu-item {
+          > .pro-inner-item {
+            > .suffix-wrapper {
+              opacity: 0;
+            }
+          }
           > .pro-inner-list-item {
             background-color: $submenu-bg-color-collapsed;
             z-index: 111;
