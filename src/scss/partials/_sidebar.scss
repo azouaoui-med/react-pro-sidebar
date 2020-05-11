@@ -21,6 +21,22 @@
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
+    display: flex;
+    flex-direction: column;
+
+    .pro-sidebar-header {
+      height: 60px;
+      line-height: 60px;
+      border-bottom: 1px solid rgba($sidebar-color, 0.2);
+    }
+    .pro-sidebar-content {
+      flex-grow: 1;
+    }
+    .pro-sidebar-footer {
+      height: 60px;
+      line-height: 60px;
+      border-top: 1px solid rgba($sidebar-color, 0.2);
+    }
     ul {
       list-style-type: none;
       padding: 0;
