@@ -15,6 +15,10 @@ React sidebar library with dropdown menus and unlimited number of nested submenu
 
 [Live preview](https://azouaoui-med.github.io/react-pro-sidebar)
 
+## Screenshot
+
+![react-pro-sidebar5](https://user-images.githubusercontent.com/25878302/81520810-35048c00-933d-11ea-9a4b-c5515b2c2ebb.gif)
+
 ## Installation
 
 ### yarn
@@ -50,6 +54,32 @@ If you are using sass then you can import the `styles.scss` directly into your s
 
 ```scss
 @import '../node_modules/react-pro-sidebar/dist/scss/styles.scss';
+```
+
+## Sidebar Layout
+
+There are also a set of components that you can use to create a layout for the sidebar
+
+```jsx
+import { ProSidebar, SidebarHeader, SidebarFooter, SidebarContent } from 'react-pro-sidebar';
+
+<ProSidebar>
+  <SidebarHeader>
+    {/**
+     *  You can add a header for the sidebar ex: logo
+     */}
+  </SidebarHeader>
+  <SidebarContent>
+    {/**
+     *  You can add the content of the sidebar ex: menu, profile details, ...
+     */}
+  </SidebarContent>
+  <SidebarFooter>
+    {/**
+     *  You can add a footer for the sidebar ex: copyright
+     */}
+  </SidebarFooter>
+</ProSidebar>;
 ```
 
 ## Custom Styling
@@ -149,7 +179,7 @@ import { Link } from 'react-router-dom';
             <td>-</td>
         </tr>  
          <tr>
-            <td rowspan=2>MenuItem</td>
+            <td rowspan=4>MenuItem</td>
             <td>icon</td>
             <td>ReactNode</td>
             <td>Icon for the menu item </td>
@@ -161,8 +191,20 @@ import { Link } from 'react-router-dom';
             <td>Set active menu items </td>
             <td><code>false</code></td>
         </tr>  
+         <tr>
+            <td>prefix</td>
+            <td>ReactNode</td>
+            <td>Add a prefix to the menuItem </td>
+            <td>-</td>
+        </tr>  
+         <tr>
+            <td>suffix</td>
+            <td>ReactNode</td>
+            <td>Add a suffix to the menuItem </td>
+            <td>-</td>
+        </tr>          
         <tr>
-            <td rowspan=4>SubMenu</td>
+            <td rowspan=6>SubMenu</td>
             <td>title</td>
             <td>string | ReactNode</td>
             <td>Title for the submenu </td>
@@ -186,6 +228,18 @@ import { Link } from 'react-router-dom';
             <td>Set open value if you want to control the state</td>
             <td>-</td>
         </tr>  
+        <tr>
+            <td>prefix</td>
+            <td>ReactNode</td>
+            <td>Add a prefix to the submenu </td>
+            <td>-</td>
+        </tr>  
+        <tr>
+            <td>suffix</td>
+            <td>ReactNode</td>
+            <td>Add a suffix to the submenu </td>
+            <td>-</td>
+        </tr>          
     </tbody>
 </table>
 
