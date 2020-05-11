@@ -17,7 +17,7 @@ React sidebar library with dropdown menus and unlimited number of nested submenu
 
 ## Screenshot
 
-![react-pro-sidebar5](https://user-images.githubusercontent.com/25878302/81520810-35048c00-933d-11ea-9a4b-c5515b2c2ebb.gif)
+![react-pro-sidebar](https://user-images.githubusercontent.com/25878302/81577624-8f373880-93a1-11ea-9156-81ff986237cf.gif)
 
 ## Installation
 
