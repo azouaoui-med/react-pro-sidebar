@@ -10,6 +10,10 @@ export default {
     collapsed: 'انطوى',
     rtl: 'ر ت ل',
     image: 'صورة الخلفية',
+    new: 'جديد',
+    withPrefix: 'مع البادئة',
+    withSuffix: 'مع اللاحقة',
+    viewSource: 'عرض الكود',
   },
   en: {
     title: 'React Pro Sidebar',
@@ -23,5 +27,9 @@ export default {
     collapsed: 'Collapsed',
     rtl: 'RTL',
     image: 'Background image',
+    new: 'NEW',
+    withPrefix: 'With Prefix',
+    withSuffix: 'With Suffix',
+    viewSource: 'View Source',
   },
 };
