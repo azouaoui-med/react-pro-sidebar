@@ -1,6 +1,7 @@
 export default {
   ar: {
     title: 'رياكت پرو سايد بار',
+    sidebarTitle: 'پرو سايد بار',
     description: 'شريط جانبي مع قوائم منسدلة وعدد غير محدود من القوائم الفرعية المتداخلة',
     dashboard: 'لوحة القيادة',
     components: 'مكونات',
@@ -17,6 +18,7 @@ export default {
   },
   en: {
     title: 'React Pro Sidebar',
+    sidebarTitle: 'Pro Sidebar',
     description:
       'React sidebar library with dropdown menus and unlimited number of nested submenus',
     dashboard: 'Dashboard',

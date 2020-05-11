@@ -38,7 +38,7 @@ const Aside = ({ image, collapsed, rtl }) => {
               whiteSpace: 'nowrap',
             }}
           >
-            Pro Sidebar
+            {intl.formatMessage({ id: 'sidebarTitle' })}
           </div>
         </SidebarHeader>
 
