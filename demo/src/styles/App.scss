@@ -128,17 +128,16 @@ body {
   }
 
   &.rtl {
-    flex-direction: row-reverse;
+    direction: rtl;
     text-align: right;
 
     header {
       h1 {
-        flex-direction: row-reverse;
         transform: translateX(20px);
       }
     }
     .block {
-      flex-direction: row-reverse;
+      direction: rtl;
       > span {
         margin-left: 0;
         margin-right: 10px;
@@ -146,7 +145,6 @@ body {
     }
     .sidebar-btn-wrapper {
       .sidebar-btn {
-        flex-direction: row-reverse;
         span {
           margin-left: 0;
           margin-right: 5px;
