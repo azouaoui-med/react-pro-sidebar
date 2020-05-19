@@ -95,7 +95,7 @@ const Aside = ({ image, collapsed, rtl }) => {
               className="sidebar-btn"
             >
               <FaGithub />
-              {!collapsed ? <span> {intl.formatMessage({ id: 'viewSource' })}</span> : null}
+              <span> {intl.formatMessage({ id: 'viewSource' })}</span>
             </a>
           </div>
         </SidebarFooter>

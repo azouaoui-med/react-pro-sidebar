@@ -66,6 +66,8 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
+        text-overflow: ellipsis;
+        overflow: hidden;
         span {
           margin-left: 5px;
           font-size: 13px;
