@@ -9,15 +9,7 @@ import {
   SidebarFooter,
   SidebarContent,
 } from 'react-pro-sidebar';
-import {
-  FaTachometerAlt,
-  FaGem,
-  FaList,
-  FaProjectDiagram,
-  FaGithub,
-  FaRegLaughWink,
-  FaHeart,
-} from 'react-icons/fa';
+import { FaTachometerAlt, FaGem, FaList, FaGithub, FaRegLaughWink, FaHeart } from 'react-icons/fa';
 import sidebarBg from './assets/bg1.jpg';
 
 const Aside = ({ image, collapsed, rtl }) => {
