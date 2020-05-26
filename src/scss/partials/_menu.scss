@@ -30,7 +30,8 @@
         > .pro-inner-list-item {
           position: relative;
           background-color: $submenu-bg-color;
-          > ul {
+
+          > div > ul {
             padding-top: 15px;
             padding-bottom: 15px;
           }
