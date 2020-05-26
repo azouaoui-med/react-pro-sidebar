@@ -74,7 +74,7 @@
   },
   "lint-staged": {
     "*.{js,ts,tsx}": [
-      "yarn lint:fix"
+      "eslint --fix"
     ]
   },
   "dependencies": {
