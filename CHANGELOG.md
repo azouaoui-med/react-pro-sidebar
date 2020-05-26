@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - use direction:rtl instead of row-reverse
+- fix submenu positioning on sidebar collapsed using popperjs and resize-observer-polyfill for resize event listener
 
 ## [0.3.0] - 2020-05-11
 

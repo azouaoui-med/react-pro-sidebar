@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import React, { forwardRef, LegacyRef } from 'react';
 import classNames from 'classnames';
 
@@ -5,7 +6,7 @@ export type IconShapeType = 'square' | 'round' | 'circle';
 
 export interface Props {
   className?: string;
-  children?: React.ReactNode;
+  children?: any;
   iconShape?: IconShapeType;
 }
 
@@ -23,7 +24,9 @@ const Menu: React.ForwardRefRenderFunction<unknown, Props> = (
         [`shaped ${iconShape}`]: ['square', 'round', 'circle'].indexOf(iconShape) >= 0,
       })}
     >
-      <ul>{children}</ul>
+      <ul>
+        {React.Children.map(children, (child) => React.cloneElement(child, { firstchild: 1 }))}
+      </ul>
     </nav>
   );
 };

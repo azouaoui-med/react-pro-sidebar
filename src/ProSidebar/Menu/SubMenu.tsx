@@ -1,6 +1,9 @@
-import React, { useState, forwardRef, LegacyRef } from 'react';
+import React, { useState, forwardRef, LegacyRef, useRef, useEffect, useContext } from 'react';
 import classNames from 'classnames';
 import SlideDown from 'react-slidedown';
+import { createPopper } from '@popperjs/core';
+import ResizeObserver from 'resize-observer-polyfill';
+import { SidebarContext } from '../ProSidebar';
 
 export interface Props {
   className?: string;
@@ -10,17 +13,66 @@ export interface Props {
   open?: boolean;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
+  firstchild?: boolean;
 }
 
 const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
-  { children, icon, className, title, defaultOpen = false, open, prefix, suffix, ...rest },
+  {
+    children,
+    icon,
+    className,
+    title,
+    defaultOpen = false,
+    open,
+    prefix,
+    suffix,
+    firstchild,
+    ...rest
+  },
   ref,
 ) => {
+  let popperInstance;
+  const { collapsed, rtl } = useContext(SidebarContext);
   const [closed, setClosed] = useState(!defaultOpen);
+  const popperElRef = useRef();
+  const referenceElement = useRef();
+  const popperElement = useRef();
 
   const handleToggleSubMenu = () => {
     setClosed(!closed);
   };
+
+  useEffect(() => {
+    if (firstchild) {
+      if (popperInstance) popperInstance.destroy();
+
+      if (referenceElement.current && popperElement.current) {
+        popperInstance = createPopper(referenceElement.current, popperElement.current, {
+          placement: 'right',
+          strategy: 'fixed',
+          modifiers: [
+            {
+              name: 'computeStyles',
+              options: {
+                adaptive: false,
+              },
+            },
+          ],
+        });
+      }
+
+      if (popperElRef.current) {
+        const ro = new ResizeObserver(() => {
+          if (popperInstance) {
+            popperInstance.update();
+          }
+        });
+
+        ro.observe(popperElRef.current);
+        ro.observe(referenceElement.current);
+      }
+    }
+  }, [collapsed, rtl]);
 
   const subMenuRef: LegacyRef<HTMLLIElement> = (ref as any) || React.createRef<HTMLLIElement>();
 
@@ -33,6 +85,7 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
     >
       <div
         {...rest}
+        ref={referenceElement}
         className="pro-inner-item"
         onClick={handleToggleSubMenu}
         onKeyPress={handleToggleSubMenu}
@@ -51,12 +104,23 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
           <span className="pro-arrow" />
         </span>
       </div>
-      <SlideDown
-        closed={typeof open === 'undefined' ? closed : !open}
-        className="pro-inner-list-item"
-      >
-        <ul>{children}</ul>
-      </SlideDown>
+
+      {firstchild && collapsed ? (
+        <div ref={popperElement} className="pro-inner-list-item">
+          <div ref={popperElRef}>
+            <ul>{children}</ul>
+          </div>
+        </div>
+      ) : (
+        <SlideDown
+          closed={typeof open === 'undefined' ? closed : !open}
+          className="pro-inner-list-item"
+        >
+          <div ref={popperElRef}>
+            <ul>{children}</ul>
+          </div>
+        </SlideDown>
+      )}
     </li>
   );
 };

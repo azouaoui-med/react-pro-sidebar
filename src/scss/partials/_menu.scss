@@ -254,12 +254,15 @@
               position: fixed;
               left: $sidebar-collapsed-width;
               transform: translateY(-50px);
-              display: none !important;
+              visibility: hidden;
               width: 270px;
+              max-height: 100%;
+              overflow-y: auto;
             }
             &:hover {
               > .pro-inner-list-item {
-                display: block !important;
+                transition: transform 0.3s;
+                visibility: visible;
               }
               .pro-icon-wrapper {
                 .pro-icon {
