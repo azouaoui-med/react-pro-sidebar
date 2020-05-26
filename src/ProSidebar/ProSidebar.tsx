@@ -25,7 +25,10 @@ const ProSidebar: React.ForwardRefRenderFunction<unknown, Props> = (
   { children, className, width, collapsed, rtl, image, ...rest },
   ref,
 ) => {
-  const [sidebarState, setSidebarState] = useState({ collapsed: false, rtl: false });
+  const [sidebarState, setSidebarState] = useState({
+    collapsed: typeof collapsed === 'undefined' ? false : collapsed,
+    rtl: typeof rtl === 'undefined' ? false : rtl,
+  });
 
   const sidebarRef: LegacyRef<HTMLDivElement> = (ref as any) || React.createRef<HTMLDivElement>();
 
