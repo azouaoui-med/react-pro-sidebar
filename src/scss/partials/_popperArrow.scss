@@ -1,0 +1,29 @@
+.popper-arrow,
+.popper-arrow::before {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  z-index: -1;
+}
+
+.popper-arrow::before {
+  content: '';
+  transform: rotate(45deg);
+  background: $submenu-bg-color-collapsed;
+}
+
+.popper-element[data-popper-placement^='top'] > .popper-arrow {
+  bottom: -4px;
+}
+
+.popper-element[data-popper-placement^='bottom'] > .popper-arrow {
+  top: -4px;
+}
+
+.popper-element[data-popper-placement^='left'] > .popper-arrow {
+  right: -4px;
+}
+
+.popper-element[data-popper-placement^='right'] > .popper-arrow {
+  left: -4px;
+}

@@ -253,16 +253,24 @@
             > .pro-inner-list-item {
               height: auto !important;
               position: fixed;
-              left: $sidebar-collapsed-width;
-              transform: translateY(-50px);
+              // left: $sidebar-collapsed-width;
+              // transform: translateY(-50px);
               visibility: hidden;
-              width: 270px;
+              min-width: 220px;
+              max-width: 270px;
               max-height: 100%;
               overflow-y: auto;
+              background-color: transparent;
+              padding-left: 10px;
+              > .popper-inner {
+                background-color: $submenu-bg-color-collapsed;
+                padding-left: 20px;
+                border-radius: 4px;
+              }
             }
             &:hover {
               > .pro-inner-list-item {
-                transition: transform 0.3s;
+                transition: visibility, transform 0.3s;
                 visibility: visible;
               }
               .pro-icon-wrapper {
@@ -343,8 +351,12 @@
           > .pro-menu-item {
             &.pro-sub-menu {
               > .pro-inner-list-item {
-                left: auto;
-                right: $sidebar-collapsed-width;
+                padding-left: 0;
+                padding-right: 10px;
+                > .popper-inner {
+                  padding-left: 0;
+                  padding-right: 20px;
+                }
               }
 
               .pro-inner-list-item {

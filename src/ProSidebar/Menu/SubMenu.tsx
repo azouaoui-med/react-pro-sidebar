@@ -109,17 +109,18 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
       </div>
 
       {firstchild && collapsed ? (
-        <div ref={popperElement} className="pro-inner-list-item">
-          <div ref={popperElRef}>
+        <div ref={popperElement} className="pro-inner-list-item popper-element">
+          <div className="popper-inner" ref={popperElRef}>
             <ul>{children}</ul>
           </div>
+          <div className="popper-arrow" data-popper-arrow />
         </div>
       ) : (
         <SlideDown
           closed={typeof open === 'undefined' ? closed : !open}
           className="pro-inner-list-item"
         >
-          <div ref={popperElRef}>
+          <div>
             <ul>{children}</ul>
           </div>
         </SlideDown>
