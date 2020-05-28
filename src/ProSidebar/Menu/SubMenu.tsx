@@ -44,7 +44,10 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
 
   useEffect(() => {
     if (firstchild) {
-      if (popperInstance) popperInstance.destroy();
+      if (popperInstance) {
+        popperInstance.destroy();
+        popperInstance = null;
+      }
 
       if (referenceElement.current && popperElement.current) {
         popperInstance = createPopper(referenceElement.current, popperElement.current, {
