@@ -1,29 +1,18 @@
-.popper-arrow,
-.popper-arrow::before {
+.popper-arrow {
   position: absolute;
-  width: 8px;
-  height: 8px;
   z-index: -1;
-}
-
-.popper-arrow::before {
-  content: '';
-  transform: rotate(45deg);
-  background: $submenu-bg-color-collapsed;
-}
-
-.popper-element[data-popper-placement^='top'] > .popper-arrow {
-  bottom: -4px;
-}
-
-.popper-element[data-popper-placement^='bottom'] > .popper-arrow {
-  top: -4px;
+  width: 0;
+  height: 0;
+  border-top: 7px solid transparent;
+  border-bottom: 7px solid transparent;
 }
 
 .popper-element[data-popper-placement^='left'] > .popper-arrow {
-  right: -4px;
+  right: 0;
+  border-right: 7px solid $submenu-bg-color-collapsed;
 }
 
 .popper-element[data-popper-placement^='right'] > .popper-arrow {
-  left: -4px;
+  left: 0;
+  border-left: 7px solid $submenu-bg-color-collapsed;
 }
