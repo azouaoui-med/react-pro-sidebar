@@ -253,16 +253,15 @@
             > .pro-inner-list-item {
               height: auto !important;
               position: fixed;
-              // left: $sidebar-collapsed-width;
-              // transform: translateY(-50px);
               visibility: hidden;
               min-width: 220px;
               max-width: 270px;
-              max-height: 100%;
-              overflow-y: auto;
               background-color: transparent;
               padding-left: 10px;
+              max-height: 100%;
               > .popper-inner {
+                max-height: 100vh;
+                overflow-y: auto;
                 background-color: $submenu-bg-color-collapsed;
                 padding-left: 20px;
                 border-radius: 4px;
