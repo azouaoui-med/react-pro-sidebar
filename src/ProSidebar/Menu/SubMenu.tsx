@@ -34,9 +34,9 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
   let popperInstance;
   const { collapsed, rtl } = useContext(SidebarContext);
   const [closed, setClosed] = useState(!defaultOpen);
-  const popperElRef = useRef();
-  const referenceElement = useRef();
-  const popperElement = useRef();
+  const popperElRef = useRef(null);
+  const referenceElement = useRef(null);
+  const popperElement = useRef(null);
 
   const handleToggleSubMenu = () => {
     setClosed(!closed);
@@ -44,11 +44,6 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
 
   useEffect(() => {
     if (firstchild) {
-      if (popperInstance) {
-        popperInstance.destroy();
-        popperInstance = null;
-      }
-
       if (referenceElement.current && popperElement.current) {
         popperInstance = createPopper(referenceElement.current, popperElement.current, {
           placement: 'right',
@@ -75,6 +70,13 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
         ro.observe(referenceElement.current);
       }
     }
+
+    return () => {
+      if (popperInstance) {
+        popperInstance.destroy();
+        popperInstance = null;
+      }
+    };
   }, [collapsed, rtl]);
 
   const subMenuRef: LegacyRef<HTMLLIElement> = (ref as any) || React.createRef<HTMLLIElement>();
