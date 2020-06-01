@@ -8,7 +8,7 @@ $highlight-color: #d8d8d8;
 $icon-bg-color: rgba(255, 255, 255, 0.05);
 $icon-size: 35px;
 
-@import '../node_modules/react-pro-sidebar/dist/scss/styles.scss';
+@import '~react-pro-sidebar/dist/scss/styles.scss';
 body {
   margin: 0;
   height: 100vh;
@@ -118,6 +118,12 @@ body {
       }
     }
   }
+  .social-bagdes {
+    margin-top: 10px;
+    img {
+      margin: 5px;
+    }
+  }
 
   .block {
     display: flex;
@@ -168,8 +174,12 @@ body {
     aside {
       position: absolute;
       z-index: 1111;
-      left: -270px;
+      left: -$sidebar-width;
+      // left: -270px;
       transition: left 0.3s;
+      &.collapsed {
+        left: -$sidebar-collapsed-width;
+      }
     }
     &.toggled {
       .overlay {
@@ -186,8 +196,11 @@ body {
       }
       aside {
         left: auto;
-        right: -270px;
+        right: -$sidebar-width;
         transition: right 0.3s;
+        &.collapsed {
+          right: -$sidebar-collapsed-width;
+        }
       }
       &.toggled {
         aside {

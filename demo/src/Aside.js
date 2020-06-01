@@ -15,7 +15,7 @@ import sidebarBg from './assets/bg1.jpg';
 const Aside = ({ image, collapsed, rtl }) => {
   const intl = useIntl();
   return (
-    <aside>
+    <aside className={`${collapsed ? 'collapsed' : ''}`}>
       <ProSidebar image={image ? sidebarBg : false} rtl={rtl} collapsed={collapsed}>
         <SidebarHeader>
           <div
@@ -85,6 +85,7 @@ const Aside = ({ image, collapsed, rtl }) => {
               href="https://github.com/azouaoui-med/react-pro-sidebar"
               target="_blank"
               className="sidebar-btn"
+              rel="noopener noreferrer"
             >
               <FaGithub />
               <span> {intl.formatMessage({ id: 'viewSource' })}</span>
