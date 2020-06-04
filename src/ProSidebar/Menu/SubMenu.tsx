@@ -44,7 +44,7 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
 
   useEffect(() => {
     if (firstchild) {
-      if (collapsed && toggled) {
+      if (collapsed) {
         if (referenceElement.current && popperElement.current) {
           popperInstance = createPopper(referenceElement.current, popperElement.current, {
             placement: 'right',
