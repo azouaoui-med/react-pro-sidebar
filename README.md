@@ -3,11 +3,16 @@
 [![npm][version]][npm-url]
 [![License][license]][npm-url]
 [![Peer][peer]][npm-url]
+[![Download][download]][npm-url]
+[![Stars][stars]][github-url]
 
 [version]: https://img.shields.io/npm/v/react-pro-sidebar.svg?style=flat-square
 [license]: https://img.shields.io/github/license/azouaoui-med/react-pro-sidebar?style=flat-square
 [peer]: https://img.shields.io/npm/dependency-version/react-pro-sidebar/peer/react?style=flat-square
+[download]: https://img.shields.io/npm/dm/react-pro-sidebar?style=flat-square
+[stars]: https://img.shields.io/github/stars/azouaoui-med/react-pro-sidebar?style=social
 [npm-url]: https://www.npmjs.com/package/react-pro-sidebar
+[github-url]: https://github.com/azouaoui-med/react-pro-sidebar
 
 React sidebar library with dropdown menus and unlimited number of nested submenus
 
@@ -58,7 +63,7 @@ If you are using sass then you can import the `styles.scss` directly into your s
 
 ## Sidebar Layout
 
-There are also a set of components that you can use to create a layout for the sidebar
+You can take advantage of the sidebar layout components to organize the content of your sidebar
 
 ```jsx
 import { ProSidebar, SidebarHeader, SidebarFooter, SidebarContent } from 'react-pro-sidebar';
@@ -81,6 +86,8 @@ import { ProSidebar, SidebarHeader, SidebarFooter, SidebarContent } from 'react-
   </SidebarFooter>
 </ProSidebar>;
 ```
+
+> Note : `SidebarContent` component will stretch and fill the remaining space
 
 ## Custom Styling
 
@@ -147,7 +154,7 @@ import { Link } from 'react-router-dom';
     </thead>
     <tbody>
         <tr>
-            <td rowspan=4>ProSidebar</td>
+            <td rowspan=7>ProSidebar</td>
             <td>collapsed</td>
             <td>boolean</td>
             <td>collapsed status of the sidebar </td>
@@ -158,6 +165,24 @@ import { Link } from 'react-router-dom';
             <td>boolean</td>
             <td>RTL direction</td>
             <td><code>false</code></td>
+        </tr>
+        <tr>
+            <td>toggled</td>
+            <td>string</td>
+            <td>toggle status of the sidebar</td>
+            <td><code>false</code></td>
+        </tr>
+        <tr>
+            <td>onToggle</td>
+            <td><code>(value:boolean)=>{}</code></td>
+            <td>Callback function called when toggled status changes, happens when overlay is clicked</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>breakPoint</td>
+            <td><code>xs</code> | <code>sm</code> | <code>md</code> | <code>lg</code> | <code>xl</code></td>
+            <td>set break point for responsiveness</td>
+            <td>-</td>
         </tr>
         <tr>
             <td>width</td>
@@ -174,8 +199,8 @@ import { Link } from 'react-router-dom';
          <tr>
             <td rowspan=1>Menu</td>
             <td>iconShape</td>
-            <td>string</td>
-            <td>Shape of the menu icons : <code>square</code> | <code>round</code> | <code>circle</code></td>
+            <td><code>'square'</code> | <code>'round'</code> | <code>'circle'</code></td>
+            <td>Shape of the menu icons </td>
             <td>-</td>
         </tr>  
          <tr>

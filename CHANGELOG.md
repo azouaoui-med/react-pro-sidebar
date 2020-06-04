@@ -7,10 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Display arrow when hover on top level submenu title
+- Add toggle option for sidebar and break points 
+
 ### Changed
 
-- use direction:rtl instead of row-reverse
-- fix submenu positioning on sidebar collapsed using popperjs and resize-observer-polyfill for resize event listener
+- Use direction:rtl instead of row-reverse
+
+### Fixed
+
+- Fix react-slidedown css import [issue #1](https://github.com/azouaoui-med/react-pro-sidebar/issues/1) from [@metadan](https://github.com/metadan)
+- Fix submenu positioning on sidebar collapsed using popperjs and resize-observer-polyfill for resize event listener.
 
 ## [0.3.0] - 2020-05-11
 

@@ -1,11 +1,38 @@
+@mixin break-point {
+  position: fixed;
+  left: -$sidebar-width;
+  &.collapsed {
+    left: -$sidebar-collapsed-width;
+  }
+  &.toggled {
+    left: 0;
+    .overlay {
+      display: block;
+    }
+  }
+  &.rtl {
+    left: auto;
+    right: -$sidebar-width;
+    &.collapsed {
+      left: auto;
+      right: -$sidebar-collapsed-width;
+    }
+    &.toggled {
+      left: auto;
+      right: 0;
+    }
+  }
+}
+
 .pro-sidebar {
   background: $sidebar-bg-color;
   color: $sidebar-color;
   height: 100%;
   width: $sidebar-width;
   text-align: left;
-  transition: width 0.3s;
+  transition: width, left, right, 0.3s;
   position: relative;
+  z-index: 111;
   > img.sidebar-bg {
     width: 100%;
     height: 100%;
@@ -23,6 +50,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    z-index: 110;
 
     .pro-sidebar-header {
       height: 60px;
@@ -44,6 +72,17 @@
     }
   }
 
+  .overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(#000, 0.3);
+    z-index: 109;
+    display: none;
+  }
+
   &.collapsed {
     width: $sidebar-collapsed-width;
   }
@@ -51,5 +90,31 @@
   &.rtl {
     text-align: right;
     direction: rtl;
+  }
+
+  &.xs {
+    @media (max-width: $breakpoint-xs) {
+      @include break-point;
+    }
+  }
+  &.sm {
+    @media (max-width: $breakpoint-sm) {
+      @include break-point;
+    }
+  }
+  &.md {
+    @media (max-width: $breakpoint-md) {
+      @include break-point;
+    }
+  }
+  &.lg {
+    @media (max-width: $breakpoint-lg) {
+      @include break-point;
+    }
+  }
+  &.xl {
+    @media (max-width: $breakpoint-xl) {
+      @include break-point;
+    }
   }
 }

@@ -32,7 +32,7 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
   ref,
 ) => {
   let popperInstance;
-  const { collapsed, rtl } = useContext(SidebarContext);
+  const { collapsed, rtl, toggled } = useContext(SidebarContext);
   const [closed, setClosed] = useState(!defaultOpen);
   const popperElRef = useRef(null);
   const referenceElement = useRef(null);
@@ -44,30 +44,38 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
 
   useEffect(() => {
     if (firstchild) {
-      if (referenceElement.current && popperElement.current) {
-        popperInstance = createPopper(referenceElement.current, popperElement.current, {
-          placement: 'right',
-          strategy: 'fixed',
-          modifiers: [
-            {
-              name: 'computeStyles',
-              options: {
-                adaptive: false,
+      if (collapsed && toggled) {
+        if (referenceElement.current && popperElement.current) {
+          popperInstance = createPopper(referenceElement.current, popperElement.current, {
+            placement: 'right',
+            strategy: 'fixed',
+            modifiers: [
+              {
+                name: 'computeStyles',
+                options: {
+                  adaptive: false,
+                },
               },
-            },
-          ],
-        });
-      }
+            ],
+          });
+        }
 
-      if (popperElRef.current) {
-        const ro = new ResizeObserver(() => {
+        if (popperElRef.current) {
+          const ro = new ResizeObserver(() => {
+            if (popperInstance) {
+              popperInstance.update();
+            }
+          });
+
+          ro.observe(popperElRef.current);
+          ro.observe(referenceElement.current);
+        }
+
+        setTimeout(() => {
           if (popperInstance) {
             popperInstance.update();
           }
-        });
-
-        ro.observe(popperElRef.current);
-        ro.observe(referenceElement.current);
+        }, 300);
       }
     }
 
@@ -77,7 +85,7 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
         popperInstance = null;
       }
     };
-  }, [collapsed, rtl]);
+  }, [collapsed, rtl, toggled]);
 
   const subMenuRef: LegacyRef<HTMLLIElement> = (ref as any) || React.createRef<HTMLLIElement>();
 
