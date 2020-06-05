@@ -55,6 +55,8 @@ const Main = ({
           uncheckedIcon={false}
           onChange={handleCollapsedChange}
           checked={collapsed}
+          onColor="#219de9"
+          offColor="#bbbbbb"
         />
         <span> {intl.formatMessage({ id: 'collapsed' })}</span>
       </div>
@@ -66,6 +68,8 @@ const Main = ({
           uncheckedIcon={false}
           onChange={handleRtlChange}
           checked={rtl}
+          onColor="#219de9"
+          offColor="#bbbbbb"
         />
         <span> {intl.formatMessage({ id: 'rtl' })}</span>
       </div>
@@ -77,6 +81,8 @@ const Main = ({
           uncheckedIcon={false}
           onChange={handleImageChange}
           checked={image}
+          onColor="#219de9"
+          offColor="#bbbbbb"
         />
         <span> {intl.formatMessage({ id: 'image' })}</span>
       </div>

@@ -26,10 +26,16 @@ function Layout({ setLocale }) {
 
   return (
     <div className={`app ${rtl ? 'rtl' : ''} ${toggled ? 'toggled' : ''}`}>
-      <div className="overlay" onClick={() => handleToggleSidebar(false)} />
-      <Aside image={image} collapsed={collapsed} rtl={rtl} />
+      <Aside
+        image={image}
+        collapsed={collapsed}
+        rtl={rtl}
+        toggled={toggled}
+        handleToggleSidebar={handleToggleSidebar}
+      />
       <Main
         image={image}
+        toggled={toggled}
         collapsed={collapsed}
         rtl={rtl}
         handleToggleSidebar={handleToggleSidebar}

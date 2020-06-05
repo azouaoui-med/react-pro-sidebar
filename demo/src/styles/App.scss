@@ -24,15 +24,6 @@ body {
   height: 100%;
   display: flex;
   position: relative;
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.32);
-    display: none;
-  }
 
   .btn-toggle {
     cursor: pointer;
@@ -48,47 +39,46 @@ body {
     font-size: 15px;
     display: none;
   }
-  aside {
+
+  .sidebar-btn-wrapper {
     height: 100%;
-    .sidebar-btn-wrapper {
-      height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .sidebar-btn {
+      padding: 1px 15px;
+      border-radius: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #adadad;
+      text-decoration: none;
+      margin: 0 auto;
+      height: 35px;
       display: flex;
       align-items: center;
       justify-content: center;
-      .sidebar-btn {
-        padding: 1px 15px;
-        border-radius: 40px;
-        background: rgba(255, 255, 255, 0.05);
-        color: #adadad;
-        text-decoration: none;
-        margin: 0 auto;
-        height: 35px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        span {
-          margin-left: 5px;
-          font-size: 13px;
-        }
-        &:hover {
-          color: $highlight-color;
-        }
+      text-overflow: ellipsis;
+      overflow: hidden;
+      span {
+        margin-left: 5px;
+        font-size: 13px;
       }
-    }
-
-    .collapsed {
-      .sidebar-btn {
-        display: inline-block;
-        border-radius: 50%;
-        width: 35px;
-        height: 35px;
-        line-height: 40px;
-        padding: 0;
+      &:hover {
+        color: $highlight-color;
       }
     }
   }
+
+  .collapsed {
+    .sidebar-btn {
+      display: inline-block;
+      border-radius: 50%;
+      width: 35px;
+      height: 35px;
+      line-height: 40px;
+      padding: 0;
+    }
+  }
+
   main {
     padding: 24px;
     flex-grow: 1;
@@ -168,45 +158,15 @@ body {
         font-size: 24px;
       }
     }
+  }
+  @media (max-width: $breakpoint-md) {
     .btn-toggle {
       display: flex;
-    }
-    aside {
-      position: absolute;
-      z-index: 1111;
-      left: -$sidebar-width;
-      // left: -270px;
-      transition: left 0.3s;
-      &.collapsed {
-        left: -$sidebar-collapsed-width;
-      }
-    }
-    &.toggled {
-      .overlay {
-        display: block;
-      }
-      aside {
-        left: 0;
-      }
     }
 
     &.rtl {
       .btn-toggle {
         margin-left: auto;
-      }
-      aside {
-        left: auto;
-        right: -$sidebar-width;
-        transition: right 0.3s;
-        &.collapsed {
-          right: -$sidebar-collapsed-width;
-        }
-      }
-      &.toggled {
-        aside {
-          left: auto;
-          right: 0;
-        }
       }
     }
   }
