@@ -22,7 +22,7 @@ Customizable and responsive react sidebar library with dropdown menus and unlimi
 
 ## Screenshot
 
-![react-pro-sidebar](https://user-images.githubusercontent.com/25878302/81577624-8f373880-93a1-11ea-9156-81ff986237cf.gif)
+![react-pro-sidebar](https://user-images.githubusercontent.com/25878302/83899865-0c5f8e80-a751-11ea-9689-a7fad94843a1.gif)
 
 ## Installation
 
@@ -100,17 +100,29 @@ Your `custom.scss` file should look something like this
 ```scss
 // Your variable overrides
 $sidebar-bg-color: #1d1d1d;
-$sidebar-color: #adadad;
-$sidebar-width: 270px;
-$sidebar-collapsed-width: 80px;
-$highlight-color: #d8d8d8;
-$submenu-bg-color: #2b2b2b;
-$submenu-bg-color-collapsed: #2b2b2b;
-$icon-bg-color: #2b2b2b;
-$icon-size: 35px;
 
 @import '../node_modules/react-pro-sidebar/dist/scss/styles.scss';
 ```
+
+Available scss variables
+
+```scss
+$sidebar-bg-color: #1d1d1d !default;
+$sidebar-color: #adadad !default;
+$sidebar-width: 270px !default;
+$sidebar-collapsed-width: 80px !default;
+$highlight-color: #d8d8d8 !default;
+$submenu-bg-color: #2b2b2b !default;
+$submenu-bg-color-collapsed: #2b2b2b !default;
+$icon-bg-color: #2b2b2b !default;
+$icon-size: 35px !default;
+$breakpoint-xs: 480px !default;
+$breakpoint-sm: 576px !default;
+$breakpoint-md: 768px !default;
+$breakpoint-lg: 992px !default;
+$breakpoint-xl: 1200px !default;
+```
+
 
 ## Using nested sub-menus
 
@@ -169,7 +181,7 @@ import { Link } from 'react-router-dom';
         <tr>
             <td>toggled</td>
             <td>string</td>
-            <td>Toggle status of the sidebar when break point is activated</td>
+            <td>Toggle status of the sidebar when break point is enabled</td>
             <td><code>false</code></td>
         </tr>
         <tr>
