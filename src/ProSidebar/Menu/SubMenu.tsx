@@ -45,7 +45,6 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
   };
 
   useEffect(() => {
-    console.log('popperarrow', popperarrow);
     if (firstchild) {
       if (collapsed) {
         if (referenceElement.current && popperElement.current) {
