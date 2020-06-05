@@ -257,8 +257,11 @@
               min-width: 220px;
               max-width: 270px;
               background-color: transparent;
-              padding-left: 10px;
               max-height: 100%;
+              padding-left: 3px;
+              &.has-arrow {
+                padding-left: 10px;
+              }
               > .popper-inner {
                 max-height: 100vh;
                 overflow-y: auto;
@@ -351,7 +354,10 @@
             &.pro-sub-menu {
               > .pro-inner-list-item {
                 padding-left: 0;
-                padding-right: 10px;
+                padding-right: 3px;
+                &.has-arrow {
+                  padding-right: 10px;
+                }
                 > .popper-inner {
                   padding-left: 0;
                   padding-right: 20px;

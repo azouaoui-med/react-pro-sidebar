@@ -8,14 +8,14 @@ export interface Props {
   className?: string;
   children?: any;
   iconShape?: IconShapeType;
+  popperArrow?: boolean;
 }
 
 const Menu: React.ForwardRefRenderFunction<unknown, Props> = (
-  { children, className, iconShape, ...rest },
+  { children, className, iconShape, popperArrow, ...rest },
   ref,
 ) => {
   const menuRef: LegacyRef<HTMLElement> = (ref as any) || React.createRef<HTMLElement>();
-
   return (
     <nav
       {...rest}
@@ -25,7 +25,12 @@ const Menu: React.ForwardRefRenderFunction<unknown, Props> = (
       })}
     >
       <ul>
-        {React.Children.map(children, (child) => React.cloneElement(child, { firstchild: 1 }))}
+        {React.Children.map(children, (child) =>
+          React.cloneElement(child, {
+            firstchild: 1,
+            popperarrow: popperArrow === true ? 1 : 0,
+          }),
+        )}
       </ul>
     </nav>
   );

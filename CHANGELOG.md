@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Display arrow when hover on top level submenu title
 - Add toggle option for sidebar and break points 
+- Add popperArrow prop in Menu component to specify whether to display an arrow to point to sub-menu wrapper on sidebar collapsed
 
 ### Changed
 

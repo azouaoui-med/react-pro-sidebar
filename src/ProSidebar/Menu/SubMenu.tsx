@@ -14,6 +14,7 @@ export interface Props {
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   firstchild?: boolean;
+  popperarrow?: boolean;
 }
 
 const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
@@ -27,6 +28,7 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
     prefix,
     suffix,
     firstchild,
+    popperarrow,
     ...rest
   },
   ref,
@@ -43,6 +45,7 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
   };
 
   useEffect(() => {
+    console.log('popperarrow', popperarrow);
     if (firstchild) {
       if (collapsed) {
         if (referenceElement.current && popperElement.current) {
@@ -119,11 +122,14 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
       </div>
 
       {firstchild && collapsed ? (
-        <div ref={popperElement} className="pro-inner-list-item popper-element">
+        <div
+          ref={popperElement}
+          className={classNames('pro-inner-list-item popper-element', { 'has-arrow': popperarrow })}
+        >
           <div className="popper-inner" ref={popperElRef}>
             <ul>{children}</ul>
           </div>
-          <div className="popper-arrow" data-popper-arrow />
+          {popperarrow ? <div className="popper-arrow" data-popper-arrow /> : null}
         </div>
       ) : (
         <SlideDown

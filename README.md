@@ -14,7 +14,7 @@
 [npm-url]: https://www.npmjs.com/package/react-pro-sidebar
 [github-url]: https://github.com/azouaoui-med/react-pro-sidebar
 
-React sidebar library with dropdown menus and unlimited number of nested submenus
+Customizable and responsive react sidebar library with dropdown menus and unlimited number of nested submenus
 
 ## Demo
 
@@ -169,7 +169,7 @@ import { Link } from 'react-router-dom';
         <tr>
             <td>toggled</td>
             <td>string</td>
-            <td>toggle status of the sidebar</td>
+            <td>Toggle status of the sidebar when break point is activated</td>
             <td><code>false</code></td>
         </tr>
         <tr>
@@ -181,7 +181,7 @@ import { Link } from 'react-router-dom';
         <tr>
             <td>breakPoint</td>
             <td><code>xs</code> | <code>sm</code> | <code>md</code> | <code>lg</code> | <code>xl</code></td>
-            <td>set break point for responsiveness</td>
+            <td>Set break point to specify when the sidebar should be responsive </td>
             <td>-</td>
         </tr>
         <tr>
@@ -197,11 +197,17 @@ import { Link } from 'react-router-dom';
             <td>-</td>
         </tr>
          <tr>
-            <td rowspan=1>Menu</td>
+            <td rowspan=2>Menu</td>
             <td>iconShape</td>
             <td><code>'square'</code> | <code>'round'</code> | <code>'circle'</code></td>
             <td>Shape of the menu icons </td>
             <td>-</td>
+        </tr>  
+         <tr>          
+            <td>popperArrow</td>
+            <td>boolean</td>
+            <td>if <code>true</code>, an arrow will be displayed when sidebar collapsed to point to sub-menu wrapper</td>
+            <td><code>false</code></td>
         </tr>  
          <tr>
             <td rowspan=4>MenuItem</td>
