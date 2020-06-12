@@ -58,7 +58,7 @@ import 'react-pro-sidebar/dist/css/styles.css';
 If you are using sass then you can import the `styles.scss` directly into your scss file
 
 ```scss
-@import '../node_modules/react-pro-sidebar/dist/scss/styles.scss';
+@import '~react-pro-sidebar/dist/scss/styles.scss';
 ```
 
 ## Sidebar Layout
