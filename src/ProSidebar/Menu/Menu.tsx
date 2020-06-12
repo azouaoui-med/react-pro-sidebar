@@ -6,7 +6,7 @@ export type IconShapeType = 'square' | 'round' | 'circle';
 
 export interface Props {
   className?: string;
-  children?: any;
+  children?: React.ReactNode;
   iconShape?: IconShapeType;
   popperArrow?: boolean;
 }
@@ -26,7 +26,7 @@ const Menu: React.ForwardRefRenderFunction<unknown, Props> = (
     >
       <ul>
         {React.Children.map(children, (child) =>
-          React.cloneElement(child, {
+          React.cloneElement(child as React.ReactElement, {
             firstchild: 1,
             popperarrow: popperArrow === true ? 1 : 0,
           }),

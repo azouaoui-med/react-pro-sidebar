@@ -6,6 +6,7 @@ import ResizeObserver from 'resize-observer-polyfill';
 import { SidebarContext } from '../ProSidebar';
 
 export interface Props {
+  children?: React.ReactNode;
   className?: string;
   icon?: React.ReactNode;
   title?: React.ReactNode;
