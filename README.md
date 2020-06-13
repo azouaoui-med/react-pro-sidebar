@@ -101,7 +101,7 @@ Your `custom.scss` file should look something like this
 // Your variable overrides
 $sidebar-bg-color: #1d1d1d;
 
-@import '../node_modules/react-pro-sidebar/dist/scss/styles.scss';
+@import '~react-pro-sidebar/dist/scss/styles.scss';
 ```
 
 Available scss variables
@@ -122,7 +122,6 @@ $breakpoint-md: 768px !default;
 $breakpoint-lg: 992px !default;
 $breakpoint-xl: 1200px !default;
 ```
-
 
 ## Using nested sub-menus
 
