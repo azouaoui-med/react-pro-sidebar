@@ -3268,7 +3268,7 @@ react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-slidedown@2.4.5:
+react-slidedown@^2.4.5:
   version "2.4.5"
   resolved "https://registry.yarnpkg.com/react-slidedown/-/react-slidedown-2.4.5.tgz#d575404256fa0ba81e60161547a8fa9ff62b935d"
   integrity sha512-zFDhgqQ1ZLfRr+rQA7p+13OTT/+zUR/+3v3JnwrnXPM8R+1KHhuTNseYHU8jYN3QfxjJXtqve0rgbWCBiFkpiw==
@@ -3538,7 +3538,7 @@ rollup-plugin-sass@^1.2.2:
     rollup-pluginutils ">= 1.3.1"
     sass "1.7.2"
 
-rollup-plugin-scss@^2.5.0:
+rollup-plugin-scss@^2.4.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/rollup-plugin-scss/-/rollup-plugin-scss-2.5.0.tgz#ce97d829b27d053007a0e7bd22269eb9af3e7705"
   integrity sha512-yJauSw1AbyPGohybr44nLTiOH5VejMAK8HgM9bSblcTF/WahC6ekscjzN5yUjzcrEt8SUFfdn/jRH2LRlYhEPQ==
