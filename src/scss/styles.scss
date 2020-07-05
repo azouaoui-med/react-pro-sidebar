@@ -2,9 +2,5 @@
 @import './partials/animation';
 @import './partials/sidebar';
 @import './partials/menu';
-@import '~react-slidedown/lib/slidedown.css';
 @import './partials/popperArrow';
-
-.react-slidedown {
-  transition-duration: 0.2s !important;
-}
+@import './partials/reactSlidedown';
