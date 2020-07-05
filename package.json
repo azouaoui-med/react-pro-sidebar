@@ -1,6 +1,6 @@
 {
   "name": "react-pro-sidebar",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "React sidebar library with dropdown menus and unlimit number of nested submenus",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -8,7 +8,7 @@
     "dist"
   ],
   "repository": "https://github.com/azouaoui-med/react-pro-sidebar.git",
-  "author": "Mohamed AZOUAOUI <azouaoui.med@gmail.com>",
+  "author": "Mohamed Azouaoui <azouaoui.med@gmail.com>",
   "license": "MIT",
   "private": false,
   "scripts": {

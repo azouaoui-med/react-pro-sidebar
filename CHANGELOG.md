@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.2] - 2020-07-05
+
+### Fixed
+
+- Fix slidedown.css path bug [issue #7](https://github.com/azouaoui-med/react-pro-sidebar/issues/7)
+-
+
 ## [0.4.1] - 2020-06-12
 
 ### Fixed
