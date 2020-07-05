@@ -1,5 +1,4 @@
 import React, { forwardRef, createContext, useEffect, useState } from 'react';
-import '../scss/styles.scss';
 import classNames from 'classnames';
 
 export interface Props {
