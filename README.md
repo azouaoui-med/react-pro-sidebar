@@ -9,7 +9,7 @@
 [version]: https://img.shields.io/npm/v/react-pro-sidebar.svg?style=flat-square
 [license]: https://img.shields.io/github/license/azouaoui-med/react-pro-sidebar?style=flat-square
 [peer]: https://img.shields.io/npm/dependency-version/react-pro-sidebar/peer/react?style=flat-square
-[download]: https://img.shields.io/npm/dm/react-pro-sidebar?style=flat-square
+[download]: https://img.shields.io/npm/dt/react-pro-sidebar?style=flat-square
 [stars]: https://img.shields.io/github/stars/azouaoui-med/react-pro-sidebar?style=social
 [npm-url]: https://www.npmjs.com/package/react-pro-sidebar
 [github-url]: https://github.com/azouaoui-med/react-pro-sidebar
@@ -86,8 +86,6 @@ import { ProSidebar, SidebarHeader, SidebarFooter, SidebarContent } from 'react-
   </SidebarFooter>
 </ProSidebar>;
 ```
-
-> Note : `SidebarContent` component will stretch and fill the remaining space
 
 ## Custom Styling
 
