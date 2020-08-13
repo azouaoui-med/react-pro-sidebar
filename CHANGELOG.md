@@ -7,19 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix SidebarFooter styling [issue #12](https://github.com/azouaoui-med/react-pro-sidebar/issues/12)
+  
 ## [0.4.3] - 2020-07-06
 
 ### Fixed
 
 - Fix css build
--
 
 ## [0.4.2] - 2020-07-05
 
 ### Fixed
 
 - Fix slidedown.css path bug [issue #7](https://github.com/azouaoui-med/react-pro-sidebar/issues/7)
--
+
 
 ## [0.4.1] - 2020-06-12
 

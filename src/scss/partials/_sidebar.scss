@@ -54,16 +54,12 @@
     z-index: 110;
 
     .pro-sidebar-header {
-      height: 60px;
-      line-height: 60px;
       border-bottom: 1px solid rgba($sidebar-color, 0.2);
     }
     .pro-sidebar-content {
       flex-grow: 1;
     }
     .pro-sidebar-footer {
-      height: 60px;
-      line-height: 60px;
       border-top: 1px solid rgba($sidebar-color, 0.2);
     }
     ul {
