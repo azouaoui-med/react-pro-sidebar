@@ -26,7 +26,7 @@ const Aside = ({ image, collapsed, rtl, toggled, handleToggleSidebar }) => {
       <SidebarHeader>
         <div
           style={{
-            padding: '0 24px',
+            padding: '24px',
             textTransform: 'uppercase',
             fontWeight: 'bold',
             fontSize: 14,
@@ -86,7 +86,12 @@ const Aside = ({ image, collapsed, rtl, toggled, handleToggleSidebar }) => {
       </SidebarContent>
 
       <SidebarFooter style={{ textAlign: 'center' }}>
-        <div className="sidebar-btn-wrapper">
+        <div
+          className="sidebar-btn-wrapper"
+          style={{
+            padding: '20px 24px',
+          }}
+        >
           <a
             href="https://github.com/azouaoui-med/react-pro-sidebar"
             target="_blank"
