@@ -58,8 +58,10 @@ const ProSidebar: React.ForwardRefRenderFunction<unknown, Props> = (
         className={classNames('pro-sidebar', className, breakPoint, { collapsed, rtl, toggled })}
         style={{ width }}
       >
-        {image ? <img src={image} alt="sidebar background" className="sidebar-bg" /> : null}
-        <div className="pro-sidebar-inner">{children}</div>
+        <div className="pro-sidebar-inner">
+          {image ? <img src={image} alt="sidebar background" className="sidebar-bg" /> : null}
+          <div className="pro-sidebar-layout">{children}</div>
+        </div>
         <div
           className="overlay"
           onClick={handleToggleSidebar}
