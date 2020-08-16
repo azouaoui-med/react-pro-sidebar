@@ -8934,10 +8934,10 @@ react-is@^16.12.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-pro-sidebar@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/react-pro-sidebar/-/react-pro-sidebar-0.4.0.tgz#d8436eda5c298e188ca9043480a3910ae95f64f3"
-  integrity sha512-dQd4ZfA8EsL5QpNQOcmBTVMSz8aqekjBV4gwBNGY+aqoStoxn5Ik1sXo+xPxp/ps6LlfX6Ug/XywUZtbw5Lc2g==
+react-pro-sidebar@^0.4.4:
+  version "0.4.4"
+  resolved "https://registry.yarnpkg.com/react-pro-sidebar/-/react-pro-sidebar-0.4.4.tgz#07b6796d72be98ac0c835382e47160b827b7c5f6"
+  integrity sha512-nfi0xUuuJttKgRjfDIrlDJcUUf96pvJAv7T7j/nT+tyPVuufzOKOIes9vF+6sIxwdbmjPGmh6CJ+JR5fket9Rg==
   dependencies:
     "@popperjs/core" "^2.4.0"
     classnames "^2.2.6"
