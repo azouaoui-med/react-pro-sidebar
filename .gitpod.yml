@@ -1,0 +1,8 @@
+tasks:
+  - init: |
+      yarn install && cd demo && yarn install && cd ../
+    command: yarn start:all
+
+ports:
+  - port: 4747
+    onOpen: open-preview

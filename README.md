@@ -5,6 +5,7 @@
 [![Peer][peer]][npm-url]
 [![Download][download]][npm-url]
 [![Stars][stars]][github-url]
+[![Gitpod Ready-to-Code][gitpod-badge]][gitpod-url]
 
 [version]: https://img.shields.io/npm/v/react-pro-sidebar.svg?style=flat-square
 [license]: https://img.shields.io/github/license/azouaoui-med/react-pro-sidebar?style=flat-square
@@ -13,6 +14,8 @@
 [stars]: https://img.shields.io/github/stars/azouaoui-med/react-pro-sidebar?style=social
 [npm-url]: https://www.npmjs.com/package/react-pro-sidebar
 [github-url]: https://github.com/azouaoui-med/react-pro-sidebar
+[gitpod-badge]: https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod
+[gitpod-url]: https://gitpod.io/from-referrer/
 
 Customizable and responsive react sidebar library with dropdown menus and unlimited number of nested submenus
 
@@ -211,77 +214,91 @@ import { Link } from 'react-router-dom';
             <td><code>'square'</code> | <code>'round'</code> | <code>'circle'</code></td>
             <td>Shape of the menu icons </td>
             <td>-</td>
-        </tr>  
-         <tr>          
+        </tr>
+         <tr>
             <td>popperArrow</td>
             <td>boolean</td>
             <td>if <code>true</code>, an arrow will be displayed when sidebar collapsed to point to sub-menu wrapper</td>
             <td><code>false</code></td>
-        </tr>  
+        </tr>
          <tr>
             <td rowspan=4>MenuItem</td>
             <td>icon</td>
             <td>ReactNode</td>
             <td>Icon for the menu item </td>
             <td>-</td>
-        </tr>  
+        </tr>
          <tr>
             <td>active</td>
             <td>boolean</td>
             <td>Set active menu items </td>
             <td><code>false</code></td>
-        </tr>  
+        </tr>
          <tr>
             <td>prefix</td>
             <td>ReactNode</td>
             <td>Add a prefix to the menuItem </td>
             <td>-</td>
-        </tr>  
+        </tr>
          <tr>
             <td>suffix</td>
             <td>ReactNode</td>
             <td>Add a suffix to the menuItem </td>
             <td>-</td>
-        </tr>          
+        </tr>
         <tr>
             <td rowspan=6>SubMenu</td>
             <td>title</td>
             <td>string | ReactNode</td>
             <td>Title for the submenu </td>
             <td>-</td>
-        </tr>  
+        </tr>
          <tr>
             <td>icon</td>
             <td>ReactNode</td>
             <td>Icon for submenu</td>
             <td>-</td>
-        </tr>  
+        </tr>
          <tr>
             <td>defaultOpen</td>
             <td>boolean</td>
             <td>Set if the submenu is open by default</td>
             <td><code>false</code></td>
-        </tr>  
+        </tr>
          <tr>
             <td>open</td>
             <td>boolean</td>
             <td>Set open value if you want to control the state</td>
             <td>-</td>
-        </tr>  
+        </tr>
         <tr>
             <td>prefix</td>
             <td>ReactNode</td>
             <td>Add a prefix to the submenu </td>
             <td>-</td>
-        </tr>  
+        </tr>
         <tr>
             <td>suffix</td>
             <td>ReactNode</td>
             <td>Add a suffix to the submenu </td>
             <td>-</td>
-        </tr>          
+        </tr>
     </tbody>
 </table>
+
+## Contributing
+
+### Online one-click setup
+
+You can use [Gitpod](https://www.gitpod.io/) (an Online Open Source VS Code-like IDE which is free for Open Source) for working on issues and making PRs to this project. With a single click it will launch a workspace and automatically:
+
+- clone this repo.
+- install all the dependencies.
+- run `yarn start:all`.
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/from-referrer/)
+
+so that you can start hacking around straight away without any friction.
 
 ## License
 
