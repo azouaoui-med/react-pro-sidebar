@@ -16,6 +16,7 @@ export interface Props {
   suffix?: React.ReactNode;
   firstchild?: boolean;
   popperarrow?: boolean;
+  onOpenChange? :(closed: boolean) => void;
 }
 
 const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
@@ -30,6 +31,7 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
     suffix,
     firstchild,
     popperarrow,
+    onOpenChange,
     ...rest
   },
   ref,
@@ -42,6 +44,7 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
   const popperElement = useRef(null);
 
   const handleToggleSubMenu = () => {
+    onOpenChange && onOpenChange(!closed);
     setClosed(!closed);
   };
 
