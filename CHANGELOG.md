@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2020-08-16
+
+### Added
+
+- Add onOpenChange callback function for submenu [issue #23](https://github.com/azouaoui-med/react-pro-sidebar/issues/23) from [@QoobIY](https://github.com/QoobIY)
+
+### Fixed
+
+- Fix prop spreading and update types on submenu
+
 ## [0.4.4] - 2020-08-16
 
 ### Fixed
