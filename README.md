@@ -282,8 +282,8 @@ import { Link } from 'react-router-dom';
         </tr>
         <tr>
             <td>onOpenChange</td>
-            <td><code>(closed: boolean)=>{}</code></td>
-            <td>Callback function called when clicking on a submenu</td>
+            <td><code>(open: boolean)=>{}</code></td>
+            <td>Callback function called when submenu state changes</td>
             <td>-</td>
         </tr>
     </tbody>
