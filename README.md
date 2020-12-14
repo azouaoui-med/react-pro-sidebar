@@ -244,7 +244,7 @@ import { Link } from 'react-router-dom';
             <td>-</td>
         </tr>          
         <tr>
-            <td rowspan=6>SubMenu</td>
+            <td rowspan=7>SubMenu</td>
             <td>title</td>
             <td>string | ReactNode</td>
             <td>Title for the submenu </td>
@@ -279,7 +279,13 @@ import { Link } from 'react-router-dom';
             <td>ReactNode</td>
             <td>Add a suffix to the submenu </td>
             <td>-</td>
-        </tr>          
+        </tr>
+        <tr>
+            <td>onOpenChange</td>
+            <td><code>(closed: boolean)=>{}</code></td>
+            <td>Callback function called when clicking on a submenu</td>
+            <td>-</td>
+        </tr>
     </tbody>
 </table>
 
