@@ -5,7 +5,7 @@ import { createPopper } from '@popperjs/core';
 import ResizeObserver from 'resize-observer-polyfill';
 import { SidebarContext } from '../ProSidebar';
 
-export interface Props {
+export type Props = React.LiHTMLAttributes<HTMLLIElement> & {
   children?: React.ReactNode;
   className?: string;
   icon?: React.ReactNode;
@@ -17,7 +17,7 @@ export interface Props {
   firstchild?: boolean;
   popperarrow?: boolean;
   onOpenChange?: (open: boolean) => void;
-}
+};
 
 const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
   {
@@ -101,9 +101,9 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
       className={classNames('pro-menu-item pro-sub-menu', className, {
         open: typeof open === 'undefined' ? !closed : open,
       })}
+      {...rest}
     >
       <div
-        {...rest}
         ref={referenceElement}
         className="pro-inner-item"
         onClick={handleToggleSubMenu}
