@@ -25,12 +25,15 @@ const Menu: React.ForwardRefRenderFunction<unknown, Props> = (
       })}
     >
       <ul>
-        {React.Children.map(children, (child) =>
-          React.cloneElement(child as React.ReactElement, {
-            firstchild: 1,
-            popperarrow: popperArrow === true ? 1 : 0,
-          }),
-        )}
+        {React.Children.toArray(children)
+          .filter(Boolean)
+          .map((child, index) =>
+            React.cloneElement(child as React.ReactElement, {
+              key: index,
+              firstchild: 1,
+              popperarrow: popperArrow === true ? 1 : 0,
+            }),
+          )}
       </ul>
     </nav>
   );
