@@ -1,7 +1,7 @@
 import React, { forwardRef, LegacyRef } from 'react';
 import classNames from 'classnames';
 
-export interface Props {
+export type Props = React.LiHTMLAttributes<HTMLLIElement> & {
   children?: React.ReactNode;
   className?: string;
   icon?: React.ReactNode;
@@ -10,7 +10,7 @@ export interface Props {
   suffix?: React.ReactNode;
   firstchild?: boolean;
   popperarrow?: boolean;
-}
+};
 
 const MenuItem: React.ForwardRefRenderFunction<unknown, Props> = (
   { children, className, icon, active, prefix, suffix, firstchild, popperarrow, ...rest },
@@ -19,7 +19,7 @@ const MenuItem: React.ForwardRefRenderFunction<unknown, Props> = (
   const menuItemRef: LegacyRef<HTMLLIElement> = (ref as any) || React.createRef<HTMLLIElement>();
 
   return (
-    <li {...rest} ref={menuItemRef} className={classNames('pro-menu-item', className, { active })}>
+    <li ref={menuItemRef} className={classNames('pro-menu-item', className, { active })} {...rest}>
       <div className="pro-inner-item" tabIndex={0} role="button">
         {icon ? (
           <span className="pro-icon-wrapper">

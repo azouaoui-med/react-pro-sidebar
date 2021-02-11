@@ -4,12 +4,12 @@ import classNames from 'classnames';
 
 export type IconShapeType = 'square' | 'round' | 'circle';
 
-export interface Props {
+export type Props = React.HTMLAttributes<HTMLElement> & {
   className?: string;
   children?: React.ReactNode;
   iconShape?: IconShapeType;
   popperArrow?: boolean;
-}
+};
 
 const Menu: React.ForwardRefRenderFunction<unknown, Props> = (
   { children, className, iconShape, popperArrow, ...rest },
@@ -18,11 +18,11 @@ const Menu: React.ForwardRefRenderFunction<unknown, Props> = (
   const menuRef: LegacyRef<HTMLElement> = (ref as any) || React.createRef<HTMLElement>();
   return (
     <nav
-      {...rest}
       ref={menuRef}
       className={classNames('pro-menu', className, {
         [`shaped ${iconShape}`]: ['square', 'round', 'circle'].indexOf(iconShape) >= 0,
       })}
+      {...rest}
     >
       <ul>
         {React.Children.toArray(children)

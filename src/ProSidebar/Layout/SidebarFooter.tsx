@@ -1,10 +1,10 @@
 import React, { forwardRef, LegacyRef } from 'react';
 import classNames from 'classnames';
 
-export interface Props {
+export type Props = React.HTMLAttributes<HTMLElement> & {
   className?: string;
   children?: React.ReactNode;
-}
+};
 
 const SidebarFooter: React.ForwardRefRenderFunction<unknown, Props> = (
   { children, className, ...rest },
@@ -13,7 +13,7 @@ const SidebarFooter: React.ForwardRefRenderFunction<unknown, Props> = (
   const sidebarFooterRef: LegacyRef<HTMLDivElement> =
     (ref as any) || React.createRef<HTMLDivElement>();
   return (
-    <div {...rest} ref={sidebarFooterRef} className={classNames('pro-sidebar-footer', className)}>
+    <div ref={sidebarFooterRef} className={classNames('pro-sidebar-footer', className)} {...rest}>
       {children}
     </div>
   );

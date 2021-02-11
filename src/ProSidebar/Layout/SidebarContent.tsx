@@ -1,10 +1,10 @@
 import React, { forwardRef, LegacyRef } from 'react';
 import classNames from 'classnames';
 
-export interface Props {
+export type Props = React.HTMLAttributes<HTMLElement> & {
   className?: string;
   children?: React.ReactNode;
-}
+};
 
 const SidebarContent: React.ForwardRefRenderFunction<unknown, Props> = (
   { children, className, ...rest },
@@ -13,7 +13,7 @@ const SidebarContent: React.ForwardRefRenderFunction<unknown, Props> = (
   const sidebarContentRef: LegacyRef<HTMLDivElement> =
     (ref as any) || React.createRef<HTMLDivElement>();
   return (
-    <div {...rest} ref={sidebarContentRef} className={classNames('pro-sidebar-content', className)}>
+    <div ref={sidebarContentRef} className={classNames('pro-sidebar-content', className)} {...rest}>
       {children}
     </div>
   );
