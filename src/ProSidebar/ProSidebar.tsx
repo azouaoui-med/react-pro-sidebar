@@ -6,6 +6,7 @@ export interface Props {
   rtl?: boolean;
   toggled?: boolean;
   width?: string | number;
+  customStyles?: any,
   image?: string;
   className?: string;
   children?: React.ReactNode;
@@ -26,7 +27,7 @@ export const SidebarContext = createContext<SidebarContextProps>({
 });
 
 const ProSidebar: React.ForwardRefRenderFunction<unknown, Props> = (
-  { children, className, width, collapsed, rtl, toggled, image, breakPoint, onToggle, ...rest },
+  { children, className, width, customStyles, collapsed, rtl, toggled, image, breakPoint, onToggle, ...rest },
   ref,
 ) => {
   const [sidebarState, setSidebarState] = useState({
@@ -56,7 +57,7 @@ const ProSidebar: React.ForwardRefRenderFunction<unknown, Props> = (
         {...rest}
         ref={sidebarRef}
         className={classNames('pro-sidebar', className, breakPoint, { collapsed, rtl, toggled })}
-        style={{ width }}
+        style={{ width, ...customStyles }}
       >
         <div className="pro-sidebar-inner">
           {image ? <img src={image} alt="sidebar background" className="sidebar-bg" /> : null}
