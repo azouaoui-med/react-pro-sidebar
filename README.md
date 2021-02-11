@@ -200,6 +200,12 @@ import { Link } from 'react-router-dom';
             <td><code>270px</code></td>
         </tr>
         <tr>
+            <td>collapsedWidth</td>
+            <td>number | string</td>
+            <td>Width of the sidebar on collapsed state</td>
+            <td><code>80px</code></td>
+        </tr>
+        <tr>
             <td>image</td>
             <td>string</td>
             <td>Url of the image to use in the sidebar background</td>
