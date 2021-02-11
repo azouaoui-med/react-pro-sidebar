@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2021-02-11
+
+### Added
+
+- Add width and collapsedWidth props
+
+### Fixed
+
+- Fix dynamically add Menu items depending on certain conditions from [@sergiovhe](https://github.com/sergiovhe)
+- Fix use of styles in ProSidebar component from [@sujaysudheenda](https://github.com/sujaysudheenda)
+- Fix default props spreading
+
 ## [0.5.0] - 2020-12-14
 
 ### Added
