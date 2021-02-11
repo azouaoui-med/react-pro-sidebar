@@ -1,17 +1,19 @@
 import React, { forwardRef, createContext, useEffect, useState } from 'react';
 import classNames from 'classnames';
 
-export interface Props {
+export type Props = React.HTMLAttributes<HTMLElement> & {
   collapsed?: boolean;
   rtl?: boolean;
   toggled?: boolean;
   width?: string | number;
+  collapsedWidth?: string | number;
   image?: string;
   className?: string;
   children?: React.ReactNode;
   breakPoint?: 'xl' | 'lg' | 'md' | 'sm' | 'xs';
   onToggle?: (value: boolean) => void;
-}
+  style?: React.CSSProperties;
+};
 
 export interface SidebarContextProps {
   collapsed: boolean;
@@ -26,7 +28,20 @@ export const SidebarContext = createContext<SidebarContextProps>({
 });
 
 const ProSidebar: React.ForwardRefRenderFunction<unknown, Props> = (
-  { children, className, width, collapsed, rtl, toggled, image, breakPoint, onToggle, ...rest },
+  {
+    children,
+    className,
+    width,
+    collapsedWidth,
+    collapsed,
+    rtl,
+    toggled,
+    image,
+    breakPoint,
+    onToggle,
+    style = {},
+    ...rest
+  },
   ref,
 ) => {
   const [sidebarState, setSidebarState] = useState({
@@ -46,6 +61,12 @@ const ProSidebar: React.ForwardRefRenderFunction<unknown, Props> = (
     }
   };
 
+  const widthStyle = width ? { width, minWidth: width } : {};
+  const collapsedWidthStyle = collapsedWidth
+    ? { width: collapsedWidth, minWidth: collapsedWidth }
+    : {};
+  const finalWidth = collapsed ? collapsedWidthStyle : widthStyle;
+
   useEffect(() => {
     setSidebarState({ ...sidebarState, collapsed, rtl, toggled });
   }, [collapsed, rtl, toggled]);
@@ -53,10 +74,10 @@ const ProSidebar: React.ForwardRefRenderFunction<unknown, Props> = (
   return (
     <SidebarContext.Provider value={sidebarState}>
       <div
-        {...rest}
         ref={sidebarRef}
         className={classNames('pro-sidebar', className, breakPoint, { collapsed, rtl, toggled })}
-        style={{ width }}
+        style={{ ...finalWidth, ...style }}
+        {...rest}
       >
         <div className="pro-sidebar-inner">
           {image ? <img src={image} alt="sidebar background" className="sidebar-bg" /> : null}
