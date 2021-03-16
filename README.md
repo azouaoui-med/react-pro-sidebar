@@ -217,69 +217,81 @@ import { Link } from 'react-router-dom';
             <td><code>'square'</code> | <code>'round'</code> | <code>'circle'</code></td>
             <td>Shape of the menu icons </td>
             <td>-</td>
-        </tr>  
-         <tr>          
+        </tr>
+         <tr>
             <td>popperArrow</td>
             <td>boolean</td>
             <td>if <code>true</code>, an arrow will be displayed when sidebar collapsed to point to sub-menu wrapper</td>
             <td><code>false</code></td>
-        </tr>  
+        </tr>
          <tr>
-            <td rowspan=4>MenuItem</td>
+            <td rowspan=5>MenuItem</td>
+            <td>title</td>
+            <td>string</td>
+            <td>Title attribute for the menu item </td>
+            <td>-</td>
+        </tr>
+         <tr>
             <td>icon</td>
             <td>ReactNode</td>
             <td>Icon for the menu item </td>
             <td>-</td>
-        </tr>  
+        </tr>
          <tr>
             <td>active</td>
             <td>boolean</td>
             <td>Set active menu items </td>
             <td><code>false</code></td>
-        </tr>  
+        </tr>
          <tr>
             <td>prefix</td>
             <td>ReactNode</td>
             <td>Add a prefix to the menuItem </td>
             <td>-</td>
-        </tr>  
+        </tr>
          <tr>
             <td>suffix</td>
             <td>ReactNode</td>
             <td>Add a suffix to the menuItem </td>
             <td>-</td>
-        </tr>          
+        </tr>
         <tr>
-            <td rowspan=7>SubMenu</td>
-            <td>title</td>
+            <td rowspan=8>SubMenu</td>
+            <td>label</td>
             <td>string | ReactNode</td>
-            <td>Title for the submenu </td>
+            <td>Label for the submenu </td>
             <td>-</td>
-        </tr>  
+        </tr>
+         <tr>
+            <td>title</td>
+            <td>string</td>
+            <td>Title attribute for submenu</td>
+            <td>-</td>
+        </tr>
          <tr>
             <td>icon</td>
             <td>ReactNode</td>
             <td>Icon for submenu</td>
             <td>-</td>
-        </tr>  
+        </tr>
          <tr>
             <td>defaultOpen</td>
             <td>boolean</td>
             <td>Set if the submenu is open by default</td>
             <td><code>false</code></td>
-        </tr>  
+        </tr>
          <tr>
             <td>open</td>
             <td>boolean</td>
             <td>Set open value if you want to control the state</td>
             <td>-</td>
-        </tr>  
+        </tr>
         <tr>
             <td>prefix</td>
             <td>ReactNode</td>
             <td>Add a prefix to the submenu </td>
             <td>-</td>
-        </tr>  
+        </tr>
         <tr>
             <td>suffix</td>
             <td>ReactNode</td>

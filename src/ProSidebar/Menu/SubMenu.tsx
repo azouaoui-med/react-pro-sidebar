@@ -9,7 +9,8 @@ export type Props = React.LiHTMLAttributes<HTMLLIElement> & {
   children?: React.ReactNode;
   className?: string;
   icon?: React.ReactNode;
-  title?: React.ReactNode;
+  title?: string;
+  label?: React.ReactNode;
   defaultOpen?: boolean;
   open?: boolean;
   prefix?: React.ReactNode;
@@ -25,6 +26,7 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
     icon,
     className,
     title,
+    label,
     defaultOpen = false,
     open,
     prefix,
@@ -110,6 +112,7 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
         onKeyPress={handleToggleSubMenu}
         role="button"
         tabIndex={0}
+        title={title}
       >
         {icon ? (
           <span className="pro-icon-wrapper">
@@ -117,7 +120,7 @@ const SubMenu: React.ForwardRefRenderFunction<unknown, Props> = (
           </span>
         ) : null}
         {prefix ? <span className="prefix-wrapper">{prefix}</span> : null}
-        <span className="pro-item-content">{title}</span>
+        <span className="pro-item-content">{label}</span>
         {suffix ? <span className="suffix-wrapper">{suffix}</span> : null}
         <span className="pro-arrow-wrapper">
           <span className="pro-arrow" />
