@@ -47,7 +47,7 @@ import 'react-pro-sidebar/dist/css/styles.css';
 <ProSidebar>
   <Menu iconShape="square">
     <MenuItem icon={<FaGem />}>Dashboard</MenuItem>
-    <SubMenu title="Components" icon={<FaHeart />}>
+    <SubMenu label="Components" icon={<FaHeart />}>
       <MenuItem>Component 1</MenuItem>
       <MenuItem>Component 2</MenuItem>
     </SubMenu>
@@ -127,9 +127,9 @@ You can have as many nested menu-items and sub-menus as you like, and the syntax
 
 ```jsx
 <Menu iconShape="square">
-  <SubMenu title="Components" icon={<FaGem />}>
+  <SubMenu label="Components" icon={<FaGem />}>
     <MenuItem>Component 1</MenuItem>
-    <SubMenu title="Sub Component 1" icon={<FaHeart />}>
+    <SubMenu label="Sub Component 1" icon={<FaHeart />}>
       {/* you can have more nested submenus ... */}
     </SubMenu>
   </SubMenu>
