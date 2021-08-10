@@ -48,14 +48,14 @@
     "gh-pages": "^2.2.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.2",
-    "node-sass": "^4.14.1",
+    "node-sass": "^5.0.0",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
     "rollup": "^2.7.6",
     "rollup-plugin-copy": "^3.3.0",
     "rollup-plugin-peer-deps-external": "^2.2.2",
     "rollup-plugin-sass": "^1.2.2",
-    "rollup-plugin-scss": "^2.4.0",
+    "rollup-plugin-scss": "^3.0.0",
     "rollup-plugin-typescript2": "^0.27.0",
     "typescript": "^3.8.3"
   },
@@ -82,7 +82,7 @@
   "dependencies": {
     "@popperjs/core": "^2.4.0",
     "classnames": "^2.2.6",
-    "react-slidedown": "^2.4.5",
+    "@xavierraffin/react-slidedown": "^2.4.6",
     "resize-observer-polyfill": "^1.5.1"
   }
 }
