@@ -120,6 +120,7 @@ $breakpoint-sm: 576px !default;
 $breakpoint-md: 768px !default;
 $breakpoint-lg: 992px !default;
 $breakpoint-xl: 1200px !default;
+$breakpoint-xxl: 1600px !default;
 ```
 
 ## Using nested sub-menus

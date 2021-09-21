@@ -10,7 +10,7 @@ export type Props = React.HTMLAttributes<HTMLElement> & {
   image?: string;
   className?: string;
   children?: React.ReactNode;
-  breakPoint?: 'xl' | 'lg' | 'md' | 'sm' | 'xs';
+  breakPoint?: 'xxl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs';
   onToggle?: (value: boolean) => void;
   style?: React.CSSProperties;
 };

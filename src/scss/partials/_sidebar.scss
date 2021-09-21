@@ -123,4 +123,9 @@
       @include break-point;
     }
   }
+  &.xxl {
+    @media (max-width: $breakpoint-xxl) {
+      @include break-point;
+    }
+  }
 }
