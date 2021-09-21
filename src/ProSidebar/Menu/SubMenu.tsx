@@ -5,7 +5,7 @@ import { createPopper } from '@popperjs/core';
 import ResizeObserver from 'resize-observer-polyfill';
 import { SidebarContext } from '../ProSidebar';
 
-export type Props = React.LiHTMLAttributes<HTMLLIElement> & {
+export type Props = Omit<React.LiHTMLAttributes<HTMLLIElement>, 'prefix'> & {
   children?: React.ReactNode;
   className?: string;
   icon?: React.ReactNode;
