@@ -2,12 +2,12 @@
 import React, { forwardRef, LegacyRef } from 'react';
 import classNames from 'classnames';
 
-export type IconShapeType = 'square' | 'round' | 'circle';
+export type IconShape = 'square' | 'round' | 'circle';
 
 export type Props = React.HTMLAttributes<HTMLElement> & {
   className?: string;
   children?: React.ReactNode;
-  iconShape?: IconShapeType;
+  iconShape?: IconShape;
   popperArrow?: boolean;
 };
 
