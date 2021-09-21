@@ -146,7 +146,11 @@
             padding: 8px 30px 8px 15px;
 
             > .pro-icon-wrapper {
-              display: none;
+              background: none;
+              width: auto;
+              min-width: auto;
+              height: auto;
+              line-height: auto;
             }
           }
         }
