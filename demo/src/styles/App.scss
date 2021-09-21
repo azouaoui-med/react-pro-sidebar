@@ -45,6 +45,8 @@ body {
     align-items: center;
     justify-content: center;
     .sidebar-btn {
+      transition: width 0.3s;
+      width: 150px;
       padding: 1px 15px;
       border-radius: 40px;
       background: rgba(255, 255, 255, 0.05);
@@ -70,9 +72,6 @@ body {
   .collapsed {
     .sidebar-btn {
       display: inline-block;
-      border-radius: 50%;
-      width: 35px;
-      height: 35px;
       line-height: 40px;
       padding: 0;
     }

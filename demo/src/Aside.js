@@ -99,7 +99,9 @@ const Aside = ({ image, collapsed, rtl, toggled, handleToggleSidebar }) => {
             rel="noopener noreferrer"
           >
             <FaGithub />
-            <span> {intl.formatMessage({ id: 'viewSource' })}</span>
+            <span style={{ whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>
+              {intl.formatMessage({ id: 'viewSource' })}
+            </span>
           </a>
         </div>
       </SidebarFooter>
