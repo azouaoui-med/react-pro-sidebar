@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2021-09-22
+
+### Added
+
+- Add submenu indent variable and update default
+- Add exports for all component props
+- Add breakpoint-xxl
+
+### updated
+
+- Replace submenu bullets with arrows
+- Enable icon use in submenu items
+
+### Fixed
+
+- Fix typescript property collision by Omitting prefix props for li element [@zirho](https://github.com/zirho)
+
 ## [0.6.0] - 2021-02-11
 
 ### Added
