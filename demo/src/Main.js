@@ -89,7 +89,7 @@ const Main = ({
 
       <footer>
         <small>
-          © 2020 made with <FaHeart style={{ color: 'red' }} /> by -{' '}
+          © {new Date().getFullYear()} made with <FaHeart style={{ color: 'red' }} /> by -{' '}
           <a target="_blank" rel="noopener noreferrer" href="https://azouaoui.netlify.com">
             Mohamed Azouaoui
           </a>
