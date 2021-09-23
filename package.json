@@ -1,6 +1,6 @@
 {
   "name": "react-pro-sidebar",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "React sidebar library with dropdown menus and unlimit number of nested submenus",
   "main": "dist/index.js",
   "module": "dist/index.es.js",

@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.1] - 2021-09-23
+
+### Fixed
+
+- Fix submenu items bullets not showing by adding `subMenuBullets` and `innerSubMenuArrows` props to Menu to choose between arrows and bullets
+
 ## [0.7.0] - 2021-09-22
 
 ### Added

@@ -9,10 +9,20 @@ export type Props = React.HTMLAttributes<HTMLElement> & {
   children?: React.ReactNode;
   iconShape?: IconShape;
   popperArrow?: boolean;
+  subMenuBullets?: boolean;
+  innerSubMenuArrows?: boolean;
 };
 
 const Menu: React.ForwardRefRenderFunction<unknown, Props> = (
-  { children, className, iconShape, popperArrow, ...rest },
+  {
+    children,
+    className,
+    iconShape,
+    popperArrow = false,
+    subMenuBullets = false,
+    innerSubMenuArrows = true,
+    ...rest
+  },
   ref,
 ) => {
   const menuRef: LegacyRef<HTMLElement> = (ref as any) || React.createRef<HTMLElement>();
@@ -21,6 +31,8 @@ const Menu: React.ForwardRefRenderFunction<unknown, Props> = (
       ref={menuRef}
       className={classNames('pro-menu', className, {
         [`shaped ${iconShape}`]: ['square', 'round', 'circle'].indexOf(iconShape) >= 0,
+        'submenu-bullets': subMenuBullets,
+        'inner-submenu-arrows': innerSubMenuArrows,
       })}
       {...rest}
     >

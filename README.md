@@ -214,7 +214,7 @@ import { Link } from 'react-router-dom';
             <td>-</td>
         </tr>
          <tr>
-            <td rowspan=2>Menu</td>
+            <td rowspan=4>Menu</td>
             <td>iconShape</td>
             <td><code>'square'</code> | <code>'round'</code> | <code>'circle'</code></td>
             <td>Shape of the menu icons </td>
@@ -224,6 +224,18 @@ import { Link } from 'react-router-dom';
             <td>popperArrow</td>
             <td>boolean</td>
             <td>if <code>true</code>, an arrow will be displayed when sidebar collapsed to point to sub-menu wrapper</td>
+            <td><code>false</code></td>
+        </tr>  
+         <tr>          
+            <td>innerSubMenuArrows</td>
+            <td>boolean</td>
+            <td>if <code>true</code>, arrows will be displayed for each inner submenu</td>
+            <td><code>true</code></td>
+        </tr>  
+         <tr>          
+            <td>subMenuBullets</td>
+            <td>boolean</td>
+            <td>if <code>true</code>, bullets will be displayed for each inner submenu/menuItem</td>
             <td><code>false</code></td>
         </tr>  
          <tr>

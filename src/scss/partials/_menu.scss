@@ -1,3 +1,19 @@
+%pro-item-prefix {
+  &:before {
+    content: '';
+    display: inline-block;
+    width: 4px;
+    min-width: 4px;
+    height: 4px;
+    border: 1px solid $submenu-bg-color;
+    border-radius: 50%;
+    margin-right: 15px;
+    position: relative;
+    box-shadow: 1px 0px 0px $sidebar-color, 0px -1px 0px $sidebar-color, 0px 1px 0px $sidebar-color,
+      -1px 0px 0px $sidebar-color;
+  }
+}
+
 %text-truncate {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -154,6 +170,17 @@
             }
           }
         }
+      }
+    }
+
+    &:not(.inner-submenu-arrows) {
+      .pro-inner-list-item .pro-menu-item.pro-sub-menu .pro-inner-item .pro-arrow-wrapper {
+        display: none;
+      }
+    }
+    &.submenu-bullets {
+      .pro-menu-item.pro-sub-menu .pro-inner-list-item .pro-inner-item {
+        @extend %pro-item-prefix;
       }
     }
 
