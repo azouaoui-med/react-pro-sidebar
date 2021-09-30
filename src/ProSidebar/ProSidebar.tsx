@@ -13,6 +13,7 @@ export type Props = React.HTMLAttributes<HTMLElement> & {
   breakPoint?: 'xxl' | 'xl' | 'lg' | 'md' | 'sm' | 'xs';
   onToggle?: (value: boolean) => void;
   style?: React.CSSProperties;
+  component: React.ReactElement;
 };
 
 export interface SidebarContextProps {
@@ -40,6 +41,7 @@ const ProSidebar: React.ForwardRefRenderFunction<unknown, Props> = (
     breakPoint,
     onToggle,
     style = {},
+    component,
     ...rest
   },
   ref,
@@ -70,10 +72,12 @@ const ProSidebar: React.ForwardRefRenderFunction<unknown, Props> = (
   useEffect(() => {
     setSidebarState({ ...sidebarState, collapsed, rtl, toggled });
   }, [collapsed, rtl, toggled]);
+  
+   const Component = component || 'aside';
 
   return (
     <SidebarContext.Provider value={sidebarState}>
-      <div
+      <Component
         ref={sidebarRef}
         className={classNames('pro-sidebar', className, breakPoint, { collapsed, rtl, toggled })}
         style={{ ...finalWidth, ...style }}
@@ -91,7 +95,7 @@ const ProSidebar: React.ForwardRefRenderFunction<unknown, Props> = (
           tabIndex={0}
           aria-label="overlay"
         />
-      </div>
+      </Component>
     </SidebarContext.Provider>
   );
 };
