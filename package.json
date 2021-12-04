@@ -11,12 +11,17 @@
   "author": "Mohamed Azouaoui <azouaoui.med@gmail.com>",
   "license": "MIT",
   "private": false,
-  "scripts": {},
+  "scripts": {
+    "build": "rollup -c",
+    "start": "rollup -c -w"
+  },
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.0.6",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
     "eslint": "^8.4.0",
@@ -30,6 +35,9 @@
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
     "prettier": "^2.5.1",
+    "rollup": "^2.60.2",
+    "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-typescript2": "^0.31.1",
     "typescript": "^4.5.2"
   },
   "keywords": [
