@@ -1,7 +1,7 @@
 {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 2021,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
@@ -16,10 +16,10 @@
     }
   },
   "plugins": ["react", "@typescript-eslint", "prettier"],
-  "extends": ["airbnb-typescript", "prettier"],
+  "extends": ["airbnb-typescript", "airbnb/hooks", "prettier"],
   "env": {
     "browser": true,
-    "es6": true
+    "es2021": true
   },
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
