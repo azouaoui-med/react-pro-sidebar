@@ -14,7 +14,8 @@
   "scripts": {
     "build": "rollup -c",
     "start": "rollup -c -w",
-    "storybook": "start-storybook"
+    "storybook": "start-storybook",
+    "build:storybook": "build-storybook"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
