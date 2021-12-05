@@ -15,7 +15,7 @@
       }
     }
   },
-  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "plugins": ["react", "@typescript-eslint", "prettier", "import"],
   "extends": ["airbnb-typescript", "airbnb/hooks", "prettier"],
   "env": {
     "browser": true,
