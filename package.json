@@ -16,7 +16,11 @@
     "start": "rollup -c -w",
     "storybook": "start-storybook",
     "build:storybook": "build-storybook",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "yarn lint --fix",
+    "format": "prettier --write '.'",
+    "prepare": "husky install"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -50,7 +54,9 @@
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-testing-library": "^5.0.1",
+    "husky": "^7.0.0",
     "jest": "^27.4.3",
+    "lint-staged": ">=10",
     "prettier": "^2.5.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
