@@ -14,12 +14,12 @@
   "scripts": {
     "build": "rollup -c",
     "start": "rollup -c -w",
-    "storybook": "start-storybook",
+    "storybook": "start-storybook -p 9001",
     "build:storybook": "build-storybook",
     "test": "jest",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "yarn lint --fix",
-    "format": "prettier --write '.'",
+    "format": "prettier --write .",
     "prepare": "husky install"
   },
   "peerDependencies": {
@@ -39,6 +39,7 @@
     "@types/jest": "^27.0.3",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
+    "@types/styled-components": "^5.1.17",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
     "babel-jest": "^27.4.2",
@@ -76,5 +77,8 @@
     "collapsed",
     "rtl"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "classnames": "^2.3.1",
+    "styled-components": "^5.3.3"
+  }
 }
