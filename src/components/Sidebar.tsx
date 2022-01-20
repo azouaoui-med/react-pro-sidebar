@@ -7,15 +7,14 @@ import { useMediaQuery } from '../hooks/useMediaQuery';
 import { Overlay } from './Overlay';
 
 const BREAK_POINTS: Record<BreakPoint, string> = {
-  xs: '479.98px',
-  sm: '575.98px',
-  md: '767.98px',
-  lg: '991.98px',
-  xl: '1199.98px',
-  xxl: '1599.98px',
+  xs: '480px',
+  sm: '576px',
+  md: '768px',
+  lg: '992px',
+  xl: '1200px',
+  xxl: '1600px',
 };
 
-// TODO: add transition duration prop
 export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
   /**
    * set width of the sidebar
