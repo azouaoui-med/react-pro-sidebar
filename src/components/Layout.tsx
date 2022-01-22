@@ -6,6 +6,11 @@ import { useLayout } from './layoutContext';
 
 export interface LayoutProps extends React.HTMLAttributes<HTMLDivElement> {
   rtl?: boolean;
+
+  /**
+   * set to ```true``` when Sidebar component is a direct descendent of Layout
+   * @default ```false```
+   */
   hasSidebar?: boolean;
 }
 

@@ -19,13 +19,43 @@ const BREAK_POINTS: Record<BreakPoint, string> = {
 export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
   /**
    * width of the sidebar
+   * @default ```250px```
    */
   width?: string;
+
+  /**
+   * width of the sidebar when collapsed
+   * @default ```80px```
+   */
   collapsedWidth?: string;
+
+  /**
+   * initial collapsed status
+   * @default ```false```
+   */
   defaultCollapsed?: boolean;
+
+  /**
+   * when set to ```true``` the sidebar will have its own scrollbar
+   * @default ```false```
+   */
   fixed?: boolean;
+
+  /**
+   * set when the sidebar should trigger responsiveness behavior
+   */
   breakPoint?: BreakPoint;
+
+  /**
+   * alternative breakpoint value that will be used to trigger responsiveness
+   * @example
+   * <Sidebar customBreakPoint="1000px">
+   *  ...
+   * </Sidebar>
+   *
+   */
   customBreakPoint?: string;
+
   backgroundColor?: string;
 }
 
@@ -79,7 +109,6 @@ const StyledSidebar = styled.aside<StyledSidebarProps>`
 `;
 
 const StyledInnerSidebar = styled.div<StyledInnerSidebarProps>`
-  height: 100%;
   position: relative;
   z-index: 101;
   ${({ backgroundColor }) => (backgroundColor ? `background-color:${backgroundColor};` : '')}
