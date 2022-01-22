@@ -1,15 +1,20 @@
 import { useSidebar } from '../components/sidebarContext';
 
 interface ProSidebarFunction {
-  collapseSidebar: (collapsed: boolean) => void;
+  collapseSidebar: (collapsed?: boolean) => void;
+  toggleSidebar: (toggled?: boolean) => void;
 }
 
 export const useProSidebar = (): ProSidebarFunction => {
-  const { updateSidebarState } = useSidebar();
+  const { updateSidebarState, collapsed, toggled } = useSidebar();
 
-  const collapseSidebar = (collapsed: boolean) => {
-    updateSidebarState({ collapsed });
+  const collapseSidebar = (value?: boolean) => {
+    updateSidebarState({ collapsed: value ?? !collapsed });
   };
 
-  return { collapseSidebar };
+  const toggleSidebar = (value?: boolean) => {
+    updateSidebarState({ toggled: value ?? !toggled });
+  };
+
+  return { collapseSidebar, toggleSidebar };
 };

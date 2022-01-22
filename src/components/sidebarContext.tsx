@@ -1,12 +1,12 @@
 import React from 'react';
 
 interface SidebarState {
-  collapsed: boolean;
+  fixed?: boolean;
+  collapsed?: boolean;
+  toggled?: boolean;
+  broken?: boolean;
   width?: string;
   collapsedWidth?: string;
-  fixed?: boolean;
-  broken?: boolean;
-  toggled?: boolean;
 }
 
 interface SidebarContextProps extends SidebarState {
@@ -16,9 +16,7 @@ interface SidebarContextProps extends SidebarState {
 const SidebarContext = React.createContext<SidebarContextProps | undefined>(undefined);
 
 export const SidebarProvider: React.FC = ({ children }) => {
-  const [sidebarState, setSidebarState] = React.useState<SidebarState>({
-    collapsed: false,
-  });
+  const [sidebarState, setSidebarState] = React.useState<SidebarState>();
 
   const updateSidebarState = React.useCallback((values: Partial<SidebarState>) => {
     setSidebarState((prevState) => ({ ...prevState, ...values }));

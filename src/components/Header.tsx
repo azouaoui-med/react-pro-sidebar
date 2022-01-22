@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import classnames from 'classnames';
 import { useSidebar } from './sidebarContext';
-import { render } from 'react-dom';
 
 export interface HeaderProps extends React.HTMLAttributes<HTMLHeadElement> {
   height?: string;

@@ -5,6 +5,7 @@ import { useSidebar } from './sidebarContext';
 import { BreakPoint } from '../types/types';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { Overlay } from './Overlay';
+import { useLayout } from './layoutContext';
 
 const BREAK_POINTS: Record<BreakPoint, string> = {
   xs: '480px',
@@ -17,23 +18,25 @@ const BREAK_POINTS: Record<BreakPoint, string> = {
 
 export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
   /**
-   * set width of the sidebar
+   * width of the sidebar
    */
   width?: string;
   collapsedWidth?: string;
-  collapsed?: boolean;
-  toggled?: boolean;
+  defaultCollapsed?: boolean;
   fixed?: boolean;
   breakPoint?: BreakPoint;
   customBreakPoint?: string;
-  onCollapse?: (collapsed: boolean) => void;
-  onToggle?: (toggled: boolean) => void;
-  onBreakPoint?: (broken: boolean) => void;
+  backgroundColor?: string;
 }
 
-interface StyledSidebarProps extends SidebarProps {
+interface StyledSidebarProps extends Omit<SidebarProps, 'backgroundColor'> {
+  collapsed?: boolean;
+  toggled?: boolean;
   broken?: boolean;
+  rtl?: boolean;
 }
+
+type StyledInnerSidebarProps = Pick<SidebarProps, 'backgroundColor'>;
 
 const StyledSidebar = styled.aside<StyledSidebarProps>`
   width: ${({ width, collapsed, collapsedWidth }) => (collapsed ? collapsedWidth : width)};
@@ -50,32 +53,48 @@ const StyledSidebar = styled.aside<StyledSidebarProps>`
         }`
       : ''}
 
-  ${({ broken, collapsed, collapsedWidth }) =>
+  ${({ broken, collapsed, collapsedWidth, toggled, width, rtl }) =>
     broken
       ? ` 
         position: fixed;
-        left: -$sidebar-width;
         height: 100%;
         top: 0;
         z-index: 100;
-        ${collapsed ? `left:-${collapsedWidth}` : ''}
+        ${
+          rtl
+            ? `
+            right: -${width};
+            ${collapsed ? `right:-${collapsedWidth};` : ''}
+            ${toggled ? 'right:0;' : ''}
+            `
+            : `
+            left: -${width};
+            ${collapsed ? `left:-${collapsedWidth};` : ''}
+            ${toggled ? 'left:0;' : ''}`
+        }
+
+      
         `
       : ''}
+`;
+
+const StyledInnerSidebar = styled.div<StyledInnerSidebarProps>`
+  height: 100%;
+  position: relative;
+  z-index: 101;
+  ${({ backgroundColor }) => (backgroundColor ? `background-color:${backgroundColor};` : '')}
 `;
 
 export const Sidebar: React.FC<SidebarProps> = ({
   width = '250px',
   collapsedWidth = '80px',
   fixed = false,
-  collapsed = false,
-  toggled = false,
+  defaultCollapsed = false,
   className,
   children,
   breakPoint,
   customBreakPoint,
-  onCollapse,
-  onToggle,
-  onBreakPoint,
+  backgroundColor,
   ...rest
 }) => {
   const breakPointValue: string | undefined =
@@ -93,33 +112,37 @@ export const Sidebar: React.FC<SidebarProps> = ({
     toggled: toggledSidebar,
   } = useSidebar();
 
-  React.useEffect(() => {
-    updateSidebarState({ collapsed, fixed, width, collapsedWidth, broken, toggled });
-  }, [collapsed, fixed, width, collapsedWidth, broken, toggled, updateSidebarState]);
+  const { rtl } = useLayout();
+
+  const handleOverlayClick = () => {
+    updateSidebarState({ toggled: false });
+  };
 
   React.useEffect(() => {
-    onCollapse?.(collapsedSidebar);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [collapsedSidebar]);
+    updateSidebarState({ fixed, width, collapsedWidth, broken });
+  }, [fixed, width, collapsedWidth, broken, updateSidebarState]);
 
   React.useEffect(() => {
-    onBreakPoint?.(brokenSidebar ?? false);
+    updateSidebarState({ collapsed: defaultCollapsed, toggled: false });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [brokenSidebar]);
+  }, []);
 
   return (
     <StyledSidebar
-      broken={brokenSidebar}
-      width={sidebarWidth}
-      collapsed={collapsedSidebar}
-      className={classnames('sidebar', className)}
-      collapsedWidth={sidebarCollapsedWidth}
       fixed={fixedSidebar}
+      collapsed={collapsedSidebar}
+      broken={brokenSidebar}
       toggled={toggledSidebar}
+      rtl={rtl}
+      width={sidebarWidth}
+      collapsedWidth={sidebarCollapsedWidth}
+      className={classnames('sidebar', className)}
       {...rest}
     >
-      {children}
-      {brokenSidebar ? <Overlay /> : null}
+      <StyledInnerSidebar className="sidebar-inner" backgroundColor={backgroundColor}>
+        {children}
+      </StyledInnerSidebar>
+      {brokenSidebar && toggledSidebar ? <Overlay onOverlayClick={handleOverlayClick} /> : null}
     </StyledSidebar>
   );
 };

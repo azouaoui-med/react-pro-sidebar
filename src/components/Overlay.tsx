@@ -1,6 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
+interface Props {
+  onOverlayClick: () => void;
+}
+
 const StyledOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -11,14 +15,12 @@ const StyledOverlay = styled.div`
   z-index: 100;
 `;
 
-export const Overlay: React.FC = () => {
-  const handleToggleSidebar = () => {};
-
+export const Overlay: React.FC<Props> = ({ onOverlayClick }) => {
   return (
     <StyledOverlay
       className="overlay"
-      onClick={handleToggleSidebar}
-      onKeyPress={handleToggleSidebar}
+      onClick={onOverlayClick}
+      onKeyPress={onOverlayClick}
       role="button"
       tabIndex={0}
       aria-label="overlay"
