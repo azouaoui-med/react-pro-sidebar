@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import classnames from 'classnames';
 import { useSidebar } from './sidebarContext';
+import { useLayout } from './layoutContext';
 
 export interface LayoutProps extends React.HTMLAttributes<HTMLDivElement> {
   rtl?: boolean;
@@ -26,11 +27,17 @@ const StyledLayout = styled.div<StyledLayoutProps>`
 
 export const Layout: React.FC<LayoutProps> = ({ rtl = false, children, className, ...rest }) => {
   const { fixed: fixedSidebar } = useSidebar();
+  const { rtl: layoutRtl, updateLayoutState } = useLayout();
+
+  React.useEffect(() => {
+    updateLayoutState({ rtl });
+  }, [rtl, updateLayoutState]);
+
   return (
     <StyledLayout
       fixedSidebar={fixedSidebar}
       className={classnames('layout', className)}
-      rtl={rtl}
+      rtl={layoutRtl}
       {...rest}
     >
       {children}

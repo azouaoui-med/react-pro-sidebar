@@ -4,6 +4,7 @@ import { Layout, Content, Header, Sidebar, Footer } from '../src';
 import { ConfigProvider } from '../src/components/ConfigProvider';
 import { Playground } from './Playground';
 
+// TODO : use controls to test props (collapsed, toggled, rtl,...)
 const StoryParams: ComponentMeta<typeof Layout> = {
   title: 'layout',
   component: Layout,
@@ -24,8 +25,8 @@ const StoryParams: ComponentMeta<typeof Layout> = {
 
 export default StoryParams;
 
-export const basic: ComponentStory<typeof Layout> = () => (
-  <Layout>
+export const basic: ComponentStory<typeof Layout> = ({ rtl }) => (
+  <Layout rtl={rtl}>
     <Header>Header</Header>
     <Content>Content</Content>
     <Footer>Footer</Footer>
