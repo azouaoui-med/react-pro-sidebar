@@ -14,6 +14,7 @@ interface StyledHeaderProps extends HeaderProps {
   fixedSidebar?: boolean;
   sidebarWidth?: string;
   sidebarCollapsedWidth?: string;
+  transitionDuration: number;
   mounted: boolean;
 }
 
@@ -22,7 +23,8 @@ const StyledHeader = styled.header<StyledHeaderProps>`
   min-height: ${({ height }) => height};
   position: relative;
   width: 100%;
-  ${({ mounted }) => (mounted ? 'transition: width 0.3s;' : '')}
+  ${({ mounted, transitionDuration }) =>
+    mounted ? `transition: width ${transitionDuration}s;` : ''}
 
   ${({ fixed, fixedSidebar, collapsedSidebar, sidebarWidth, sidebarCollapsedWidth, height }) =>
     fixed
@@ -60,6 +62,7 @@ export const Header: React.FC<HeaderProps> = ({
     width: sidebarWidth,
     collapsedWidth: sidebarCollapsedWidth,
     broken: brokenSidebar,
+    transitionDuration,
   } = useSidebar();
 
   React.useLayoutEffect(() => {
@@ -76,6 +79,7 @@ export const Header: React.FC<HeaderProps> = ({
       fixedSidebar={fixedSidebar}
       sidebarWidth={sidebarWidth}
       sidebarCollapsedWidth={sidebarCollapsedWidth}
+      transitionDuration={(transitionDuration ?? 300) / 1000}
       className={classnames('header', className)}
       {...rest}
     >

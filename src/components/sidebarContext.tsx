@@ -7,6 +7,7 @@ interface SidebarState {
   broken?: boolean;
   width?: string;
   collapsedWidth?: string;
+  transitionDuration?: number;
 }
 
 interface SidebarContextProps extends SidebarState {

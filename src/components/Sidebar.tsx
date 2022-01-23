@@ -57,6 +57,12 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
   customBreakPoint?: string;
 
   backgroundColor?: string;
+
+  /**
+   * duration for the transition in milliseconds to be used in collapse and toggle behavior
+   * @default ```300```
+   */
+  transitionDuration?: number;
 }
 
 interface StyledSidebarProps extends Omit<SidebarProps, 'backgroundColor'> {
@@ -71,7 +77,7 @@ type StyledInnerSidebarProps = Pick<SidebarProps, 'backgroundColor'>;
 const StyledSidebar = styled.aside<StyledSidebarProps>`
   width: ${({ width, collapsed, collapsedWidth }) => (collapsed ? collapsedWidth : width)};
   min-width: ${({ width, collapsed, collapsedWidth }) => (collapsed ? collapsedWidth : width)};
-  transition: width, left, right, 0.3s;
+  transition: ${({ transitionDuration }) => `width, left, right, ${transitionDuration}s`};
 
   ${({ fixed }) =>
     fixed
@@ -124,6 +130,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   breakPoint,
   customBreakPoint,
   backgroundColor,
+  transitionDuration = 300,
   ...rest
 }) => {
   const breakPointValue: string | undefined =
@@ -139,6 +146,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
     collapsedWidth: sidebarCollapsedWidth,
     broken: brokenSidebar,
     toggled: toggledSidebar,
+    transitionDuration: SidebarTransitionDuration,
   } = useSidebar();
 
   const { rtl } = useLayout();
@@ -152,7 +160,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
   }, [fixed, width, collapsedWidth, broken, updateSidebarState]);
 
   React.useEffect(() => {
-    updateSidebarState({ collapsed: defaultCollapsed, toggled: false });
+    updateSidebarState({
+      collapsed: defaultCollapsed,
+      transitionDuration,
+      toggled: false,
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -165,6 +177,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       rtl={rtl}
       width={sidebarWidth}
       collapsedWidth={sidebarCollapsedWidth}
+      transitionDuration={(SidebarTransitionDuration ?? 300) / 1000}
       className={classnames('sidebar', className)}
       {...rest}
     >
