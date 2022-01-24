@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Layout, Content, Header, Sidebar, Footer } from '../src';
-import { ConfigProvider } from '../src/components/ConfigProvider';
+import { ProSidebarProvider } from '../src/components/ProSidebarProvider';
 import { Playground } from './Playground';
 
 // TODO : use controls to test props (collapsed, toggled, rtl,...)
@@ -16,9 +16,9 @@ const StoryParams: ComponentMeta<typeof Layout> = {
   },
   decorators: [
     (Story) => (
-      <ConfigProvider>
+      <ProSidebarProvider>
         <Story />
-      </ConfigProvider>
+      </ProSidebarProvider>
     ),
   ],
 };
