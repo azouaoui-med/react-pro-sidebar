@@ -40,6 +40,7 @@ export const Layout: React.FC<LayoutProps> = ({ rtl = false, children, className
 
   return (
     <StyledLayout
+      data-testid="layout-test-id"
       fixedSidebar={fixedSidebar}
       className={classnames('layout', className)}
       rtl={layoutRtl}

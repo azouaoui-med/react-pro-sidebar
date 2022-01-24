@@ -17,6 +17,7 @@
     "storybook": "start-storybook -p 9001",
     "build:storybook": "build-storybook",
     "test": "jest",
+    "test:watch": "jest --watch",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "yarn lint --fix",
     "format": "prettier --write .",

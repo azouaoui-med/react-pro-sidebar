@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Layout basic snapshot  1`] = `
+<div
+  class="sc-bdvvtL eMoNwh layout"
+  data-testid="layout-test-id"
+>
+  Layout content
+</div>
+`;
