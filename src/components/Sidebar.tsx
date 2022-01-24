@@ -2,10 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import classnames from 'classnames';
 import { useSidebar } from './sidebarContext';
-import { BreakPoint } from '../types/types';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { Overlay } from './Overlay';
 import { useLayout } from './layoutContext';
+
+type BreakPoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 
 const BREAK_POINTS: Record<BreakPoint, string> = {
   xs: '480px',
@@ -63,6 +64,11 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
    * @default ```300```
    */
   transitionDuration?: number;
+
+  /**
+   * sidebar background image
+   */
+  image?: string;
 }
 
 interface StyledSidebarProps extends Omit<SidebarProps, 'backgroundColor'> {
@@ -75,6 +81,7 @@ interface StyledSidebarProps extends Omit<SidebarProps, 'backgroundColor'> {
 type StyledInnerSidebarProps = Pick<SidebarProps, 'backgroundColor'>;
 
 const StyledSidebar = styled.aside<StyledSidebarProps>`
+  position: relative;
   width: ${({ width, collapsed, collapsedWidth }) => (collapsed ? collapsedWidth : width)};
   min-width: ${({ width, collapsed, collapsedWidth }) => (collapsed ? collapsedWidth : width)};
   transition: ${({ transitionDuration }) => `width, left, right, ${transitionDuration}s`};
@@ -116,8 +123,22 @@ const StyledSidebar = styled.aside<StyledSidebarProps>`
 
 const StyledInnerSidebar = styled.div<StyledInnerSidebarProps>`
   position: relative;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
   z-index: 101;
   ${({ backgroundColor }) => (backgroundColor ? `background-color:${backgroundColor};` : '')}
+`;
+
+const StyledSidebarImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 100;
 `;
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -131,6 +152,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   customBreakPoint,
   backgroundColor,
   transitionDuration = 300,
+  image,
   ...rest
 }) => {
   const breakPointValue: string | undefined =
@@ -184,6 +206,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
       <StyledInnerSidebar className="sidebar-inner" backgroundColor={backgroundColor}>
         {children}
       </StyledInnerSidebar>
+      {image ? (
+        <StyledSidebarImage src={image} alt="sidebar background" className="sidebar-bg" />
+      ) : null}
       {brokenSidebar && toggledSidebar ? <Overlay onOverlayClick={handleOverlayClick} /> : null}
     </StyledSidebar>
   );
