@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Content basic snapshot  1`] = `
+<main
+  class="sc-bdvvtL gZywae content"
+  data-testid="content-test-id"
+>
+  Content
+</main>
+`;

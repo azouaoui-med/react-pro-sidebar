@@ -8,10 +8,14 @@ const StyledContent = styled.main`
   flex: 1;
 `;
 
-export const Content: React.FC<ContentProps> = ({ children, className, ...rest }) => {
+export const Content: React.FC<ContentProps> = React.memo(({ children, className, ...rest }) => {
   return (
-    <StyledContent className={classnames('content', className)} {...rest}>
+    <StyledContent
+      data-testid="content-test-id"
+      className={classnames('content', className)}
+      {...rest}
+    >
       {children}
     </StyledContent>
   );
-};
+});
