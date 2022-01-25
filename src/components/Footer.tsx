@@ -14,7 +14,12 @@ const StyledFooter = styled.footer<FooterProps>`
 export const Footer: React.FC<FooterProps> = React.memo(
   ({ height = '64px', className, children, ...rest }) => {
     return (
-      <StyledFooter className={classnames('footer', className)} height={height} {...rest}>
+      <StyledFooter
+        data-testid="footer-test-id"
+        className={classnames('footer', className)}
+        height={height}
+        {...rest}
+      >
         {children}
       </StyledFooter>
     );
