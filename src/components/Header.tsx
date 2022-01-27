@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import classnames from 'classnames';
-import { useSidebar } from './sidebarContext';
+import { useSidebar } from '../hooks/useSidebar';
 
 export interface HeaderProps extends React.HTMLAttributes<HTMLHeadElement> {
   height?: string;
@@ -71,6 +71,7 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <StyledHeader
+      data-testid="header-test-id"
       mounted={mounted}
       height={height}
       fixed={fixed}

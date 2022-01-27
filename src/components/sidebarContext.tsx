@@ -10,11 +10,11 @@ interface SidebarState {
   transitionDuration?: number;
 }
 
-interface SidebarContextProps extends SidebarState {
+export interface SidebarContextProps extends SidebarState {
   updateSidebarState: (values: SidebarState) => void;
 }
 
-const SidebarContext = React.createContext<SidebarContextProps | undefined>(undefined);
+export const SidebarContext = React.createContext<SidebarContextProps | undefined>(undefined);
 
 export const SidebarProvider: React.FC = ({ children }) => {
   const [sidebarState, setSidebarState] = React.useState<SidebarState>();
@@ -29,13 +29,4 @@ export const SidebarProvider: React.FC = ({ children }) => {
   );
 
   return <SidebarContext.Provider value={providerValue}>{children}</SidebarContext.Provider>;
-};
-
-export const useSidebar = (): SidebarContextProps => {
-  const context = React.useContext(SidebarContext);
-  if (context === undefined) {
-    //TODO: set better error message
-    throw new Error('ProSidebarProvider is required!');
-  }
-  return context;
 };

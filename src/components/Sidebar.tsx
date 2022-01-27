@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import classnames from 'classnames';
-import { useSidebar } from './sidebarContext';
+import { useSidebar } from '../hooks/useSidebar';
+import { useLayout } from '../hooks/useLayout';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { Overlay } from './Overlay';
-import { useLayout } from './layoutContext';
 
 type BreakPoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 
@@ -192,6 +192,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <StyledSidebar
+      data-testid="sidebar-test-id"
       fixed={fixedSidebar}
       collapsed={collapsedSidebar}
       broken={brokenSidebar}
@@ -203,11 +204,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
       className={classnames('sidebar', className)}
       {...rest}
     >
-      <StyledInnerSidebar className="sidebar-inner" backgroundColor={backgroundColor}>
+      <StyledInnerSidebar
+        data-testid="inner-sidebar-test-id"
+        className="sidebar-inner"
+        backgroundColor={backgroundColor}
+      >
         {children}
       </StyledInnerSidebar>
       {image ? (
-        <StyledSidebarImage src={image} alt="sidebar background" className="sidebar-bg" />
+        <StyledSidebarImage
+          data-testid="sidebar-img-test-id"
+          src={image}
+          alt="sidebar background"
+          className="sidebar-bg"
+        />
       ) : null}
       {brokenSidebar && toggledSidebar ? <Overlay onOverlayClick={handleOverlayClick} /> : null}
     </StyledSidebar>

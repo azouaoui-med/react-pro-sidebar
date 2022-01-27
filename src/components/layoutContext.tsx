@@ -4,11 +4,11 @@ interface LayoutState {
   rtl?: boolean;
 }
 
-interface LayoutContextProps extends LayoutState {
+export interface LayoutContextProps extends LayoutState {
   updateLayoutState: (values: LayoutState) => void;
 }
 
-const LayoutContext = React.createContext<LayoutContextProps | undefined>(undefined);
+export const LayoutContext = React.createContext<LayoutContextProps | undefined>(undefined);
 
 export const LayoutProvider: React.FC = ({ children }) => {
   const [layoutState, setLayoutState] = React.useState<LayoutState>();
@@ -23,13 +23,4 @@ export const LayoutProvider: React.FC = ({ children }) => {
   );
 
   return <LayoutContext.Provider value={providerValue}>{children}</LayoutContext.Provider>;
-};
-
-export const useLayout = (): LayoutContextProps => {
-  const context = React.useContext(LayoutContext);
-  if (context === undefined) {
-    //TODO: set better error message
-    throw new Error('ProSidebarProvider is required!');
-  }
-  return context;
 };
