@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Overlay basic snapshot  1`] = `
+<div
+  aria-label="overlay"
+  class="sc-bdvvtL ljhVXp overlay"
+  data-testid="overlay-test-id"
+  role="button"
+  tabindex="0"
+/>
+`;
