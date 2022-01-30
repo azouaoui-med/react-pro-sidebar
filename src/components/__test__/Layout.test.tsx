@@ -4,14 +4,14 @@ import { Layout } from '../Layout';
 
 describe('Layout', () => {
   it('basic snapshot ', () => {
-    const { container } = customRender(<Layout>Layout content</Layout>);
+    const { container } = customRender(<Layout>Layout</Layout>);
 
     expect(container.firstChild).toMatchSnapshot();
   });
 
   it('should initialize Layout correctly', async () => {
-    customRender(<Layout>Layout content</Layout>);
-    const layoutElem = screen.getByText('Layout content');
+    customRender(<Layout>Layout</Layout>);
+    const layoutElem = screen.getByText('Layout');
 
     expect(layoutElem).toBeInTheDocument();
     expect(layoutElem).toHaveClass('layout');
@@ -23,7 +23,7 @@ describe('Layout', () => {
   });
 
   it('should render flex-direction: row when hasSidebar is true', async () => {
-    customRender(<Layout hasSidebar>Layout content</Layout>);
+    customRender(<Layout hasSidebar>Layout</Layout>);
     const layoutElem = screen.getByTestId('layout-test-id');
 
     expect(layoutElem).toHaveStyle({
@@ -32,7 +32,7 @@ describe('Layout', () => {
   });
 
   it('should render direction:rtl when rtl prop is true', async () => {
-    customRender(<Layout rtl>Layout content</Layout>);
+    customRender(<Layout rtl>Layout</Layout>);
     const layoutElem = screen.getByTestId('layout-test-id');
 
     expect(layoutElem).toHaveStyle({
