@@ -101,7 +101,7 @@ const StyledSidebar = styled.aside<StyledSidebarProps>`
       ? ` 
         position: fixed;
         height: 100%;
-        top: 0;
+        top: 0px;
         z-index: 100;
         ${
           rtl

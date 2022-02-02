@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sidebar basic snapshot  1`] = `
+<aside
+  class="sc-gsDKAQ gwamfI sidebar"
+  data-testid="sidebar-test-id"
+  width="250px"
+>
+  <div
+    class="sc-dkPtRN CjpBn sidebar-inner"
+    data-testid="inner-sidebar-test-id"
+  >
+    Sidebar
+  </div>
+</aside>
+`;
