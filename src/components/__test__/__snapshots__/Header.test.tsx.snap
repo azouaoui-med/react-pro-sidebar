@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header basic snapshot  1`] = `
+<header
+  class="sc-bdvvtL kGHiwU header"
+  data-testid="header-test-id"
+  height="64px"
+>
+  Header
+</header>
+`;

@@ -44,7 +44,7 @@ const StyledHeader = styled.header<StyledHeaderProps>`
         `
       : ''};
 
-  ${({ brokenSidebar }) => (brokenSidebar ? ' width: 100% !important;transition: none;' : '')}
+  ${({ brokenSidebar }) => (brokenSidebar ? 'width: 100% !important;transition: none;' : '')}
 `;
 
 export const Header: React.FC<HeaderProps> = ({
