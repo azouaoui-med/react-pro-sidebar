@@ -24,7 +24,7 @@ const StyledHeader = styled.header<StyledHeaderProps>`
   position: relative;
   width: 100%;
   ${({ mounted, transitionDuration }) =>
-    mounted ? `transition: width ${transitionDuration}s;` : ''}
+    mounted ? `transition: width ${transitionDuration}ms;` : ''}
 
   ${({ fixed, fixedSidebar, collapsedSidebar, sidebarWidth, sidebarCollapsedWidth, height }) =>
     fixed
@@ -80,7 +80,7 @@ export const Header: React.FC<HeaderProps> = ({
       fixedSidebar={fixedSidebar}
       sidebarWidth={sidebarWidth}
       sidebarCollapsedWidth={sidebarCollapsedWidth}
-      transitionDuration={(transitionDuration ?? 300) / 1000}
+      transitionDuration={transitionDuration ?? 300}
       className={classnames('header', className)}
       {...rest}
     >

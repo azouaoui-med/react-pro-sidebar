@@ -89,7 +89,7 @@ const StyledSidebar = styled.aside<StyledSidebarProps>`
   position: relative;
   width: ${({ width, collapsed, collapsedWidth }) => (collapsed ? collapsedWidth : width)};
   min-width: ${({ width, collapsed, collapsedWidth }) => (collapsed ? collapsedWidth : width)};
-  transition: ${({ transitionDuration }) => `width, left, right, ${transitionDuration}s`};
+  transition: ${({ transitionDuration }) => `width, left, right, ${transitionDuration}ms`};
 
   ${({ fixed }) =>
     fixed
@@ -206,7 +206,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       rtl={rtl}
       width={sidebarWidth}
       collapsedWidth={sidebarCollapsedWidth}
-      transitionDuration={(SidebarTransitionDuration ?? 300) / 1000}
+      transitionDuration={SidebarTransitionDuration ?? 300}
       className={classnames('sidebar', className)}
       {...rest}
     >
