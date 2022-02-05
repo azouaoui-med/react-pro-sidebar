@@ -6,7 +6,7 @@ import { useLayout } from '../hooks/useLayout';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { Overlay } from './Overlay';
 
-type BreakPoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+type BreakPoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'always';
 
 const BREAK_POINTS: Record<BreakPoint, string> = {
   xs: '480px',
@@ -15,15 +15,7 @@ const BREAK_POINTS: Record<BreakPoint, string> = {
   lg: '992px',
   xl: '1200px',
   xxl: '1600px',
-};
-
-const getBreakPoint = (breakPoint?: BreakPoint | string): string | undefined => {
-  if (!breakPoint) return undefined;
-
-  if (Object.keys(BREAK_POINTS).filter((bp) => breakPoint === bp).length > 0)
-    return BREAK_POINTS[breakPoint as BreakPoint];
-
-  return breakPoint;
+  always: 'always',
 };
 
 export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
@@ -55,7 +47,13 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
    * set when the sidebar should trigger responsiveness behavior
    *
    */
-  breakPoint?: BreakPoint | string;
+  breakPoint?: BreakPoint;
+
+  /**
+   * alternative breakpoint value that will be used to trigger responsiveness
+   *
+   */
+  customBreakPoint?: string;
 
   /**
    * sidebar background color
@@ -158,13 +156,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
   className,
   children,
   breakPoint,
+  customBreakPoint,
   backgroundColor,
   transitionDuration = 300,
   overlayColor = 'rgb(0, 0, 0, 0.3)',
   image,
   ...rest
 }) => {
-  const broken = useMediaQuery(getBreakPoint(breakPoint));
+  const broken = useMediaQuery(
+    customBreakPoint ?? (breakPoint ? BREAK_POINTS[breakPoint] : breakPoint),
+  );
 
   const {
     updateSidebarState,
