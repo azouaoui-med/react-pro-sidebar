@@ -69,6 +69,11 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
    * sidebar background image
    */
   image?: string;
+  /**
+   * set overlay color
+   * @default ```rgb(0, 0, 0, 0.3)```
+   */
+  overlayColor?: string;
 }
 
 interface StyledSidebarProps extends Omit<SidebarProps, 'backgroundColor'> {
@@ -126,7 +131,7 @@ const StyledInnerSidebar = styled.div<StyledInnerSidebarProps>`
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
-  z-index: 101;
+  z-index: 3;
   ${({ backgroundColor }) => (backgroundColor ? `background-color:${backgroundColor};` : '')}
 `;
 
@@ -138,7 +143,7 @@ const StyledSidebarImage = styled.img`
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 100;
+  z-index: 2;
 `;
 
 export const Sidebar: React.FC<SidebarProps> = ({
@@ -152,6 +157,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   customBreakPoint,
   backgroundColor,
   transitionDuration = 300,
+  overlayColor = 'rgb(0, 0, 0, 0.3)',
   image,
   ...rest
 }) => {
@@ -219,7 +225,9 @@ export const Sidebar: React.FC<SidebarProps> = ({
           className="sidebar-bg"
         />
       ) : null}
-      {brokenSidebar && toggledSidebar ? <Overlay onOverlayClick={handleOverlayClick} /> : null}
+      {brokenSidebar && toggledSidebar ? (
+        <Overlay onOverlayClick={handleOverlayClick} overlayColor={overlayColor} />
+      ) : null}
     </StyledSidebar>
   );
 };

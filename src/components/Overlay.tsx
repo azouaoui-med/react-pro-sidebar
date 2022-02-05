@@ -3,19 +3,20 @@ import styled from 'styled-components';
 
 interface Props {
   onOverlayClick: () => void;
+  overlayColor: string;
 }
 
-const StyledOverlay = styled.div`
+const StyledOverlay = styled.div<Pick<Props, 'overlayColor'>>`
   position: fixed;
   top: 0px;
   right: 0px;
   bottom: 0px;
   left: 0px;
-  background-color: rgb(0, 0, 0, 0.3);
-  z-index: 100;
+  background-color: ${({ overlayColor }) => overlayColor};
+  z-index: 1;
 `;
 
-export const Overlay: React.FC<Props> = ({ onOverlayClick }) => {
+export const Overlay: React.FC<Props> = ({ onOverlayClick, overlayColor }) => {
   return (
     <StyledOverlay
       data-testid="overlay-test-id"
@@ -25,6 +26,7 @@ export const Overlay: React.FC<Props> = ({ onOverlayClick }) => {
       role="button"
       tabIndex={0}
       aria-label="overlay"
+      overlayColor={overlayColor}
     />
   );
 };

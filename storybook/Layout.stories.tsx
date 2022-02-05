@@ -47,7 +47,7 @@ export const withSidebar: ComponentStory<typeof Layout> = () => (
   <Layout>
     <Header>Header</Header>
     <Layout hasSidebar>
-      <Sidebar>Sidebar</Sidebar>
+      <Sidebar backgroundColor="rgba(5, 172, 55, 0.5)">Sidebar</Sidebar>
       <Content>
         <div style={{ height: 800 }}>Content</div>
       </Content>
@@ -58,7 +58,7 @@ export const withSidebar: ComponentStory<typeof Layout> = () => (
 
 export const FixedSidebar: ComponentStory<typeof Layout> = () => (
   <Layout hasSidebar>
-    <Sidebar fixed>
+    <Sidebar fixed backgroundColor="rgba(5, 172, 55, 0.5)">
       <div style={{ height: 800 }}>Sidebar</div>
     </Sidebar>
     <Layout>
@@ -71,7 +71,7 @@ export const FixedSidebar: ComponentStory<typeof Layout> = () => (
 
 export const FixedSidebarHeader: ComponentStory<typeof Layout> = () => (
   <Layout hasSidebar>
-    <Sidebar fixed>
+    <Sidebar fixed backgroundColor="rgba(5, 172, 55, 0.5)">
       <div style={{ height: 1000 }}>Content </div>
     </Sidebar>
     <Layout>
@@ -88,7 +88,7 @@ export const RTL: ComponentStory<typeof Layout> = () => (
   <Layout rtl>
     <Header>Header</Header>
     <Layout hasSidebar>
-      <Sidebar>Sidebar</Sidebar>
+      <Sidebar backgroundColor="rgba(5, 172, 55, 0.5)">Sidebar</Sidebar>
       <Content>
         <div style={{ height: 800 }}>Content</div>
       </Content>
