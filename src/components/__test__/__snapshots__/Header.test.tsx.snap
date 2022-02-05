@@ -2,7 +2,7 @@
 
 exports[`Header basic snapshot  1`] = `
 <header
-  class="sc-bdvvtL kGHiwU header"
+  class="sc-bdvvtL cGuwzb header"
   data-testid="header-test-id"
   height="64px"
 >

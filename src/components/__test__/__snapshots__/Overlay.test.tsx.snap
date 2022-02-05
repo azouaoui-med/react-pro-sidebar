@@ -3,7 +3,7 @@
 exports[`Overlay basic snapshot  1`] = `
 <div
   aria-label="overlay"
-  class="sc-bdvvtL ljhVXp overlay"
+  class="sc-bdvvtL bURvCW overlay"
   data-testid="overlay-test-id"
   role="button"
   tabindex="0"

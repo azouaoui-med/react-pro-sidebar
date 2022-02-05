@@ -6,7 +6,9 @@ describe('Overlay', () => {
   it('basic snapshot ', () => {
     const handleOverlayClick = jest.fn();
     const { container } = customRender(
-      <Overlay onOverlayClick={handleOverlayClick}>Overlay</Overlay>,
+      <Overlay overlayColor="rgb(0, 0, 0, 0.3)" onOverlayClick={handleOverlayClick}>
+        Overlay
+      </Overlay>,
     );
 
     expect(container.firstChild).toMatchSnapshot();
@@ -14,7 +16,7 @@ describe('Overlay', () => {
 
   it('should initialize Overlay correctly', async () => {
     const handleOverlayClick = jest.fn();
-    customRender(<Overlay onOverlayClick={handleOverlayClick} />);
+    customRender(<Overlay overlayColor="rgb(0, 0, 0, 0.3)" onOverlayClick={handleOverlayClick} />);
     const overlayElem = screen.getByTestId('overlay-test-id');
 
     expect(overlayElem).toBeInTheDocument();
@@ -26,13 +28,13 @@ describe('Overlay', () => {
       bottom: '0px',
       left: '0px',
       'background-color': 'rgb(0, 0, 0, 0.3)',
-      'z-index': '100',
+      'z-index': '1',
     });
   });
 
   it('should call onOverlayClick when clicked', async () => {
     const handleOverlayClick = jest.fn();
-    customRender(<Overlay onOverlayClick={handleOverlayClick} />);
+    customRender(<Overlay overlayColor="rgb(0, 0, 0, 0.3)" onOverlayClick={handleOverlayClick} />);
     const overlayElem = screen.getByTestId('overlay-test-id');
     fireEvent.click(overlayElem);
 

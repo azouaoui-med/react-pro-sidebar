@@ -23,7 +23,7 @@ describe('Sidebar', () => {
       position: 'relative',
       width: '250px',
       'min-width': '250px',
-      transition: 'width,left,right,0.3s',
+      transition: 'width,left,right,300ms',
     });
   });
 
@@ -84,7 +84,7 @@ describe('Sidebar', () => {
     const SidebarElem = screen.getByTestId('sidebar-test-id');
 
     expect(SidebarElem).toHaveStyle({
-      transition: 'width,left,right,0.5s',
+      transition: 'width,left,right,500ms',
     });
   });
 
