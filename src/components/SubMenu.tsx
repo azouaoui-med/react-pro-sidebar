@@ -10,6 +10,8 @@ interface Props extends React.LiHTMLAttributes<HTMLLIElement> {
 
 const StyledSubMenu = styled.li`
   position: relative;
+  display: inline-block;
+  width: 100%;
 `;
 
 const StyledAnchor = styled.a`
