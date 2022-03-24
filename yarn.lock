@@ -1245,6 +1245,18 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@floating-ui/core@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@floating-ui/core/-/core-0.4.0.tgz#cf101522ba8087a905e5e8b99c99c5b8520f7656"
+  integrity sha512-99Pnb5T2S7PSE8rKHD5fZWWnXE3a2xG9E8eQm8SIMYWJyJoHDJIt0b9SK3UjetWFcepxVG+ZMDxcfbamyx+HSg==
+
+"@floating-ui/dom@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@floating-ui/dom/-/dom-0.2.0.tgz#019fe0774bd4a039a988cba086960135bbb321f3"
+  integrity sha512-hNhTbImiJ8SH9rHsP0qcE9IVxn/maMhwWA5d17p7EkEzVdciayB664Qy2Vxa8RxY/8avE8iVKkfE8sIeg34J0g==
+  dependencies:
+    "@floating-ui/core" "^0.4.0"
+
 "@gar/promisify@^1.0.1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.2.tgz#30aa825f11d438671d585bd44e7fd564535fc210"
@@ -1589,6 +1601,11 @@
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
     source-map "^0.7.3"
+
+"@popperjs/core@^2.11.2":
+  version "2.11.2"
+  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.2.tgz#830beaec4b4091a9e9398ac50f865ddea52186b9"
+  integrity sha512-92FRmppjjqz29VMJ2dn+xdyXZBrMlE42AV6Kq6BwjWV7CNUW1hs2FtxSNLQE+gJhaZ6AAmYuO9y8dshhcBl7vA==
 
 "@popperjs/core@^2.5.4", "@popperjs/core@^2.6.0":
   version "2.11.0"

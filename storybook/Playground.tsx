@@ -19,7 +19,7 @@ export const Playground: React.FC = () => {
         // image="https://i.pinimg.com/736x/8e/6c/06/8e6c064f57f94838263d7ba9ad80f353.jpg"
         overlayColor="rgba(157, 0, 255, .3)"
       >
-        <div style={{ height: 1000 }}>
+        <div>
           <Menu>
             <MenuItem> dashboard</MenuItem>
             <MenuItem> community</MenuItem>
@@ -32,6 +32,11 @@ export const Playground: React.FC = () => {
                 <MenuItem> community</MenuItem>
                 <MenuItem> components</MenuItem>
               </SubMenu>
+            </SubMenu>
+            <SubMenu label="submenu">
+              <MenuItem> dashboard</MenuItem>
+              <MenuItem> community</MenuItem>
+              <MenuItem> components</MenuItem>
             </SubMenu>
             <MenuItem> components</MenuItem>
           </Menu>

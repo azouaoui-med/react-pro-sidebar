@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import { StyledUl } from './StyledUl';
+import { SubMenuProps } from './SubMenu';
 
 interface Props {
   openCurrent?: boolean;
@@ -8,9 +9,20 @@ interface Props {
 }
 
 export const Menu: React.FC<Props> = ({ children, className, ...rest }) => {
+  const childNodes = React.Children.toArray(children).filter(Boolean) as [
+    React.ReactElement<SubMenuProps>,
+  ];
+
   return (
     <nav className={classnames('menu', className)} {...rest}>
-      <StyledUl>{children}</StyledUl>
+      <StyledUl>
+        {childNodes.map((node) =>
+          React.cloneElement(node, {
+            ...node.props,
+            firstLevel: true,
+          }),
+        )}
+      </StyledUl>
     </nav>
   );
 };

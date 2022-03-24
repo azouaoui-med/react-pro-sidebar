@@ -79,6 +79,8 @@
     "rtl"
   ],
   "dependencies": {
+    "@floating-ui/dom": "^0.2.0",
+    "@popperjs/core": "^2.11.2",
     "classnames": "^2.3.1",
     "styled-components": "^5.3.3"
   }

@@ -5,6 +5,8 @@ import { StyledUl } from './StyledUl';
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   open?: boolean;
+  firstLevel?: boolean;
+  collapsed?: boolean;
 }
 
 let timer: NodeJS.Timer;
@@ -14,54 +16,110 @@ const StyledSubMenuList = styled.div<Props>`
   display: none;
   overflow: hidden;
   z-index: 999;
-  transition: height, margin, padding, 300ms;
+  transition: height 300ms;
   box-sizing: border-box;
+  background-color: green;
+  ${({ collapsed, firstLevel, open }) =>
+    collapsed && firstLevel
+      ? `
+      max-width: 300px;
+      height:auto!important;
+      display:block!important;     
+      transition:none!important;     
+      visibility: ${open ? 'visible' : 'hidden'};
+     `
+      : `
+      position:static!important;
+      transform:none!important;
+      `};
 `;
 
-export const SubMenuList: React.FC<Props> = ({ children, open, ...rest }) => {
-  const subMenuListRef = React.useRef<HTMLDivElement>(null);
-  const duration = 300;
+const duration = 300;
+const SubMenuListFR: React.ForwardRefRenderFunction<HTMLDivElement, Props> = (
+  { children, open, firstLevel, collapsed, ...rest },
+  ref,
+) => {
+  // const subMenuListRef = React.useRef<HTMLDivElement>(null);
+  const subMenuListRef = ref as React.MutableRefObject<HTMLDivElement>;
 
-  const slideDown = () => {
-    clearTimeout(timer);
-    const target = subMenuListRef.current;
-    if (target) {
-      target.style.display = 'block';
-      target.style.height = 'auto';
-      const height = target.offsetHeight;
-      target.style.height = '0px';
-      target.offsetHeight;
-      target.style.height = `${height}px`;
+  // const slideDown = () => {
+  //   clearTimeout(timer);
+  //   const target = ref?.current;
+  //   if (target) {
+  //     target.style.display = 'block';
+  //     target.style.height = 'auto';
+  //     const height = target.offsetHeight;
+  //     target.style.height = '0px';
+  //     target.offsetHeight;
+  //     target.style.height = `${height}px`;
 
-      timer = setTimeout(() => {
-        target.style.height = 'auto';
-      }, duration);
-    }
-  };
+  //     timer = setTimeout(() => {
+  //       target.style.height = 'auto';
+  //     }, duration);
+  //   }
+  // };
 
-  const slideUp = () => {
-    clearTimeout(timer);
-    const target = subMenuListRef.current;
-    if (target) {
-      target.style.height = `${target.offsetHeight}px`;
-      target.offsetHeight;
-      target.style.height = '0px';
+  // const slideUp = () => {
+  //   clearTimeout(timer);
+  //   const target = ref?.current;
+  //   if (target) {
+  //     target.style.height = `${target.offsetHeight}px`;
+  //     target.offsetHeight;
+  //     target.style.height = '0px';
 
-      timer = setTimeout(() => {
-        target.style.display = 'none';
-      }, duration);
-    }
-  };
+  //     timer = setTimeout(() => {
+  //       target.style.display = 'none';
+  //     }, duration);
+  //   }
+  // };
 
   React.useEffect(() => {
-    if (open) slideDown();
-    else slideUp();
+    if (firstLevel && collapsed) {
+      console.log('object');
+    } else {
+      clearTimeout(timer);
+      if (open) {
+        const target = subMenuListRef?.current;
+        if (target) {
+          target.style.display = 'block';
+          target.style.height = 'auto';
+          const height = target.offsetHeight;
+          target.style.height = '0px';
+          target.offsetHeight;
+          target.style.height = `${height}px`;
+
+          timer = setTimeout(() => {
+            target.style.height = 'auto';
+          }, duration);
+        }
+      } else {
+        const target = subMenuListRef?.current;
+        if (target) {
+          target.style.height = `${target.offsetHeight}px`;
+          target.offsetHeight;
+          target.style.height = '0px';
+
+          timer = setTimeout(() => {
+            target.style.display = 'none';
+          }, duration);
+        }
+      }
+    }
     return () => clearTimeout(timer);
-  }, [open]);
+  }, [collapsed, firstLevel, open, subMenuListRef]);
 
   return (
-    <StyledSubMenuList ref={subMenuListRef} className="sub-menu-list" open={open} {...rest}>
+    <StyledSubMenuList
+      ref={ref}
+      firstLevel={firstLevel}
+      collapsed={collapsed}
+      className="sub-menu-list"
+      open={open}
+      {...rest}
+    >
       <StyledUl>{children}</StyledUl>
     </StyledSubMenuList>
   );
 };
+
+export const SubMenuList = React.forwardRef(SubMenuListFR);
