@@ -151,6 +151,29 @@ import { Link } from 'react-router-dom';
 </MenuItem>;
 ```
 
+### Setting Active State with React Router v6
+
+```jsx
+import { Link, useResolvedPath, useMatch } from 'react-router-dom';
+
+function ReactRouterMenuItem(props) {
+  const { to, ...menuItemProps } = props;
+  let resolved = useResolvedPath(to);
+  let match = useMatch({ path: resolved.pathname, end: true });
+
+  return (
+    <MenuItem active={match} {...menuItemProps}>
+      {props.children}
+      <Link to={props.to} />
+    </MenuItem>
+  );
+}
+
+<ReactRouterMenuItem icon={<FaGem />} to="/">
+  Dashboard
+</ReactRouterMenuItem>;
+```
+
 ## API
 
 <table>
