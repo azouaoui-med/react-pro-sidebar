@@ -39,18 +39,6 @@ const StyledAnchor = styled.a`
   }
 `;
 
-// interface StyledFloatingDivProps {
-//   open?: boolean;
-//   collapsed?: boolean;
-// }
-
-// const StyledFloatingDiv = styled.div<StyledFloatingDivProps>`
-//   visibility: ${({ open }) => (open ? 'visible' : 'hidden')};
-//   ${({ collapsed }) => (!collapsed ? `position:static!important;transform:none!important;` : '')}
-//   position: ${({ collapsed }) => (collapsed ? 'fixed' : 'static')}!important;
-//   background-color: rgba(68, 124, 196);
-// `;
-
 export const SubMenu: React.FC<SubMenuProps> = ({
   children,
   className,
@@ -65,60 +53,58 @@ export const SubMenu: React.FC<SubMenuProps> = ({
 
   const [popperInstance, setPopperInstance] = React.useState<Instance | undefined>();
 
-  // const menuListRef = React.useRef<HTMLDivElement>(null);
   const anchorRef = React.useRef<HTMLAnchorElement>(null);
   const subMenuListRef = React.useRef<HTMLDivElement>(null);
 
-  const handleSlideToggle = (): void => setOpen(!open);
+  const handleSlideToggle = (): void => {
+    if (firstLevel && collapsed) setOpenWhenCollapsed(!openWhenCollapsed);
+    else setOpen(!open);
+  };
 
   React.useEffect(() => {
-    if (firstLevel && collapsed) {
-      if (subMenuListRef.current && anchorRef.current) {
-        const instance = createPopper(anchorRef.current, subMenuListRef.current, {
-          placement: 'right',
-          strategy: 'fixed',
-        });
+    if (firstLevel && collapsed && subMenuListRef.current && anchorRef.current) {
+      const instance = createPopper(anchorRef.current, subMenuListRef.current, {
+        placement: 'right',
+        strategy: 'fixed',
+      });
 
-        setPopperInstance(instance);
-      }
+      setPopperInstance(instance);
     }
   }, [firstLevel, collapsed]);
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     setTimeout(() => popperInstance?.update(), transitionDuration);
-    if (collapsed && firstLevel) setOpen(false);
+    if (collapsed && firstLevel) setOpenWhenCollapsed(false);
   }, [collapsed, firstLevel, transitionDuration, popperInstance]);
 
   React.useEffect(() => {
     const handleDocumentClick = (event: MouseEvent) => {
-      console.log('target', subMenuListRef.current?.contains(event.target as Node));
-      console.log('open', open);
-      if (!subMenuListRef.current?.contains(event.target as Node) && open) {
-        setOpen(false);
-      }
+      if (!subMenuListRef.current?.contains(event.target as Node) && openWhenCollapsed)
+        setOpenWhenCollapsed(false);
     };
 
-    if (collapsed && firstLevel) {
-      document.addEventListener('click', handleDocumentClick, false);
-    } else {
-      document.removeEventListener('click', handleDocumentClick);
-    }
+    if (collapsed && firstLevel) document.addEventListener('click', handleDocumentClick, false);
+    else document.removeEventListener('click', handleDocumentClick);
 
     return () => {
       document.removeEventListener('click', handleDocumentClick);
     };
-  }, [collapsed, firstLevel, open]);
+  }, [collapsed, firstLevel, openWhenCollapsed]);
 
   return (
     <StyledSubMenu className={classnames('sub-menu', className)} {...rest}>
       <StyledAnchor ref={anchorRef} href="#" onClick={handleSlideToggle}>
         {label}
       </StyledAnchor>
-      {/* <StyledFloatingDiv ref={menuListRef} open={open} collapsed={collapsed && firstLevel}> */}
-      <SubMenuList ref={subMenuListRef} open={open} firstLevel={firstLevel} collapsed={collapsed}>
+      <SubMenuList
+        ref={subMenuListRef}
+        openWhenCollapsed={openWhenCollapsed}
+        open={open}
+        firstLevel={firstLevel}
+        collapsed={collapsed}
+      >
         {children}
       </SubMenuList>
-      {/* </StyledFloatingDiv> */}
     </StyledSubMenu>
   );
 };

@@ -36,9 +36,9 @@ export const useProSidebar = (): ProSidebarFunction => {
   return {
     collapseSidebar,
     toggleSidebar,
-    collapsed: collapsed ?? false,
-    broken: broken ?? false,
-    toggled: toggled ?? false,
-    rtl: rtl ?? false,
+    collapsed: !!collapsed,
+    broken: !!broken,
+    toggled: !!toggled,
+    rtl: !!rtl,
   };
 };

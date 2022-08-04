@@ -23,10 +23,10 @@ const StyledAnchor = styled.a`
   background-color: rgba(255, 255, 255, 0.5);
 `;
 
-export const MenuItem: React.FC<Props> = ({ children, className, ...rest }) => {
+export const MenuItem: React.FC<Props> = ({ children, href = '#', className, ...rest }) => {
   return (
     <StyledMenuItem className={classnames('menu-item', className)}>
-      <StyledAnchor href="#" {...rest}>
+      <StyledAnchor href={href} {...rest}>
         {children}
       </StyledAnchor>
     </StyledMenuItem>

@@ -22,9 +22,6 @@ const StyledHeader = styled.header<StyledHeaderProps>`
   height: ${({ height }) => height};
   min-height: ${({ height }) => height};
   position: relative;
-  width: 100%;
-  ${({ mounted, transitionDuration }) =>
-    mounted ? `transition: width ${transitionDuration}ms;` : ''}
 
   ${({ fixed, fixedSidebar, collapsedSidebar, sidebarWidth, sidebarCollapsedWidth, height }) =>
     fixed
@@ -42,9 +39,12 @@ const StyledHeader = styled.header<StyledHeaderProps>`
             : ''
         }
         `
-      : ''};
+      : 'width: 100%;'};
 
   ${({ brokenSidebar }) => (brokenSidebar ? 'width: 100% !important;transition: none;' : '')}
+
+  ${({ mounted, transitionDuration }) =>
+    mounted ? `transition: width ${transitionDuration}ms;` : ''}
 `;
 
 export const Header: React.FC<HeaderProps> = ({
@@ -65,7 +65,7 @@ export const Header: React.FC<HeaderProps> = ({
     transitionDuration,
   } = useSidebar();
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     setMounted(true);
   }, []);
 
