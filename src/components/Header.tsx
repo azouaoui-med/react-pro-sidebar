@@ -36,7 +36,7 @@ const StyledHeader = styled.header<StyledHeaderProps>`
         ${
           fixedSidebar
             ? `width:calc(100% - ${collapsedSidebar ? sidebarCollapsedWidth : sidebarWidth})`
-            : ''
+            : 'width: 100%;'
         }
         `
       : 'width: 100%;'};
