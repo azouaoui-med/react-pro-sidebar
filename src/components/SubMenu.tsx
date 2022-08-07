@@ -64,6 +64,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({
   label,
   firstLevel,
   icon,
+  title,
   ...rest
 }) => {
   const { collapsed, transitionDuration, toggled } = useSidebar();
@@ -136,7 +137,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({
 
   return (
     <StyledSubMenu className={classnames('sub-menu', className)} {...rest}>
-      <StyledAnchor ref={anchorRef} href="#" onClick={handleSlideToggle}>
+      <StyledAnchor ref={anchorRef} href="#" onClick={handleSlideToggle} title={title}>
         {icon && <StyledMenuIcon className="menu-icon">{icon}</StyledMenuIcon>}
         <StyledMenuLabel className="menu-label">{label}</StyledMenuLabel>
         {collapsed && firstLevel ? <StyledExpandIconCollapsed /> : <StyledExpandIcon open={open} />}
