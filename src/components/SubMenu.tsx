@@ -4,12 +4,43 @@ import classnames from 'classnames';
 import { SubMenuList } from './SubMenuList';
 import { createPopper, Instance } from '@popperjs/core';
 import { useSidebar } from '../hooks/useSidebar';
+import { StyledMenuLabel } from './StyledMenuLabel';
+import { StyledMenuIcon } from './StyledMenuIcon';
 
 export interface SubMenuProps extends React.LiHTMLAttributes<HTMLLIElement> {
   className?: string;
   label?: string;
+  /**
+   * @ignore
+   */
   firstLevel?: boolean;
+  icon?: React.ReactNode;
 }
+
+interface StyledExpandIconProps {
+  open?: boolean;
+}
+
+const StyledExpandIcon = styled.span<StyledExpandIconProps>`
+  transition: transform 0.3s;
+  border-right: 2px solid currentcolor;
+  border-bottom: 2px solid currentcolor;
+  width: 5px;
+  height: 5px;
+  transform: rotate(${({ open }) => (open ? '45deg' : '-45deg')});
+`;
+
+const StyledExpandIconCollapsed = styled.span`
+  width: 5px;
+  height: 5px;
+  background-color: currentcolor;
+  border-radius: 50%;
+  display: inline-block;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+`;
 
 const StyledSubMenu = styled.li`
   position: relative;
@@ -20,23 +51,11 @@ const StyledSubMenu = styled.li`
 const StyledAnchor = styled.a`
   display: flex;
   align-items: center;
-  height: 45px;
+  height: 50px;
   padding: 0 20px;
-  margin: 5px 10px;
   text-decoration: none;
   color: inherit;
   box-sizing: border-box;
-  background-color: rgba(255, 255, 255, 0.5);
-
-  &::after {
-    content: '';
-    transition: transform 0.3s;
-    border-right: 2px solid currentcolor;
-    border-bottom: 2px solid currentcolor;
-    width: 5px;
-    height: 5px;
-    transform: rotate(-45deg);
-  }
 `;
 
 export const SubMenu: React.FC<SubMenuProps> = ({
@@ -44,9 +63,10 @@ export const SubMenu: React.FC<SubMenuProps> = ({
   className,
   label,
   firstLevel,
+  icon,
   ...rest
 }) => {
-  const { collapsed, transitionDuration } = useSidebar();
+  const { collapsed, transitionDuration, toggled } = useSidebar();
 
   const [open, setOpen] = React.useState(false);
   const [openWhenCollapsed, setOpenWhenCollapsed] = React.useState(false);
@@ -72,9 +92,32 @@ export const SubMenu: React.FC<SubMenuProps> = ({
     }
   }, [firstLevel, collapsed]);
 
+  React.useEffect(() => {
+    if (subMenuListRef.current && anchorRef.current) {
+      const ro = new ResizeObserver(() => {
+        if (popperInstance) {
+          popperInstance.update();
+        }
+      });
+
+      ro.observe(subMenuListRef.current);
+      ro.observe(anchorRef.current);
+    }
+
+    setTimeout(() => {
+      if (popperInstance) {
+        popperInstance.update();
+      }
+    }, transitionDuration);
+  }, [popperInstance, transitionDuration, toggled]);
+
   React.useLayoutEffect(() => {
     setTimeout(() => popperInstance?.update(), transitionDuration);
-    if (collapsed && firstLevel) setOpenWhenCollapsed(false);
+    if (collapsed && firstLevel) {
+      setOpenWhenCollapsed(false);
+      // TODO: if its useful to close first level submenus on collapse sidebar uncomment the code below
+      // setOpen(false);
+    }
   }, [collapsed, firstLevel, transitionDuration, popperInstance]);
 
   React.useEffect(() => {
@@ -94,7 +137,9 @@ export const SubMenu: React.FC<SubMenuProps> = ({
   return (
     <StyledSubMenu className={classnames('sub-menu', className)} {...rest}>
       <StyledAnchor ref={anchorRef} href="#" onClick={handleSlideToggle}>
-        {label}
+        {icon && <StyledMenuIcon className="menu-icon">{icon}</StyledMenuIcon>}
+        <StyledMenuLabel className="menu-label">{label}</StyledMenuLabel>
+        {collapsed && firstLevel ? <StyledExpandIconCollapsed /> : <StyledExpandIcon open={open} />}
       </StyledAnchor>
       <SubMenuList
         ref={subMenuListRef}

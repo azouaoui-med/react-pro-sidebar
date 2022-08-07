@@ -1,9 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import classnames from 'classnames';
+import { StyledMenuLabel } from './StyledMenuLabel';
+import { StyledMenuIcon } from './StyledMenuIcon';
 
 interface Props extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-  className?: string;
+  icon?: React.ReactNode;
 }
 
 const StyledMenuItem = styled.li`
@@ -14,20 +16,19 @@ const StyledMenuItem = styled.li`
 const StyledAnchor = styled.a`
   display: flex;
   align-items: center;
-  height: 45px;
+  height: 50px;
   padding: 0 20px;
-  margin: 5px 10px;
   text-decoration: none;
   color: inherit;
   box-sizing: border-box;
-  background-color: rgba(255, 255, 255, 0.5);
 `;
 
-export const MenuItem: React.FC<Props> = ({ children, href = '#', className, ...rest }) => {
+export const MenuItem: React.FC<Props> = ({ children, href = '#', icon, className, ...rest }) => {
   return (
     <StyledMenuItem className={classnames('menu-item', className)}>
       <StyledAnchor href={href} {...rest}>
-        {children}
+        {icon && <StyledMenuIcon className="menu-icon">{icon}</StyledMenuIcon>}
+        <StyledMenuLabel>{children}</StyledMenuLabel>
       </StyledAnchor>
     </StyledMenuItem>
   );
