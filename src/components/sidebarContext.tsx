@@ -5,6 +5,7 @@ interface SidebarState {
   collapsed?: boolean;
   toggled?: boolean;
   broken?: boolean;
+  rtl?: boolean;
   width?: string;
   collapsedWidth?: string;
   transitionDuration?: number;

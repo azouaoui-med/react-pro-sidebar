@@ -76,6 +76,8 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
    * @default ```rgb(0, 0, 0, 0.3)```
    */
   overlayColor?: string;
+
+  rtl?: boolean;
 }
 
 interface StyledSidebarProps extends Omit<SidebarProps, 'backgroundColor'> {
@@ -88,10 +90,13 @@ interface StyledSidebarProps extends Omit<SidebarProps, 'backgroundColor'> {
 type StyledInnerSidebarProps = Pick<SidebarProps, 'backgroundColor'>;
 
 const StyledSidebar = styled.aside<StyledSidebarProps>`
+  color: #b3b8d4;
   position: relative;
   width: ${({ width, collapsed, collapsedWidth }) => (collapsed ? collapsedWidth : width)};
   min-width: ${({ width, collapsed, collapsedWidth }) => (collapsed ? collapsedWidth : width)};
   transition: ${({ transitionDuration }) => `width, left, right, ${transitionDuration}ms`};
+
+  ${({ rtl }) => (rtl ? 'direction: rtl' : '')};
 
   ${({ fixed }) =>
     fixed
@@ -161,6 +166,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   transitionDuration = 300,
   overlayColor = 'rgb(0, 0, 0, 0.3)',
   image,
+  rtl,
   ...rest
 }) => {
   const broken = useMediaQuery(
@@ -176,17 +182,18 @@ export const Sidebar: React.FC<SidebarProps> = ({
     broken: brokenSidebar,
     toggled: toggledSidebar,
     transitionDuration: SidebarTransitionDuration,
+    rtl: sidebarRtl,
   } = useSidebar();
 
-  const { rtl } = useLayout();
+  const { rtl: layoutRtl } = useLayout();
 
   const handleOverlayClick = () => {
     updateSidebarState({ toggled: false });
   };
 
   React.useEffect(() => {
-    updateSidebarState({ fixed, width, collapsedWidth, broken });
-  }, [fixed, width, collapsedWidth, broken, updateSidebarState]);
+    updateSidebarState({ fixed, width, collapsedWidth, broken, rtl });
+  }, [fixed, width, collapsedWidth, broken, updateSidebarState, rtl]);
 
   React.useEffect(() => {
     updateSidebarState({
@@ -194,8 +201,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       transitionDuration,
       toggled: false,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [defaultCollapsed, transitionDuration, updateSidebarState]);
 
   return (
     <StyledSidebar
@@ -204,7 +210,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       collapsed={collapsedSidebar}
       broken={brokenSidebar}
       toggled={toggledSidebar}
-      rtl={rtl}
+      rtl={sidebarRtl ?? layoutRtl}
       width={sidebarWidth}
       collapsedWidth={sidebarCollapsedWidth}
       transitionDuration={SidebarTransitionDuration ?? 300}
