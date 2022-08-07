@@ -19,11 +19,15 @@ const StyledSubMenuList = styled.div<Props>`
   z-index: 999;
   transition: height 300ms;
   box-sizing: border-box;
-  background-color: green;
+  ${({ firstLevel }) => firstLevel && 'background-color: rgb(23, 32, 48);'}
+
   ${({ collapsed, firstLevel, openWhenCollapsed }) =>
     collapsed && firstLevel
       ? `
-      max-width: 300px;
+      margin-left:3px!important;
+      padding-left:0px;
+      max-width: 200px;
+      border-radius: 4px;
       height:auto!important;
       display:block!important;     
       transition:none!important;     
