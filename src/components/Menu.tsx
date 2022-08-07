@@ -4,7 +4,6 @@ import { StyledUl } from './StyledUl';
 import { SubMenuProps } from './SubMenu';
 
 interface Props {
-  openCurrent?: boolean;
   className?: string;
 }
 
