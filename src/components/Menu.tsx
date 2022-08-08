@@ -2,6 +2,7 @@ import React from 'react';
 import classnames from 'classnames';
 import { StyledUl } from './StyledUl';
 import { SubMenuProps } from './SubMenu';
+import { MenuItemProps } from './MenuItem';
 
 interface Props {
   className?: string;
@@ -9,7 +10,7 @@ interface Props {
 
 export const Menu: React.FC<Props> = ({ children, className, ...rest }) => {
   const childNodes = React.Children.toArray(children).filter(Boolean) as [
-    React.ReactElement<SubMenuProps>,
+    React.ReactElement<SubMenuProps | MenuItemProps>,
   ];
 
   return (

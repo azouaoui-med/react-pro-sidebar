@@ -6,15 +6,18 @@ import { createPopper, Instance } from '@popperjs/core';
 import { useSidebar } from '../hooks/useSidebar';
 import { StyledMenuLabel } from './StyledMenuLabel';
 import { StyledMenuIcon } from './StyledMenuIcon';
+import { StyledMenuPrefix } from './StyledMenuPrefix';
 
-export interface SubMenuProps extends React.LiHTMLAttributes<HTMLLIElement> {
+export interface SubMenuProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>, 'prefix'> {
   className?: string;
   label?: string;
+  icon?: React.ReactNode;
+  prefix?: React.ReactNode;
+  suffix?: React.ReactNode;
   /**
    * @ignore
    */
   firstLevel?: boolean;
-  icon?: React.ReactNode;
 }
 
 interface StyledExpandIconProps {
@@ -65,6 +68,8 @@ export const SubMenu: React.FC<SubMenuProps> = ({
   firstLevel,
   icon,
   title,
+  prefix,
+  suffix,
   ...rest
 }) => {
   const { collapsed, transitionDuration, toggled } = useSidebar();
@@ -139,7 +144,26 @@ export const SubMenu: React.FC<SubMenuProps> = ({
     <StyledSubMenu className={classnames('sub-menu', className)} {...rest}>
       <StyledAnchor ref={anchorRef} href="#" onClick={handleSlideToggle} title={title}>
         {icon && <StyledMenuIcon className="menu-icon">{icon}</StyledMenuIcon>}
+
+        {prefix && (
+          <StyledMenuPrefix
+            collapsed={collapsed}
+            transitionDuration={transitionDuration}
+            firstLevel={firstLevel}
+            className="menu-prefix"
+          >
+            {prefix}
+          </StyledMenuPrefix>
+        )}
+
         <StyledMenuLabel className="menu-label">{label}</StyledMenuLabel>
+
+        {suffix && (
+          <span className="menu-suffix" style={{ margin: '0 5px' }}>
+            {suffix}
+          </span>
+        )}
+
         {collapsed && firstLevel ? <StyledExpandIconCollapsed /> : <StyledExpandIcon open={open} />}
       </StyledAnchor>
       <SubMenuList
