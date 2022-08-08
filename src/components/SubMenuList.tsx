@@ -25,6 +25,7 @@ const StyledSubMenuList = styled.div<Props>`
     collapsed && firstLevel
       ? `
       margin-left:3px!important;
+      margin-right:3px!important;
       padding-left:0px;
       max-width: 200px;
       border-radius: 4px;
