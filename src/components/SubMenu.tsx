@@ -14,6 +14,7 @@ export interface SubMenuProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>
   icon?: React.ReactNode;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
+  open?: boolean;
   /**
    * @ignore
    */
@@ -59,17 +60,19 @@ const StyledAnchor = styled.a`
   text-decoration: none;
   color: inherit;
   box-sizing: border-box;
+  cursor: pointer;
 `;
 
 export const SubMenu: React.FC<SubMenuProps> = ({
   children,
   className,
   label,
-  firstLevel,
   icon,
   title,
   prefix,
   suffix,
+  open: openSubmenu,
+  firstLevel,
   ...rest
 }) => {
   const { collapsed, transitionDuration, toggled } = useSidebar();
@@ -142,7 +145,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({
 
   return (
     <StyledSubMenu className={classnames('sub-menu', className)} {...rest}>
-      <StyledAnchor ref={anchorRef} href="#" onClick={handleSlideToggle} title={title}>
+      <StyledAnchor ref={anchorRef} onClick={handleSlideToggle} title={title}>
         {icon && <StyledMenuIcon className="menu-icon">{icon}</StyledMenuIcon>}
 
         {prefix && (
@@ -164,12 +167,16 @@ export const SubMenu: React.FC<SubMenuProps> = ({
           </span>
         )}
 
-        {collapsed && firstLevel ? <StyledExpandIconCollapsed /> : <StyledExpandIcon open={open} />}
+        {collapsed && firstLevel ? (
+          <StyledExpandIconCollapsed />
+        ) : (
+          <StyledExpandIcon open={openSubmenu ?? open} />
+        )}
       </StyledAnchor>
       <SubMenuList
         ref={subMenuListRef}
         openWhenCollapsed={openWhenCollapsed}
-        open={open}
+        open={openSubmenu ?? open}
         firstLevel={firstLevel}
         collapsed={collapsed}
       >

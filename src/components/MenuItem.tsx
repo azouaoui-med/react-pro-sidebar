@@ -30,11 +30,12 @@ const StyledAnchor = styled.a`
   text-decoration: none;
   color: inherit;
   box-sizing: border-box;
+  cursor: pointer;
 `;
 
 export const MenuItem: React.FC<MenuItemProps> = ({
   children,
-  href = '#',
+  href,
   icon,
   className,
   prefix,
