@@ -15,6 +15,7 @@ export interface SubMenuProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   open?: boolean;
+  defaultOpen?: boolean;
   /**
    * @ignore
    */
@@ -72,14 +73,15 @@ export const SubMenu: React.FC<SubMenuProps> = ({
   prefix,
   suffix,
   open: openSubmenu,
+  defaultOpen,
   firstLevel,
   ...rest
 }) => {
   const { collapsed, transitionDuration, toggled } = useSidebar();
 
-  const [open, setOpen] = React.useState(false);
-  const [openWhenCollapsed, setOpenWhenCollapsed] = React.useState(false);
-
+  const [open, setOpen] = React.useState<boolean>(!!defaultOpen);
+  const [openDefault, setOpenDefault] = React.useState<boolean>(!!defaultOpen);
+  const [openWhenCollapsed, setOpenWhenCollapsed] = React.useState<boolean>(false);
   const [popperInstance, setPopperInstance] = React.useState<Instance | undefined>();
 
   const anchorRef = React.useRef<HTMLAnchorElement>(null);
@@ -143,8 +145,16 @@ export const SubMenu: React.FC<SubMenuProps> = ({
     };
   }, [collapsed, firstLevel, openWhenCollapsed]);
 
+  React.useEffect(() => {
+    if (openSubmenu) setOpenDefault(openSubmenu);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
-    <StyledSubMenu className={classnames('sub-menu', className)} {...rest}>
+    <StyledSubMenu
+      className={classnames('sub-menu', { open: openSubmenu ?? open }, className)}
+      {...rest}
+    >
       <StyledAnchor ref={anchorRef} onClick={handleSlideToggle} title={title}>
         {icon && <StyledMenuIcon className="menu-icon">{icon}</StyledMenuIcon>}
 
@@ -179,6 +189,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({
         open={openSubmenu ?? open}
         firstLevel={firstLevel}
         collapsed={collapsed}
+        defaultOpen={openDefault}
       >
         {children}
       </SubMenuList>
