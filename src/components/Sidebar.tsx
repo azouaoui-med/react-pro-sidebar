@@ -214,7 +214,11 @@ export const Sidebar: React.FC<SidebarProps> = ({
       width={sidebarWidth}
       collapsedWidth={sidebarCollapsedWidth}
       transitionDuration={SidebarTransitionDuration ?? 300}
-      className={classnames('sidebar', className)}
+      className={classnames(
+        'sidebar',
+        { collapsed: collapsedSidebar, toggled: toggledSidebar, broken: brokenSidebar },
+        className,
+      )}
       {...rest}
     >
       <StyledInnerSidebar

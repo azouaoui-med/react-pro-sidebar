@@ -61,7 +61,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
           </StyledMenuPrefix>
         )}
 
-        <StyledMenuLabel>{children}</StyledMenuLabel>
+        <StyledMenuLabel className="menu-label">{children}</StyledMenuLabel>
 
         {suffix && (
           <span className="menu-suffix" style={{ margin: '0 5px' }}>
