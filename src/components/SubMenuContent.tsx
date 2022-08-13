@@ -3,7 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { StyledUl } from '../styles/StyledUl';
 
-interface SubMenuListProps extends React.HTMLAttributes<HTMLDivElement> {
+interface SubMenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
   open?: boolean;
   openWhenCollapsed?: boolean;
   firstLevel?: boolean;
@@ -13,7 +13,7 @@ interface SubMenuListProps extends React.HTMLAttributes<HTMLDivElement> {
 
 let timer: NodeJS.Timer;
 
-const StyledSubMenuList = styled.div<SubMenuListProps>`
+const StyledSubMenuContent = styled.div<SubMenuContentProps>`
   padding-left: 20px;
   display: none;
   overflow: hidden;
@@ -21,7 +21,7 @@ const StyledSubMenuList = styled.div<SubMenuListProps>`
   transition: height 300ms;
   box-sizing: border-box;
 
-  ${({ firstLevel }) => firstLevel && 'background-color: rgb(23, 32, 48);'}
+  ${({ firstLevel, collapsed }) => firstLevel && collapsed && 'background-color: white;'}
 
   ${({ defaultOpen }) => defaultOpen && 'height: auto;display: block;'}
 
@@ -45,11 +45,11 @@ const StyledSubMenuList = styled.div<SubMenuListProps>`
 `;
 
 const duration = 300;
-const SubMenuListFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuListProps> = (
+const SubMenuContentFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuContentProps> = (
   { children, open, openWhenCollapsed, firstLevel, collapsed, ...rest },
   ref,
 ) => {
-  const subMenuListRef = ref as React.MutableRefObject<HTMLDivElement>;
+  const SubMenuContentRef = ref as React.MutableRefObject<HTMLDivElement>;
 
   const [mounted, setMounted] = React.useState(false);
 
@@ -57,7 +57,7 @@ const SubMenuListFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuListP
     clearTimeout(timer);
     if (mounted) {
       if (open) {
-        const target = subMenuListRef?.current;
+        const target = SubMenuContentRef?.current;
         if (target) {
           target.style.display = 'block';
           target.style.height = 'auto';
@@ -71,7 +71,7 @@ const SubMenuListFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuListP
           }, duration);
         }
       } else {
-        const target = subMenuListRef?.current;
+        const target = SubMenuContentRef?.current;
         if (target) {
           target.style.height = `${target.offsetHeight}px`;
           target.offsetHeight;
@@ -85,25 +85,25 @@ const SubMenuListFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuListP
     }
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, subMenuListRef]);
+  }, [open, SubMenuContentRef]);
 
   React.useEffect(() => {
     setMounted(true);
   }, []);
 
   return (
-    <StyledSubMenuList
+    <StyledSubMenuContent
       ref={ref}
       firstLevel={firstLevel}
       collapsed={collapsed}
-      className="sub-menu-list"
+      className="sub-menu-content"
       open={open}
       openWhenCollapsed={openWhenCollapsed}
       {...rest}
     >
       <StyledUl>{children}</StyledUl>
-    </StyledSubMenuList>
+    </StyledSubMenuContent>
   );
 };
 
-export const SubMenuList = React.forwardRef(SubMenuListFR);
+export const SubMenuContent = React.forwardRef(SubMenuContentFR);

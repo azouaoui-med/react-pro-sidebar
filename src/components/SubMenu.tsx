@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import classnames from 'classnames';
-import { SubMenuList } from './SubMenuList';
+import { SubMenuContent } from './SubMenuContent';
 import { createPopper, Instance } from '@popperjs/core';
 import { useSidebar } from '../hooks/useSidebar';
 import { StyledMenuLabel } from '../styles/StyledMenuLabel';
@@ -85,7 +85,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({
   const [popperInstance, setPopperInstance] = React.useState<Instance | undefined>();
 
   const anchorRef = React.useRef<HTMLAnchorElement>(null);
-  const subMenuListRef = React.useRef<HTMLDivElement>(null);
+  const SubMenuContentRef = React.useRef<HTMLDivElement>(null);
 
   const handleSlideToggle = (): void => {
     if (firstLevel && collapsed) setOpenWhenCollapsed(!openWhenCollapsed);
@@ -93,8 +93,8 @@ export const SubMenu: React.FC<SubMenuProps> = ({
   };
 
   React.useEffect(() => {
-    if (firstLevel && collapsed && subMenuListRef.current && anchorRef.current) {
-      const instance = createPopper(anchorRef.current, subMenuListRef.current, {
+    if (firstLevel && collapsed && SubMenuContentRef.current && anchorRef.current) {
+      const instance = createPopper(anchorRef.current, SubMenuContentRef.current, {
         placement: 'right',
         strategy: 'fixed',
       });
@@ -104,14 +104,14 @@ export const SubMenu: React.FC<SubMenuProps> = ({
   }, [firstLevel, collapsed]);
 
   React.useEffect(() => {
-    if (subMenuListRef.current && anchorRef.current) {
+    if (SubMenuContentRef.current && anchorRef.current) {
       const ro = new ResizeObserver(() => {
         if (popperInstance) {
           popperInstance.update();
         }
       });
 
-      ro.observe(subMenuListRef.current);
+      ro.observe(SubMenuContentRef.current);
       ro.observe(anchorRef.current);
     }
 
@@ -133,7 +133,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({
 
   React.useEffect(() => {
     const handleDocumentClick = (event: MouseEvent) => {
-      if (!subMenuListRef.current?.contains(event.target as Node) && openWhenCollapsed)
+      if (!SubMenuContentRef.current?.contains(event.target as Node) && openWhenCollapsed)
         setOpenWhenCollapsed(false);
     };
 
@@ -183,8 +183,8 @@ export const SubMenu: React.FC<SubMenuProps> = ({
           <StyledExpandIcon open={openSubmenu ?? open} />
         )}
       </StyledAnchor>
-      <SubMenuList
-        ref={subMenuListRef}
+      <SubMenuContent
+        ref={SubMenuContentRef}
         openWhenCollapsed={openWhenCollapsed}
         open={openSubmenu ?? open}
         firstLevel={firstLevel}
@@ -192,7 +192,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({
         defaultOpen={openDefault}
       >
         {children}
-      </SubMenuList>
+      </SubMenuContent>
     </StyledSubMenu>
   );
 };
