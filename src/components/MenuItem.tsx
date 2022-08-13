@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import classnames from 'classnames';
-import { StyledMenuLabel } from './StyledMenuLabel';
-import { StyledMenuIcon } from './StyledMenuIcon';
-import { StyledMenuPrefix } from './StyledMenuPrefix';
+import { StyledMenuLabel } from '../styles/StyledMenuLabel';
+import { StyledMenuIcon } from '../styles/StyledMenuIcon';
+import { StyledMenuPrefix } from '../styles/StyledMenuPrefix';
 import { useSidebar } from '../hooks/useSidebar';
 
 export interface MenuItemProps
@@ -35,7 +35,6 @@ const StyledAnchor = styled.a`
 
 export const MenuItem: React.FC<MenuItemProps> = ({
   children,
-  href,
   icon,
   className,
   prefix,
@@ -47,7 +46,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
 
   return (
     <StyledMenuItem className={classnames('menu-item', className)}>
-      <StyledAnchor href={href} {...rest}>
+      <StyledAnchor className="menu-anchor" {...rest}>
         {icon && <StyledMenuIcon className="menu-icon">{icon}</StyledMenuIcon>}
 
         {prefix && (

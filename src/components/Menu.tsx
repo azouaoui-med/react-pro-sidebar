@@ -1,6 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
-import { StyledUl } from './StyledUl';
+import { StyledUl } from '../styles/StyledUl';
 import { SubMenuProps } from './SubMenu';
 import { MenuItemProps } from './MenuItem';
 

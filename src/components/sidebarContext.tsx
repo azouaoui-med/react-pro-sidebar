@@ -1,7 +1,6 @@
 import React from 'react';
 
 interface SidebarState {
-  fixed?: boolean;
   collapsed?: boolean;
   toggled?: boolean;
   broken?: boolean;

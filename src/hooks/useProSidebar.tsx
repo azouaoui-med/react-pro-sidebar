@@ -1,4 +1,3 @@
-import { useLayout } from './useLayout';
 import { useSidebar } from './useSidebar';
 
 interface ProSidebarFunction {
@@ -22,8 +21,7 @@ interface ProSidebarFunction {
 }
 
 export const useProSidebar = (): ProSidebarFunction => {
-  const { updateSidebarState, collapsed, toggled, broken } = useSidebar();
-  const { rtl } = useLayout();
+  const { updateSidebarState, collapsed, toggled, broken, rtl } = useSidebar();
 
   const collapseSidebar = (value?: boolean) => {
     updateSidebarState({ collapsed: value ?? !collapsed });

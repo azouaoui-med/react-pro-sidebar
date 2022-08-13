@@ -2,7 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import classnames from 'classnames';
 import { useSidebar } from '../hooks/useSidebar';
-import { useLayout } from '../hooks/useLayout';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { Overlay } from './Overlay';
 
@@ -36,12 +35,6 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
    * @default ```false```
    */
   defaultCollapsed?: boolean;
-
-  /**
-   * when set to ```true``` the sidebar will have its own scrollbar
-   * @default ```false```
-   */
-  fixed?: boolean;
 
   /**
    * set when the sidebar should trigger responsiveness behavior
@@ -90,23 +83,12 @@ interface StyledSidebarProps extends Omit<SidebarProps, 'backgroundColor'> {
 type StyledInnerSidebarProps = Pick<SidebarProps, 'backgroundColor'>;
 
 const StyledSidebar = styled.aside<StyledSidebarProps>`
-  color: #b3b8d4;
   position: relative;
   width: ${({ width, collapsed, collapsedWidth }) => (collapsed ? collapsedWidth : width)};
   min-width: ${({ width, collapsed, collapsedWidth }) => (collapsed ? collapsedWidth : width)};
   transition: ${({ transitionDuration }) => `width, left, right, ${transitionDuration}ms`};
 
   ${({ rtl }) => (rtl ? 'direction: rtl' : '')};
-
-  ${({ fixed }) =>
-    fixed
-      ? ` height: 100%;
-        overflow: auto;
-        ~ .layout {
-          height: 100%;
-          overflow: auto;
-        }`
-      : ''}
 
   ${({ broken, collapsed, collapsedWidth, toggled, width, rtl }) =>
     broken
@@ -156,7 +138,6 @@ const StyledSidebarImage = styled.img`
 export const Sidebar: React.FC<SidebarProps> = ({
   width = '250px',
   collapsedWidth = '80px',
-  fixed = false,
   defaultCollapsed = false,
   className,
   children,
@@ -176,7 +157,6 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const {
     updateSidebarState,
     collapsed: collapsedSidebar,
-    fixed: fixedSidebar,
     width: sidebarWidth,
     collapsedWidth: sidebarCollapsedWidth,
     broken: brokenSidebar,
@@ -185,15 +165,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
     rtl: sidebarRtl,
   } = useSidebar();
 
-  const { rtl: layoutRtl } = useLayout();
-
   const handleOverlayClick = () => {
     updateSidebarState({ toggled: false });
   };
 
   React.useEffect(() => {
-    updateSidebarState({ fixed, width, collapsedWidth, broken, rtl });
-  }, [fixed, width, collapsedWidth, broken, updateSidebarState, rtl]);
+    updateSidebarState({ width, collapsedWidth, broken, rtl });
+  }, [width, collapsedWidth, broken, updateSidebarState, rtl]);
 
   React.useEffect(() => {
     updateSidebarState({
@@ -206,11 +184,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <StyledSidebar
       data-testid="sidebar-test-id"
-      fixed={fixedSidebar}
       collapsed={collapsedSidebar}
       broken={brokenSidebar}
       toggled={toggledSidebar}
-      rtl={sidebarRtl ?? layoutRtl}
+      rtl={sidebarRtl}
       width={sidebarWidth}
       collapsedWidth={sidebarCollapsedWidth}
       transitionDuration={SidebarTransitionDuration ?? 300}

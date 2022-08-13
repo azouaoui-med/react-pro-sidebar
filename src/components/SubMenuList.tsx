@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import React from 'react';
 import styled from 'styled-components';
-import { StyledUl } from './StyledUl';
+import { StyledUl } from '../styles/StyledUl';
 
 interface SubMenuListProps extends React.HTMLAttributes<HTMLDivElement> {
   open?: boolean;

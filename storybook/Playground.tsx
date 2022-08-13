@@ -1,35 +1,23 @@
 import React from 'react';
-import { Content, Footer, Header, Layout, Sidebar } from '../src';
-import { Menu } from '../src/components/Menu';
-import { MenuItem } from '../src/components/MenuItem';
-import { SubMenu } from '../src/components/SubMenu';
-import { useProSidebar } from '../src/hooks/useProSidebar';
+import { Sidebar } from '../src';
+import { Menu, MenuItem, SubMenu, useProSidebar } from '../src';
 import { Icon } from './icons/Icon';
 
 export const Playground: React.FC = () => {
   const { toggleSidebar, collapseSidebar, broken } = useProSidebar();
-  const [open, setOpen] = React.useState(true);
 
   return (
-    <Layout hasSidebar>
+    <div style={{ display: 'flex', height: '100%' }}>
       <Sidebar
-        fixed
         breakPoint="always"
         customBreakPoint="1000px"
         transitionDuration={200}
         backgroundColor="rgba(27, 38, 58, 1)"
         // image="https://i.pinimg.com/736x/8e/6c/06/8e6c064f57f94838263d7ba9ad80f353.jpg"
-        // overlayColor="rgba(5, 10, 24, .4)"
       >
         <div>
           <Menu>
-            <SubMenu
-              label="Charts"
-              icon={<Icon name="bar-chart" />}
-              prefix="OK"
-              suffix="NO"
-              open={open}
-            >
+            <SubMenu label="Charts" icon={<Icon name="bar-chart" />}>
               <MenuItem> Pie charts</MenuItem>
               <MenuItem> Line charts</MenuItem>
               <MenuItem> Bar charts</MenuItem>
@@ -61,25 +49,12 @@ export const Playground: React.FC = () => {
           </Menu>
         </div>
       </Sidebar>
-      <Layout>
-        <Header fixed>
-          <div style={{ display: 'flex', padding: 10 }}>
-            <div>Header</div>
-            <button onClick={() => collapseSidebar()}>collapse</button>
-            {broken ? <button onClick={() => toggleSidebar()}>toggle</button> : null}
-            <button onClick={() => setOpen(!open)}>toggle menu</button>
-            <div style={{ marginLeft: 'auto' }}>right</div>
-          </div>
-        </Header>
-        <Content>
-          <div style={{ height: 1000 }}>Content</div>
-        </Content>
-        <Footer>Footer</Footer>
-      </Layout>
-    </Layout>
+      <main>
+        <div style={{ display: 'flex', padding: 10 }}>
+          <button onClick={() => collapseSidebar()}>collapse</button>
+          {broken ? <button onClick={() => toggleSidebar()}>toggle</button> : null}
+        </div>
+      </main>
+    </div>
   );
 };
-
-/* <Layout variant='basic' sidebar={<Sidebar collapsed> ... </Sidebar>} */
-
-// variants = 'basic' | 'full-height-sidebar' | 'full-width-header' | 'full-width-footer' | 'fixed-header'

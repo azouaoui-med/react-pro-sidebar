@@ -4,9 +4,9 @@ import classnames from 'classnames';
 import { SubMenuList } from './SubMenuList';
 import { createPopper, Instance } from '@popperjs/core';
 import { useSidebar } from '../hooks/useSidebar';
-import { StyledMenuLabel } from './StyledMenuLabel';
-import { StyledMenuIcon } from './StyledMenuIcon';
-import { StyledMenuPrefix } from './StyledMenuPrefix';
+import { StyledMenuLabel } from '../styles/StyledMenuLabel';
+import { StyledMenuIcon } from '../styles/StyledMenuIcon';
+import { StyledMenuPrefix } from '../styles/StyledMenuPrefix';
 
 export interface SubMenuProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>, 'prefix'> {
   className?: string;
