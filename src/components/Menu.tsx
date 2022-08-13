@@ -4,11 +4,9 @@ import { StyledUl } from './StyledUl';
 import { SubMenuProps } from './SubMenu';
 import { MenuItemProps } from './MenuItem';
 
-interface Props {
-  className?: string;
-}
+export type MenuProps = React.MenuHTMLAttributes<HTMLMenuElement>;
 
-export const Menu: React.FC<Props> = ({ children, className, ...rest }) => {
+export const Menu: React.FC<MenuProps> = ({ children, className, ...rest }) => {
   const childNodes = React.Children.toArray(children).filter(Boolean) as [
     React.ReactElement<SubMenuProps | MenuItemProps>,
   ];
