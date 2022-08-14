@@ -143,7 +143,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   children,
   breakPoint,
   customBreakPoint,
-  backgroundColor,
+  backgroundColor = 'rgba(249, 249, 249, 0.7)',
   transitionDuration = 300,
   overlayColor = 'rgb(0, 0, 0, 0.3)',
   image,
@@ -156,13 +156,13 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const {
     updateSidebarState,
-    collapsed: collapsedSidebar,
-    width: sidebarWidth,
-    collapsedWidth: sidebarCollapsedWidth,
-    broken: brokenSidebar,
-    toggled: toggledSidebar,
-    transitionDuration: SidebarTransitionDuration,
-    rtl: sidebarRtl,
+    collapsed: collapsedContext,
+    width: widthContext,
+    collapsedWidth: collapsedWidthContext,
+    broken: brokenContext,
+    toggled: toggledContext,
+    transitionDuration: transitionDurationContext,
+    rtl: rtlContext,
   } = useSidebar();
 
   const handleOverlayClick = () => {
@@ -184,16 +184,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <StyledSidebar
       data-testid="sidebar-test-id"
-      collapsed={collapsedSidebar}
-      broken={brokenSidebar}
-      toggled={toggledSidebar}
-      rtl={sidebarRtl}
-      width={sidebarWidth}
-      collapsedWidth={sidebarCollapsedWidth}
-      transitionDuration={SidebarTransitionDuration ?? 300}
+      collapsed={collapsedContext}
+      broken={brokenContext}
+      toggled={toggledContext}
+      rtl={rtlContext}
+      width={widthContext}
+      collapsedWidth={collapsedWidthContext}
+      transitionDuration={transitionDurationContext ?? 300}
       className={classnames(
         'sidebar',
-        { collapsed: collapsedSidebar, toggled: toggledSidebar, broken: brokenSidebar },
+        { collapsed: collapsedContext, toggled: toggledContext, broken: brokenContext },
         className,
       )}
       {...rest}
@@ -205,17 +205,19 @@ export const Sidebar: React.FC<SidebarProps> = ({
       >
         {children}
       </StyledInnerSidebar>
-      {image ? (
+
+      {image && (
         <StyledSidebarImage
           data-testid="sidebar-img-test-id"
           src={image}
           alt="sidebar background"
           className="sidebar-bg"
         />
-      ) : null}
-      {brokenSidebar && toggledSidebar ? (
+      )}
+
+      {brokenContext && toggledContext && (
         <Overlay onOverlayClick={handleOverlayClick} overlayColor={overlayColor} />
-      ) : null}
+      )}
     </StyledSidebar>
   );
 };
