@@ -14,7 +14,7 @@ export interface MenuItemProps
   /**
    * @ignore
    */
-  firstLevel?: boolean;
+  level?: number;
 }
 
 const StyledMenuItem = styled.li`
@@ -22,15 +22,21 @@ const StyledMenuItem = styled.li`
   width: 100%;
 `;
 
-const StyledAnchor = styled.a`
+const StyledAnchor = styled.a<{ level: number; collapsed?: boolean }>`
   display: flex;
   align-items: center;
   height: 50px;
-  padding: 0 20px;
+  padding-right: 20px;
+  padding-left: ${({ level, collapsed }) =>
+    level === 0 ? 20 : (collapsed ? level : level + 1) * 20}px;
   text-decoration: none;
   color: inherit;
   box-sizing: border-box;
   cursor: pointer;
+
+  &:hover {
+    background-color: #f3f3f3;
+  }
 `;
 
 export const MenuItem: React.FC<MenuItemProps> = ({
@@ -39,21 +45,21 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   className,
   prefix,
   suffix,
-  firstLevel,
+  level = 0,
   ...rest
 }) => {
   const { collapsed, transitionDuration } = useSidebar();
 
   return (
     <StyledMenuItem className={classnames('menu-item', className)}>
-      <StyledAnchor className="menu-anchor" {...rest}>
+      <StyledAnchor className="menu-anchor" level={level} collapsed={collapsed} {...rest}>
         {icon && <StyledMenuIcon className="menu-icon">{icon}</StyledMenuIcon>}
 
         {prefix && (
           <StyledMenuPrefix
             collapsed={collapsed}
             transitionDuration={transitionDuration}
-            firstLevel={firstLevel}
+            firstLevel={level === 0}
             className="menu-prefix"
           >
             {prefix}

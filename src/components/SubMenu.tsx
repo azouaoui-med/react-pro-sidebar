@@ -7,6 +7,7 @@ import { useSidebar } from '../hooks/useSidebar';
 import { StyledMenuLabel } from '../styles/StyledMenuLabel';
 import { StyledMenuIcon } from '../styles/StyledMenuIcon';
 import { StyledMenuPrefix } from '../styles/StyledMenuPrefix';
+import { MenuItemProps } from './MenuItem';
 
 export interface SubMenuProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>, 'prefix'> {
   className?: string;
@@ -19,7 +20,7 @@ export interface SubMenuProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>
   /**
    * @ignore
    */
-  firstLevel?: boolean;
+  level?: number;
 }
 
 interface StyledExpandIconProps {
@@ -53,15 +54,21 @@ const StyledSubMenu = styled.li`
   width: 100%;
 `;
 
-const StyledAnchor = styled.a`
+const StyledAnchor = styled.a<{ level: number; collapsed?: boolean }>`
   display: flex;
   align-items: center;
   height: 50px;
-  padding: 0 20px;
+  padding-right: 20px;
+  padding-left: ${({ level, collapsed }) =>
+    level === 0 ? 20 : (collapsed ? level : level + 1) * 20}px;
   text-decoration: none;
   color: inherit;
   box-sizing: border-box;
   cursor: pointer;
+
+  &:hover {
+    background-color: #f3f3f3;
+  }
 `;
 
 export const SubMenu: React.FC<SubMenuProps> = ({
@@ -74,7 +81,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({
   suffix,
   open: openSubmenu,
   defaultOpen,
-  firstLevel,
+  level = 0,
   ...rest
 }) => {
   const { collapsed, transitionDuration, toggled } = useSidebar();
@@ -84,16 +91,20 @@ export const SubMenu: React.FC<SubMenuProps> = ({
   const [openWhenCollapsed, setOpenWhenCollapsed] = React.useState<boolean>(false);
   const [popperInstance, setPopperInstance] = React.useState<Instance | undefined>();
 
+  const childNodes = React.Children.toArray(children).filter(Boolean) as [
+    React.ReactElement<SubMenuProps | MenuItemProps>,
+  ];
+
   const anchorRef = React.useRef<HTMLAnchorElement>(null);
   const SubMenuContentRef = React.useRef<HTMLDivElement>(null);
 
   const handleSlideToggle = (): void => {
-    if (firstLevel && collapsed) setOpenWhenCollapsed(!openWhenCollapsed);
+    if (level === 0 && collapsed) setOpenWhenCollapsed(!openWhenCollapsed);
     else setOpen(!open);
   };
 
   React.useEffect(() => {
-    if (firstLevel && collapsed && SubMenuContentRef.current && anchorRef.current) {
+    if (level === 0 && collapsed && SubMenuContentRef.current && anchorRef.current) {
       const instance = createPopper(anchorRef.current, SubMenuContentRef.current, {
         placement: 'right',
         strategy: 'fixed',
@@ -101,7 +112,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({
 
       setPopperInstance(instance);
     }
-  }, [firstLevel, collapsed]);
+  }, [level, collapsed]);
 
   React.useEffect(() => {
     if (SubMenuContentRef.current && anchorRef.current) {
@@ -124,12 +135,12 @@ export const SubMenu: React.FC<SubMenuProps> = ({
 
   React.useLayoutEffect(() => {
     setTimeout(() => popperInstance?.update(), transitionDuration);
-    if (collapsed && firstLevel) {
+    if (collapsed && level === 0) {
       setOpenWhenCollapsed(false);
       // TODO: if its useful to close first level submenus on collapse sidebar uncomment the code below
       // setOpen(false);
     }
-  }, [collapsed, firstLevel, transitionDuration, popperInstance]);
+  }, [collapsed, level, transitionDuration, popperInstance]);
 
   React.useEffect(() => {
     const handleDocumentClick = (event: MouseEvent) => {
@@ -137,13 +148,13 @@ export const SubMenu: React.FC<SubMenuProps> = ({
         setOpenWhenCollapsed(false);
     };
 
-    if (collapsed && firstLevel) document.addEventListener('click', handleDocumentClick, false);
+    if (collapsed && level === 0) document.addEventListener('click', handleDocumentClick, false);
     else document.removeEventListener('click', handleDocumentClick);
 
     return () => {
       document.removeEventListener('click', handleDocumentClick);
     };
-  }, [collapsed, firstLevel, openWhenCollapsed]);
+  }, [collapsed, level, openWhenCollapsed]);
 
   React.useEffect(() => {
     if (openSubmenu) setOpenDefault(openSubmenu);
@@ -155,14 +166,20 @@ export const SubMenu: React.FC<SubMenuProps> = ({
       className={classnames('sub-menu', { open: openSubmenu ?? open }, className)}
       {...rest}
     >
-      <StyledAnchor ref={anchorRef} onClick={handleSlideToggle} title={title}>
+      <StyledAnchor
+        ref={anchorRef}
+        onClick={handleSlideToggle}
+        title={title}
+        level={level}
+        collapsed={collapsed}
+      >
         {icon && <StyledMenuIcon className="menu-icon">{icon}</StyledMenuIcon>}
 
         {prefix && (
           <StyledMenuPrefix
             collapsed={collapsed}
             transitionDuration={transitionDuration}
-            firstLevel={firstLevel}
+            firstLevel={level === 0}
             className="menu-prefix"
           >
             {prefix}
@@ -177,7 +194,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({
           </span>
         )}
 
-        {collapsed && firstLevel ? (
+        {collapsed && level === 0 ? (
           <StyledExpandIconCollapsed />
         ) : (
           <StyledExpandIcon open={openSubmenu ?? open} />
@@ -187,11 +204,16 @@ export const SubMenu: React.FC<SubMenuProps> = ({
         ref={SubMenuContentRef}
         openWhenCollapsed={openWhenCollapsed}
         open={openSubmenu ?? open}
-        firstLevel={firstLevel}
+        firstLevel={level === 0}
         collapsed={collapsed}
         defaultOpen={openDefault}
       >
-        {children}
+        {childNodes.map((node) =>
+          React.cloneElement(node, {
+            ...node.props,
+            level: level + 1,
+          }),
+        )}
       </SubMenuContent>
     </StyledSubMenu>
   );

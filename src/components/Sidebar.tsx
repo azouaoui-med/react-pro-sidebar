@@ -84,6 +84,8 @@ type StyledInnerSidebarProps = Pick<SidebarProps, 'backgroundColor'>;
 
 const StyledSidebar = styled.aside<StyledSidebarProps>`
   position: relative;
+  border-right: 1px solid #efefef;
+
   width: ${({ width, collapsed, collapsedWidth }) => (collapsed ? collapsedWidth : width)};
   min-width: ${({ width, collapsed, collapsedWidth }) => (collapsed ? collapsedWidth : width)};
   transition: ${({ transitionDuration }) => `width, left, right, ${transitionDuration}ms`};
