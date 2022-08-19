@@ -50,7 +50,7 @@ const StyledExpandIconCollapsed = styled.span`
 
 const StyledSubMenu = styled.li`
   position: relative;
-  display: inline-block;
+  /* display: inline-block; */
   width: 100%;
 `;
 

@@ -14,12 +14,12 @@ interface SubMenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
 let timer: NodeJS.Timer;
 
 const StyledSubMenuContent = styled.div<SubMenuContentProps>`
-  /* padding-left: 20px; */
   display: none;
   overflow: hidden;
   z-index: 999;
   transition: height 300ms;
   box-sizing: border-box;
+  background-color: white;
 
   ${({ firstLevel, collapsed }) =>
     firstLevel &&
@@ -37,7 +37,7 @@ const StyledSubMenuContent = styled.div<SubMenuContentProps>`
       margin-left: 5px!important;
       margin-right: 5px!important;
       padding-left: 0px;
-      max-width: 200px;
+      width: 200px;
       border-radius: 4px;
       height: auto!important;
       display: block!important;     
