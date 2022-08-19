@@ -22,7 +22,7 @@ export default StoryParams;
 
 export const Basic: ComponentStory<typeof Menu> = ({ ...props }) => (
   <div style={{ display: 'flex', height: '100%' }}>
-    <Sidebar backgroundColor="rgba(27, 38, 58, 1)" style={{ color: '#b3b8d4' }}>
+    <Sidebar>
       <Menu {...props}>
         <MenuItem> Pie charts</MenuItem>
         <MenuItem> Line charts</MenuItem>

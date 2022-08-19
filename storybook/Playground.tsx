@@ -12,7 +12,7 @@ export const Playground: React.FC = () => {
         breakPoint="always"
         customBreakPoint="1000px"
         transitionDuration={200}
-        backgroundColor="rgba(27, 38, 58, 1)"
+        // backgroundColor="rgba(27, 38, 58, 1)"
         // image="https://i.pinimg.com/736x/8e/6c/06/8e6c064f57f94838263d7ba9ad80f353.jpg"
       >
         <div>
@@ -22,7 +22,7 @@ export const Playground: React.FC = () => {
               <MenuItem> Line charts</MenuItem>
               <MenuItem> Bar charts</MenuItem>
             </SubMenu>
-            <SubMenu defaultOpen label="Maps" icon={<Icon name="global" />}>
+            <SubMenu label="Maps" icon={<Icon name="global" />}>
               <MenuItem> Google maps</MenuItem>
               <MenuItem> Open street maps</MenuItem>
             </SubMenu>

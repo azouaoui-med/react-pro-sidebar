@@ -22,9 +22,7 @@ export default StoryParams;
 
 export const Basic: ComponentStory<typeof Sidebar> = ({ ...props }) => (
   <div style={{ display: 'flex', height: '100%', minHeight: '400px' }}>
-    <Sidebar backgroundColor="rgba(27, 38, 58, 1)" style={{ color: '#b3b8d4' }} {...props}>
-      Sidebar
-    </Sidebar>
+    <Sidebar {...props}>Sidebar</Sidebar>
     <main> Main content</main>
   </div>
 );
