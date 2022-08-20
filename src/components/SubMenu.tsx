@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { CSSObject } from 'styled-components';
 import classnames from 'classnames';
 import { SubMenuContent } from './SubMenuContent';
 import { createPopper, Instance } from '@popperjs/core';
@@ -8,6 +8,8 @@ import { StyledMenuLabel } from '../styles/StyledMenuLabel';
 import { StyledMenuIcon } from '../styles/StyledMenuIcon';
 import { StyledMenuPrefix } from '../styles/StyledMenuPrefix';
 import { MenuItemProps } from './MenuItem';
+import { StyledMenuItemAnchor } from '../styles/StyledMenuItemAnchor';
+import { useMenu } from '../hooks/useMenu';
 
 export interface SubMenuProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>, 'prefix'> {
   className?: string;
@@ -48,27 +50,10 @@ const StyledExpandIconCollapsed = styled.span`
   transform: translateY(-50%);
 `;
 
-const StyledSubMenu = styled.li`
+const StyledSubMenu = styled.li<{ menuItemStyles?: CSSObject }>`
   position: relative;
-  /* display: inline-block; */
   width: 100%;
-`;
-
-const StyledAnchor = styled.a<{ level: number; collapsed?: boolean }>`
-  display: flex;
-  align-items: center;
-  height: 50px;
-  padding-right: 20px;
-  padding-left: ${({ level, collapsed }) =>
-    level === 0 ? 20 : (collapsed ? level : level + 1) * 20}px;
-  text-decoration: none;
-  color: inherit;
-  box-sizing: border-box;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #f3f3f3;
-  }
+  ${({ menuItemStyles }) => menuItemStyles};
 `;
 
 export const SubMenu: React.FC<SubMenuProps> = ({
@@ -85,6 +70,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({
   ...rest
 }) => {
   const { collapsed, transitionDuration, toggled } = useSidebar();
+  const { renderMenuItemStyles } = useMenu();
 
   const [open, setOpen] = React.useState<boolean>(!!defaultOpen);
   const [openDefault, setOpenDefault] = React.useState<boolean>(!!defaultOpen);
@@ -163,15 +149,17 @@ export const SubMenu: React.FC<SubMenuProps> = ({
 
   return (
     <StyledSubMenu
-      className={classnames('sub-menu', { open: openSubmenu ?? open }, className)}
+      className={classnames('sub-menu', 'menu-item', { open: openSubmenu ?? open }, className)}
+      menuItemStyles={renderMenuItemStyles?.({ level, collapsed: !!collapsed })}
       {...rest}
     >
-      <StyledAnchor
+      <StyledMenuItemAnchor
         ref={anchorRef}
         onClick={handleSlideToggle}
         title={title}
         level={level}
         collapsed={collapsed}
+        className="menu-anchor"
       >
         {icon && <StyledMenuIcon className="menu-icon">{icon}</StyledMenuIcon>}
 
@@ -199,7 +187,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({
         ) : (
           <StyledExpandIcon open={openSubmenu ?? open} />
         )}
-      </StyledAnchor>
+      </StyledMenuItemAnchor>
       <SubMenuContent
         ref={SubMenuContentRef}
         openWhenCollapsed={openWhenCollapsed}

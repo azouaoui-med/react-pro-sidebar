@@ -1,10 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { CSSObject } from 'styled-components';
 import classnames from 'classnames';
 import { StyledMenuLabel } from '../styles/StyledMenuLabel';
 import { StyledMenuIcon } from '../styles/StyledMenuIcon';
 import { StyledMenuPrefix } from '../styles/StyledMenuPrefix';
 import { useSidebar } from '../hooks/useSidebar';
+import { StyledMenuItemAnchor } from '../styles/StyledMenuItemAnchor';
+import { useMenu } from '../hooks/useMenu';
 
 export interface MenuItemProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
@@ -17,26 +19,10 @@ export interface MenuItemProps
   level?: number;
 }
 
-const StyledMenuItem = styled.li`
+const StyledMenuItem = styled.li<{ menuItemStyles?: CSSObject }>`
   display: inline-block;
   width: 100%;
-`;
-
-const StyledAnchor = styled.a<{ level: number; collapsed?: boolean }>`
-  display: flex;
-  align-items: center;
-  height: 50px;
-  padding-right: 20px;
-  padding-left: ${({ level, collapsed }) =>
-    level === 0 ? 20 : (collapsed ? level : level + 1) * 20}px;
-  text-decoration: none;
-  color: inherit;
-  box-sizing: border-box;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #f3f3f3;
-  }
+  ${({ menuItemStyles }) => menuItemStyles};
 `;
 
 export const MenuItem: React.FC<MenuItemProps> = ({
@@ -49,10 +35,14 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   ...rest
 }) => {
   const { collapsed, transitionDuration } = useSidebar();
+  const { renderMenuItemStyles } = useMenu();
 
   return (
-    <StyledMenuItem className={classnames('menu-item', className)}>
-      <StyledAnchor className="menu-anchor" level={level} collapsed={collapsed} {...rest}>
+    <StyledMenuItem
+      className={classnames('menu-item', className)}
+      menuItemStyles={renderMenuItemStyles?.({ level, collapsed: !!collapsed })}
+    >
+      <StyledMenuItemAnchor className="menu-anchor" level={level} collapsed={collapsed} {...rest}>
         {icon && <StyledMenuIcon className="menu-icon">{icon}</StyledMenuIcon>}
 
         {prefix && (
@@ -73,7 +63,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
             {suffix}
           </span>
         )}
-      </StyledAnchor>
+      </StyledMenuItemAnchor>
     </StyledMenuItem>
   );
 };
