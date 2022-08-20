@@ -13,6 +13,7 @@ export interface MenuItemProps
   icon?: React.ReactNode;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
+  active?: boolean;
   /**
    * @ignore
    */
@@ -22,6 +23,11 @@ export interface MenuItemProps
 const StyledMenuItem = styled.li<{ menuItemStyles?: CSSObject }>`
   display: inline-block;
   width: 100%;
+
+  &.active > .menu-anchor {
+    background-color: #e2eef9;
+  }
+
   ${({ menuItemStyles }) => menuItemStyles};
 `;
 
@@ -32,6 +38,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   prefix,
   suffix,
   level = 0,
+  active,
   ...rest
 }) => {
   const { collapsed, transitionDuration } = useSidebar();
@@ -39,7 +46,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
 
   return (
     <StyledMenuItem
-      className={classnames('menu-item', className)}
+      className={classnames('menu-item', { active }, className)}
       menuItemStyles={renderMenuItemStyles?.({ level, collapsed: !!collapsed })}
     >
       <StyledMenuItemAnchor className="menu-anchor" level={level} collapsed={collapsed} {...rest}>

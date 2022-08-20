@@ -19,6 +19,7 @@ export interface SubMenuProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>
   suffix?: React.ReactNode;
   open?: boolean;
   defaultOpen?: boolean;
+  active?: boolean;
   /**
    * @ignore
    */
@@ -63,6 +64,11 @@ const StyledExpandIconCollapsed = styled.span`
 const StyledSubMenu = styled.li<{ menuItemStyles?: CSSObject }>`
   position: relative;
   width: 100%;
+
+  &.active > .menu-anchor {
+    background-color: #e2eef9;
+  }
+
   ${({ menuItemStyles }) => menuItemStyles};
 `;
 
@@ -77,6 +83,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({
   open: openSubmenu,
   defaultOpen,
   level = 0,
+  active,
   ...rest
 }) => {
   const { collapsed, transitionDuration, toggled } = useSidebar();
@@ -159,7 +166,13 @@ export const SubMenu: React.FC<SubMenuProps> = ({
 
   return (
     <StyledSubMenu
-      className={classnames('sub-menu', 'menu-item', { open: openSubmenu ?? open }, className)}
+      className={classnames(
+        'sub-menu',
+        'menu-item',
+        { active },
+        { open: openSubmenu ?? open },
+        className,
+      )}
       menuItemStyles={renderMenuItemStyles?.({ level, collapsed: !!collapsed })}
       {...rest}
     >
