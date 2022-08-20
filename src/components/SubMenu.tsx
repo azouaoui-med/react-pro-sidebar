@@ -29,7 +29,21 @@ interface StyledExpandIconProps {
   open?: boolean;
 }
 
+const StyledExpandIconWrapper = styled.span<{ collapsed?: boolean; level?: number }>`
+  ${({ collapsed, level }) =>
+    collapsed &&
+    level === 0 &&
+    `
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    
+    `}
+`;
+
 const StyledExpandIcon = styled.span<StyledExpandIconProps>`
+  display: inline-block;
   transition: transform 0.3s;
   border-right: 2px solid currentcolor;
   border-bottom: 2px solid currentcolor;
@@ -44,10 +58,6 @@ const StyledExpandIconCollapsed = styled.span`
   background-color: currentcolor;
   border-radius: 50%;
   display: inline-block;
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
 `;
 
 const StyledSubMenu = styled.li<{ menuItemStyles?: CSSObject }>`
@@ -70,7 +80,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({
   ...rest
 }) => {
   const { collapsed, transitionDuration, toggled } = useSidebar();
-  const { renderMenuItemStyles } = useMenu();
+  const { renderMenuItemStyles, renderExpandIcon } = useMenu();
 
   const [open, setOpen] = React.useState<boolean>(!!defaultOpen);
   const [openDefault, setOpenDefault] = React.useState<boolean>(!!defaultOpen);
@@ -182,11 +192,15 @@ export const SubMenu: React.FC<SubMenuProps> = ({
           </span>
         )}
 
-        {collapsed && level === 0 ? (
-          <StyledExpandIconCollapsed />
-        ) : (
-          <StyledExpandIcon open={openSubmenu ?? open} />
-        )}
+        <StyledExpandIconWrapper className="expand-icon" collapsed={collapsed} level={level}>
+          {renderExpandIcon ? (
+            renderExpandIcon({ collapsed: !!collapsed, level, open: openSubmenu ?? open })
+          ) : collapsed && level === 0 ? (
+            <StyledExpandIconCollapsed />
+          ) : (
+            <StyledExpandIcon open={openSubmenu ?? open} />
+          )}
+        </StyledExpandIconWrapper>
       </StyledMenuItemAnchor>
       <SubMenuContent
         ref={SubMenuContentRef}

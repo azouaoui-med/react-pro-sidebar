@@ -5,10 +5,20 @@ import { CSSObject } from 'styled-components';
 
 export type MenuProps = React.MenuHTMLAttributes<HTMLMenuElement> & {
   renderMenuItemStyles?: (params: { level: number; collapsed: boolean }) => CSSObject;
+  renderExpandIcon?: (params: {
+    level: number;
+    collapsed: boolean;
+    open: boolean;
+  }) => React.ReactNode;
 };
 
 interface MenuState {
   renderMenuItemStyles?: (params: { level: number; collapsed: boolean }) => CSSObject;
+  renderExpandIcon?: (params: {
+    level: number;
+    collapsed: boolean;
+    open: boolean;
+  }) => React.ReactNode;
 }
 
 export const MenuContext = React.createContext<MenuContextProps | undefined>(undefined);
@@ -21,6 +31,7 @@ export const Menu: React.FC<MenuProps> = ({
   children,
   className,
   renderMenuItemStyles,
+  renderExpandIcon,
   ...rest
 }) => {
   const [menuState, setMenuState] = React.useState<MenuState>();
@@ -35,8 +46,8 @@ export const Menu: React.FC<MenuProps> = ({
   );
 
   React.useEffect(() => {
-    updateMenuState({ renderMenuItemStyles });
-  }, [renderMenuItemStyles, updateMenuState]);
+    updateMenuState({ renderMenuItemStyles, renderExpandIcon });
+  }, [renderExpandIcon, renderMenuItemStyles, updateMenuState]);
 
   return (
     <MenuContext.Provider value={providerValue}>
