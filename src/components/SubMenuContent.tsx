@@ -66,6 +66,7 @@ const SubMenuContentFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuCo
         const target = SubMenuContentRef?.current;
         if (target) {
           target.style.display = 'block';
+          target.style.overflow = 'hidden';
           target.style.height = 'auto';
           const height = target.offsetHeight;
           target.style.height = '0px';
@@ -73,17 +74,20 @@ const SubMenuContentFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuCo
           target.style.height = `${height}px`;
 
           timer = setTimeout(() => {
+            target.style.overflow = 'auto';
             target.style.height = 'auto';
           }, duration);
         }
       } else {
         const target = SubMenuContentRef?.current;
         if (target) {
+          target.style.overflow = 'hidden';
           target.style.height = `${target.offsetHeight}px`;
           target.offsetHeight;
           target.style.height = '0px';
 
           timer = setTimeout(() => {
+            target.style.overflow = 'auto';
             target.style.display = 'none';
           }, duration);
         }
