@@ -29,14 +29,10 @@ export interface MenuContextProps extends MenuState {
   updateMenuState: (values: MenuState) => void;
 }
 
-export const Menu: React.FC<MenuProps> = ({
-  children,
-  className,
-  closeOnClick = false,
-  renderMenuItemStyles,
-  renderExpandIcon,
-  ...rest
-}) => {
+const MenuFR: React.ForwardRefRenderFunction<HTMLMenuElement, MenuProps> = (
+  { children, className, closeOnClick = false, renderMenuItemStyles, renderExpandIcon, ...rest },
+  ref,
+) => {
   const [menuState, setMenuState] = React.useState<MenuState>();
 
   const updateMenuState = React.useCallback((values: Partial<MenuState>) => {
@@ -54,9 +50,11 @@ export const Menu: React.FC<MenuProps> = ({
 
   return (
     <MenuContext.Provider value={providerValue}>
-      <nav className={classnames('menu', className)} {...rest}>
+      <nav ref={ref} className={classnames('menu', className)} {...rest}>
         <StyledUl>{children}</StyledUl>
       </nav>
     </MenuContext.Provider>
   );
 };
+
+export const Menu = React.forwardRef<HTMLMenuElement, MenuProps>(MenuFR);

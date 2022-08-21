@@ -74,22 +74,25 @@ const StyledSubMenu = styled.li<{ menuItemStyles?: CSSObject }>`
   ${({ menuItemStyles }) => menuItemStyles};
 `;
 
-export const SubMenu: React.FC<SubMenuProps> = ({
-  children,
-  className,
-  label,
-  icon,
-  title,
-  prefix,
-  suffix,
-  open: openSubmenu,
-  defaultOpen,
-  level = 0,
-  active,
-  onOpenChange,
-  onClick,
-  ...rest
-}) => {
+export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuProps> = (
+  {
+    children,
+    className,
+    label,
+    icon,
+    title,
+    prefix,
+    suffix,
+    open: openSubmenu,
+    defaultOpen,
+    level = 0,
+    active,
+    onOpenChange,
+    onClick,
+    ...rest
+  },
+  ref,
+) => {
   const { collapsed, transitionDuration, toggled } = useSidebar();
   const { renderMenuItemStyles, renderExpandIcon, closeOnClick } = useMenu();
 
@@ -181,6 +184,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({
 
   return (
     <StyledSubMenu
+      ref={ref}
       className={classnames(
         'sub-menu',
         'menu-item',
@@ -248,3 +252,4 @@ export const SubMenu: React.FC<SubMenuProps> = ({
     </StyledSubMenu>
   );
 };
+export const SubMenu = React.forwardRef<HTMLLIElement, SubMenuProps>(SubMenuFR);

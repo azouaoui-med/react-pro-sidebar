@@ -137,21 +137,24 @@ const StyledSidebarImage = styled.img`
   z-index: 2;
 `;
 
-export const Sidebar: React.FC<SidebarProps> = ({
-  width = '250px',
-  collapsedWidth = '80px',
-  defaultCollapsed = false,
-  className,
-  children,
-  breakPoint,
-  customBreakPoint,
-  backgroundColor = 'rgba(249, 249, 249, 0.7)',
-  transitionDuration = 300,
-  overlayColor = 'rgb(0, 0, 0, 0.3)',
-  image,
-  rtl,
-  ...rest
-}) => {
+const SidebarFR: React.ForwardRefRenderFunction<HTMLHtmlElement, SidebarProps> = (
+  {
+    width = '250px',
+    collapsedWidth = '80px',
+    defaultCollapsed = false,
+    className,
+    children,
+    breakPoint,
+    customBreakPoint,
+    backgroundColor = 'rgba(249, 249, 249, 0.7)',
+    transitionDuration = 300,
+    overlayColor = 'rgb(0, 0, 0, 0.3)',
+    image,
+    rtl,
+    ...rest
+  },
+  ref,
+) => {
   const broken = useMediaQuery(
     customBreakPoint ?? (breakPoint ? BREAK_POINTS[breakPoint] : breakPoint),
   );
@@ -185,6 +188,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <StyledSidebar
+      ref={ref}
       data-testid="sidebar-test-id"
       collapsed={collapsedContext}
       broken={brokenContext}
@@ -223,3 +227,5 @@ export const Sidebar: React.FC<SidebarProps> = ({
     </StyledSidebar>
   );
 };
+
+export const Sidebar = React.forwardRef<HTMLHtmlElement, SidebarProps>(SidebarFR);

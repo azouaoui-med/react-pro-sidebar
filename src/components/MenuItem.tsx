@@ -31,21 +31,16 @@ const StyledMenuItem = styled.li<{ menuItemStyles?: CSSObject }>`
   ${({ menuItemStyles }) => menuItemStyles};
 `;
 
-export const MenuItem: React.FC<MenuItemProps> = ({
-  children,
-  icon,
-  className,
-  prefix,
-  suffix,
-  level = 0,
-  active,
-  ...rest
-}) => {
+export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemProps> = (
+  { children, icon, className, prefix, suffix, level = 0, active, ...rest },
+  ref,
+) => {
   const { collapsed, transitionDuration } = useSidebar();
   const { renderMenuItemStyles } = useMenu();
 
   return (
     <StyledMenuItem
+      ref={ref}
       className={classnames('menu-item', { active }, className)}
       menuItemStyles={renderMenuItemStyles?.({ level, collapsed: !!collapsed })}
     >
@@ -74,3 +69,5 @@ export const MenuItem: React.FC<MenuItemProps> = ({
     </StyledMenuItem>
   );
 };
+
+export const MenuItem = React.forwardRef<HTMLLIElement, MenuItemProps>(MenuItemFR);
