@@ -8,7 +8,7 @@ interface StyledMenuPrefixProps {
 }
 
 export const StyledMenuPrefix = styled.span<StyledMenuPrefixProps>`
-  margin-right: 5px;
+  ${({ rtl }) => (rtl ? 'margin-left: 5px;' : 'margin-right: 5px;')}
   opacity: ${({ firstLevel, collapsed }) => (firstLevel && collapsed ? '0' : '1')};
   transition: opacity ${({ transitionDuration }) => transitionDuration}ms;
 `;

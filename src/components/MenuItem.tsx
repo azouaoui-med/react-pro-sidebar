@@ -35,7 +35,7 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
   { children, icon, className, prefix, suffix, level = 0, active, ...rest },
   ref,
 ) => {
-  const { collapsed, transitionDuration } = useSidebar();
+  const { collapsed, transitionDuration, rtl } = useSidebar();
   const { renderMenuItemStyles } = useMenu();
 
   return (
@@ -44,8 +44,18 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
       className={classnames('menu-item', { active }, className)}
       menuItemStyles={renderMenuItemStyles?.({ level, collapsed: !!collapsed })}
     >
-      <StyledMenuItemAnchor className="menu-anchor" level={level} collapsed={collapsed} {...rest}>
-        {icon && <StyledMenuIcon className="menu-icon">{icon}</StyledMenuIcon>}
+      <StyledMenuItemAnchor
+        className="menu-anchor"
+        level={level}
+        collapsed={collapsed}
+        rtl={rtl}
+        {...rest}
+      >
+        {icon && (
+          <StyledMenuIcon rtl={rtl} className="menu-icon">
+            {icon}
+          </StyledMenuIcon>
+        )}
 
         {prefix && (
           <StyledMenuPrefix
@@ -53,6 +63,7 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
             transitionDuration={transitionDuration}
             firstLevel={level === 0}
             className="menu-prefix"
+            rtl={rtl}
           >
             {prefix}
           </StyledMenuPrefix>
