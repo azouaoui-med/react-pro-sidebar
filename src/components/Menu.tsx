@@ -3,16 +3,18 @@ import classnames from 'classnames';
 import { StyledUl } from '../styles/StyledUl';
 import { CSSObject } from 'styled-components';
 
-export type MenuProps = React.MenuHTMLAttributes<HTMLMenuElement> & {
+export interface MenuProps extends React.MenuHTMLAttributes<HTMLMenuElement> {
+  closeOnClick?: boolean;
   renderMenuItemStyles?: (params: { level: number; collapsed: boolean }) => CSSObject;
   renderExpandIcon?: (params: {
     level: number;
     collapsed: boolean;
     open: boolean;
   }) => React.ReactNode;
-};
+}
 
 interface MenuState {
+  closeOnClick?: boolean;
   renderMenuItemStyles?: (params: { level: number; collapsed: boolean }) => CSSObject;
   renderExpandIcon?: (params: {
     level: number;
@@ -30,6 +32,7 @@ export interface MenuContextProps extends MenuState {
 export const Menu: React.FC<MenuProps> = ({
   children,
   className,
+  closeOnClick = false,
   renderMenuItemStyles,
   renderExpandIcon,
   ...rest
@@ -46,8 +49,8 @@ export const Menu: React.FC<MenuProps> = ({
   );
 
   React.useEffect(() => {
-    updateMenuState({ renderMenuItemStyles, renderExpandIcon });
-  }, [renderExpandIcon, renderMenuItemStyles, updateMenuState]);
+    updateMenuState({ renderMenuItemStyles, renderExpandIcon, closeOnClick });
+  }, [renderExpandIcon, renderMenuItemStyles, closeOnClick, updateMenuState]);
 
   return (
     <MenuContext.Provider value={providerValue}>

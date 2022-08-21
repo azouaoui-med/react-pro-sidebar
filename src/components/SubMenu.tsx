@@ -91,7 +91,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({
   ...rest
 }) => {
   const { collapsed, transitionDuration, toggled } = useSidebar();
-  const { renderMenuItemStyles, renderExpandIcon } = useMenu();
+  const { renderMenuItemStyles, renderExpandIcon, closeOnClick } = useMenu();
 
   const [open, setOpen] = React.useState<boolean>(!!defaultOpen);
   const [openDefault, setOpenDefault] = React.useState<boolean>(!!defaultOpen);
@@ -157,7 +157,12 @@ export const SubMenu: React.FC<SubMenuProps> = ({
 
   React.useEffect(() => {
     const handleDocumentClick = (event: MouseEvent) => {
-      if (!SubMenuContentRef.current?.contains(event.target as Node) && openWhenCollapsed)
+      if (
+        (closeOnClick &&
+          !(event.target as HTMLElement).closest('.menu-item')?.classList.contains('sub-menu') &&
+          openWhenCollapsed) ||
+        (!SubMenuContentRef.current?.contains(event.target as Node) && openWhenCollapsed)
+      )
         setOpenWhenCollapsed(false);
     };
 
@@ -167,7 +172,7 @@ export const SubMenu: React.FC<SubMenuProps> = ({
     return () => {
       document.removeEventListener('click', handleDocumentClick);
     };
-  }, [collapsed, level, openWhenCollapsed]);
+  }, [collapsed, level, closeOnClick, openWhenCollapsed]);
 
   React.useEffect(() => {
     if (openSubmenu) setOpenDefault(openSubmenu);
