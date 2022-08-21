@@ -2,7 +2,6 @@ import React from 'react';
 import { customRender, screen } from '../../utils/testUtils';
 import { Sidebar } from '../Sidebar';
 import * as sidebarHooks from '../../hooks/useSidebar';
-import * as layoutHooks from '../../hooks/useLayout';
 
 describe('Sidebar', () => {
   it('basic snapshot ', () => {
@@ -58,15 +57,6 @@ describe('Sidebar', () => {
     expect(sidebarElem).toHaveStyle({
       width: '100px',
       'min-width': '100px',
-    });
-  });
-
-  it('should have height:100% when fixed is true ', () => {
-    customRender(<Sidebar fixed>Sidebar</Sidebar>);
-    const sidebarElem = screen.getByTestId('sidebar-test-id');
-
-    expect(sidebarElem).toHaveStyle({
-      height: '100%',
     });
   });
 
@@ -174,14 +164,14 @@ describe('Sidebar', () => {
       broken: true,
       toggled: false,
       transitionDuration: 300,
-    }));
-
-    jest.spyOn(layoutHooks, 'useLayout').mockImplementation(() => ({
-      updateLayoutState: jest.fn(),
       rtl: true,
     }));
 
-    customRender(<Sidebar image="some-url">Sidebar</Sidebar>);
+    customRender(
+      <Sidebar rtl image="some-url">
+        Sidebar
+      </Sidebar>,
+    );
     const SidebarElem = screen.getByTestId('sidebar-test-id');
 
     expect(SidebarElem).toHaveStyle({
@@ -199,14 +189,14 @@ describe('Sidebar', () => {
       broken: true,
       toggled: true,
       transitionDuration: 300,
-    }));
-
-    jest.spyOn(layoutHooks, 'useLayout').mockImplementation(() => ({
-      updateLayoutState: jest.fn(),
       rtl: true,
     }));
 
-    customRender(<Sidebar image="some-url">Sidebar</Sidebar>);
+    customRender(
+      <Sidebar rtl image="some-url">
+        Sidebar
+      </Sidebar>,
+    );
     const SidebarElem = screen.getByTestId('sidebar-test-id');
 
     expect(SidebarElem).toHaveStyle({
