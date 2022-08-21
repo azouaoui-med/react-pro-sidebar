@@ -11,7 +11,8 @@ import { MenuItemProps } from './MenuItem';
 import { StyledMenuItemAnchor } from '../styles/StyledMenuItemAnchor';
 import { useMenu } from '../hooks/useMenu';
 
-export interface SubMenuProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>, 'prefix'> {
+export interface SubMenuProps
+  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
   className?: string;
   label?: string;
   icon?: React.ReactNode;
@@ -20,6 +21,7 @@ export interface SubMenuProps extends Omit<React.LiHTMLAttributes<HTMLLIElement>
   open?: boolean;
   defaultOpen?: boolean;
   active?: boolean;
+  onOpenChange?: (open: boolean) => void;
   /**
    * @ignore
    */
@@ -84,6 +86,8 @@ export const SubMenu: React.FC<SubMenuProps> = ({
   defaultOpen,
   level = 0,
   active,
+  onOpenChange,
+  onClick,
   ...rest
 }) => {
   const { collapsed, transitionDuration, toggled } = useSidebar();
@@ -101,9 +105,15 @@ export const SubMenu: React.FC<SubMenuProps> = ({
   const anchorRef = React.useRef<HTMLAnchorElement>(null);
   const SubMenuContentRef = React.useRef<HTMLDivElement>(null);
 
-  const handleSlideToggle = (): void => {
+  const handleSlideToggle = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void => {
+    onClick?.(event);
     if (level === 0 && collapsed) setOpenWhenCollapsed(!openWhenCollapsed);
-    else setOpen(!open);
+    else if (typeof openSubmenu === 'undefined') {
+      onOpenChange?.(!open);
+      setOpen(!open);
+    } else {
+      onOpenChange?.(!openSubmenu);
+    }
   };
 
   React.useEffect(() => {
@@ -174,15 +184,15 @@ export const SubMenu: React.FC<SubMenuProps> = ({
         className,
       )}
       menuItemStyles={renderMenuItemStyles?.({ level, collapsed: !!collapsed })}
-      {...rest}
     >
       <StyledMenuItemAnchor
         ref={anchorRef}
-        onClick={handleSlideToggle}
         title={title}
         level={level}
         collapsed={collapsed}
         className="menu-anchor"
+        onClick={handleSlideToggle}
+        {...rest}
       >
         {icon && <StyledMenuIcon className="menu-icon">{icon}</StyledMenuIcon>}
 
