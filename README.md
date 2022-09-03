@@ -14,7 +14,11 @@
 [npm-url]: https://www.npmjs.com/package/react-pro-sidebar
 [github-url]: https://github.com/azouaoui-med/react-pro-sidebar
 
-Customizable and responsive react sidebar library with dropdown menus and unlimited number of nested submenus
+React Pro Sidebar provides a set of components for creating high level and customizable side navigation
+
+## Old versions
+
+- [V0.x](https://github.com/azouaoui-med/react-pro-sidebar/tree/v0.x)
 
 ## Demo
 
@@ -40,115 +44,40 @@ npm install react-pro-sidebar
 
 ## Usage
 
-```jsx
-import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import 'react-pro-sidebar/dist/css/styles.css';
+First you need to make sure that your components are wrapped within a `<ProSidebarProvider>` component
 
-<ProSidebar>
-  <Menu iconShape="square">
-    <MenuItem icon={<FaGem />}>Dashboard</MenuItem>
-    <SubMenu title="Components" icon={<FaHeart />}>
-      <MenuItem>Component 1</MenuItem>
-      <MenuItem>Component 2</MenuItem>
+```tsx
+import { ProSidebarProvider } from 'react-pro-sidebar';
+
+<ProSidebarProvider>
+  <App />
+</ProSidebarProvider>;
+```
+
+Then in your layout component you can add sidebar navigation
+
+```tsx
+import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+
+<Sidebar>
+  <Menu>
+    <MenuItem>MenuItem</MenuItem>
+    <SubMenu label="Submenu">
+      <MenuItem>MenuItem 1</MenuItem>
+      <MenuItem>MenuItem 2</MenuItem>
     </SubMenu>
   </Menu>
-</ProSidebar>;
+</Sidebar>;
 ```
 
-If you are using sass then you can import the `styles.scss` directly into your scss file
+## Hook
 
-```scss
-@import '~react-pro-sidebar/dist/scss/styles.scss';
-```
+The library comes with a `useProSidebar` hook that lets you access and handle sidebar state
 
-## Sidebar Layout
+**Usage**
 
-You can take advantage of the sidebar layout components to organize the content of your sidebar
-
-```jsx
-import { ProSidebar, SidebarHeader, SidebarFooter, SidebarContent } from 'react-pro-sidebar';
-
-<ProSidebar>
-  <SidebarHeader>
-    {/**
-     *  You can add a header for the sidebar ex: logo
-     */}
-  </SidebarHeader>
-  <SidebarContent>
-    {/**
-     *  You can add the content of the sidebar ex: menu, profile details, ...
-     */}
-  </SidebarContent>
-  <SidebarFooter>
-    {/**
-     *  You can add a footer for the sidebar ex: copyright
-     */}
-  </SidebarFooter>
-</ProSidebar>;
-```
-
-## Custom Styling
-
-There are sets of sass variables available which you can override to define your own styles
-
-You need to include your override variables before importing the scss file
-
-Your `custom.scss` file should look something like this
-
-```scss
-// Your variable overrides
-$sidebar-bg-color: #1d1d1d;
-
-@import '~react-pro-sidebar/dist/scss/styles.scss';
-```
-
-Available scss variables
-
-```scss
-$sidebar-bg-color: #1d1d1d !default;
-$sidebar-color: #adadad !default;
-$sidebar-width: 270px !default;
-$sidebar-collapsed-width: 80px !default;
-$highlight-color: #d8d8d8 !default;
-$submenu-bg-color: #2b2b2b !default;
-$submenu-bg-color-collapsed: #2b2b2b !default;
-$icon-bg-color: #2b2b2b !default;
-$icon-size: 35px !default;
-$submenu-indent: 24px !default;
-$breakpoint-xs: 480px !default;
-$breakpoint-sm: 576px !default;
-$breakpoint-md: 768px !default;
-$breakpoint-lg: 992px !default;
-$breakpoint-xl: 1200px !default;
-$breakpoint-xxl: 1600px !default;
-```
-
-## Using nested sub-menus
-
-You can have as many nested menu-items and sub-menus as you like, and the syntax is very simple
-
-```jsx
-<Menu iconShape="square">
-  <SubMenu title="Components" icon={<FaGem />}>
-    <MenuItem>Component 1</MenuItem>
-    <SubMenu title="Sub Component 1" icon={<FaHeart />}>
-      {/* you can have more nested submenus ... */}
-    </SubMenu>
-  </SubMenu>
-</Menu>
-```
-
-## Using React Router Dom
-
-Here is an example on how to use [react router dom](https://github.com/ReactTraining/react-router) in the menu item
-
-```jsx
-import { Link } from 'react-router-dom';
-
-<MenuItem icon={<FaGem />}>
-  Dashboard
-  <Link to="/" />
-</MenuItem>;
+```tsx
+const { toggleSidebar, collapseSidebar, broken, rtl, collapsed, toggled } = useProSidebar();
 ```
 
 ## API
@@ -165,144 +94,144 @@ import { Link } from 'react-router-dom';
     </thead>
     <tbody>
         <tr>
-            <td rowspan=7>ProSidebar</td>
+            <td rowspan=9>Sidebar</td>
             <td>collapsed</td>
-            <td>boolean</td>
+            <td><code>boolean</code></td>
             <td>collapsed status of the sidebar </td>
             <td><code>false</code></td>
         </tr>
         <tr>
-            <td>rtl</td>
-            <td>boolean</td>
-            <td>RTL direction</td>
+            <td>defaultCollapsed</td>
+            <td><code>boolean</code></td>
+            <td>initial collapsed status</td>
             <td><code>false</code></td>
-        </tr>
-        <tr>
-            <td>toggled</td>
-            <td>string</td>
-            <td>Toggle status of the sidebar when break point is enabled</td>
-            <td><code>false</code></td>
-        </tr>
-        <tr>
-            <td>onToggle</td>
-            <td><code>(value:boolean)=>{}</code></td>
-            <td>Callback function called when toggled status changes, happens when overlay is clicked</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>breakPoint</td>
-            <td><code>xs</code> | <code>sm</code> | <code>md</code> | <code>lg</code> | <code>xl</code></td>
-            <td>Set break point to specify when the sidebar should be responsive </td>
-            <td>-</td>
         </tr>
         <tr>
             <td>width</td>
-            <td>number | string</td>
+            <td><code>number | string</code></td>
             <td>Width of the sidebar</td>
             <td><code>270px</code></td>
         </tr>
         <tr>
             <td>collapsedWidth</td>
-            <td>number | string</td>
+            <td><code>number | string</code></td>
             <td>Width of the sidebar on collapsed state</td>
             <td><code>80px</code></td>
         </tr>
         <tr>
+            <td>breakPoint</td>
+            <td><code>xs</code> | <code>sm</code> | <code>md</code> | <code>lg</code> | <code>xl</code> | <code>xxl</code> | <code>always</code></td>
+            <td>set when the sidebar should trigger responsiveness behavior </td>
+            <td>-</td>
+        </tr>
+        <tr>
             <td>image</td>
-            <td>string</td>
+            <td><code>string</code></td>
             <td>Url of the image to use in the sidebar background</td>
             <td>-</td>
         </tr>
+        <tr>
+            <td>transitionDuration</td>
+            <td><code>number</code></td>
+            <td>duration for the transition in milliseconds to be used in collapse and toggle behavior</td>
+            <td><code>300</code></td>
+        </tr>
+        <tr>
+            <td>overlayColor</td>
+            <td><code>string</code></td>
+            <td>set overlay color</td>
+            <td><code>rgb(0, 0, 0, 0.3)</code></td>
+        </tr>
+        <tr>
+            <td>rtl</td>
+            <td><code>boolean</code></td>
+            <td>RTL direction</td>
+            <td><code>false</code></td>
+        </tr>
          <tr>
-            <td rowspan=4>Menu</td>
-            <td>iconShape</td>
-            <td><code>'square'</code> | <code>'round'</code> | <code>'circle'</code></td>
-            <td>Shape of the menu icons </td>
+            <td rowspan=3>Menu</td>
+            <td>closeOnClick</td>
+            <td><code>boolean</code></td>
+            <td>if <code>true</code>, submenu popper will close when clicking on MenuItem</td>
+            <td><code>false</code></td>
+        </tr>  
+         <tr>          
+            <td>renderMenuItemStyles</td>
+            <td><code>(params: { level: number; collapsed: boolean }) => CSSObject</code></td>
+            <td>render method for style customization on MenuItem and SubMenu components </td>
             <td>-</td>
         </tr>  
          <tr>          
-            <td>popperArrow</td>
-            <td>boolean</td>
-            <td>if <code>true</code>, an arrow will be displayed when sidebar collapsed to point to sub-menu wrapper</td>
-            <td><code>false</code></td>
-        </tr>  
-         <tr>          
-            <td>innerSubMenuArrows</td>
-            <td>boolean</td>
-            <td>if <code>true</code>, arrows will be displayed for each inner submenu</td>
-            <td><code>true</code></td>
-        </tr>  
-         <tr>          
-            <td>subMenuBullets</td>
-            <td>boolean</td>
-            <td>if <code>true</code>, bullets will be displayed for each inner submenu/menuItem</td>
-            <td><code>false</code></td>
-        </tr>  
+            <td>renderExpandIcon</td>
+            <td><code>(params: { level: number; collapsed: boolean;open: boolean; }) => React.ReactNode</code></td>
+            <td>Render method for customizing submenu expand icon</td>
+            <td>-</td>
+        </tr>         
          <tr>
             <td rowspan=4>MenuItem</td>
             <td>icon</td>
-            <td>ReactNode</td>
+            <td><code>ReactNode</code></td>
             <td>Icon for the menu item </td>
             <td>-</td>
         </tr>  
          <tr>
             <td>active</td>
-            <td>boolean</td>
+            <td><code>boolean</code></td>
             <td>Set active menu items </td>
             <td><code>false</code></td>
         </tr>  
          <tr>
             <td>prefix</td>
-            <td>ReactNode</td>
+            <td><code>ReactNode</code></td>
             <td>Add a prefix to the menuItem </td>
             <td>-</td>
         </tr>  
          <tr>
             <td>suffix</td>
-            <td>ReactNode</td>
+            <td><code>ReactNode</code></td>
             <td>Add a suffix to the menuItem </td>
             <td>-</td>
         </tr>          
         <tr>
             <td rowspan=7>SubMenu</td>
-            <td>title</td>
-            <td>string | ReactNode</td>
-            <td>Title for the submenu </td>
+            <td>label</td>
+            <td><code>string | ReactNode</code></td>
+            <td>label for the submenu </td>
             <td>-</td>
         </tr>  
          <tr>
             <td>icon</td>
-            <td>ReactNode</td>
+            <td><code>ReactNode</code></td>
             <td>Icon for submenu</td>
             <td>-</td>
         </tr>  
          <tr>
             <td>defaultOpen</td>
-            <td>boolean</td>
+            <td><code>boolean</code></td>
             <td>Set if the submenu is open by default</td>
             <td><code>false</code></td>
         </tr>  
          <tr>
             <td>open</td>
-            <td>boolean</td>
+            <td><code>boolean</code></td>
             <td>Set open value if you want to control the state</td>
             <td>-</td>
         </tr>  
         <tr>
             <td>prefix</td>
-            <td>ReactNode</td>
+            <td><code>ReactNode</code></td>
             <td>Add a prefix to the submenu </td>
             <td>-</td>
         </tr>  
         <tr>
             <td>suffix</td>
-            <td>ReactNode</td>
+            <td><code>ReactNode</code></td>
             <td>Add a suffix to the submenu </td>
             <td>-</td>
         </tr>
         <tr>
             <td>onOpenChange</td>
-            <td><code>(open: boolean)=>{}</code></td>
+            <td><code>(open: boolean) => void</code></td>
             <td>Callback function called when submenu state changes</td>
             <td>-</td>
         </tr>
