@@ -14,7 +14,7 @@ import { useMenu } from '../hooks/useMenu';
 export interface SubMenuProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
   className?: string;
-  label?: string;
+  label?: string | React.ReactNode;
   icon?: React.ReactNode;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
