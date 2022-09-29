@@ -157,18 +157,18 @@ const { toggleSidebar, collapseSidebar, broken, rtl, collapsed, toggled } = useP
         </tr>  
          <tr>          
             <td>renderMenuItemStyles</td>
-            <td><code>(params: { level: number; collapsed: boolean }) => CSSObject</code></td>
+            <td><code>(params: { level: number; collapsed: boolean; disabled: boolean; active: boolean; }) => CSSObject</code></td>
             <td>render method for style customization on MenuItem and SubMenu components </td>
             <td>-</td>
         </tr>  
          <tr>          
             <td>renderExpandIcon</td>
-            <td><code>(params: { level: number; collapsed: boolean;open: boolean; }) => React.ReactNode</code></td>
+            <td><code>(params: { level: number; collapsed: boolean; disabled: boolean; active: boolean; open: boolean; }) => React.ReactNode</code></td>
             <td>Render method for customizing submenu expand icon</td>
             <td>-</td>
         </tr>         
          <tr>
-            <td rowspan=4>MenuItem</td>
+            <td rowspan=5>MenuItem</td>
             <td>icon</td>
             <td><code>ReactNode</code></td>
             <td>Icon for the menu item </td>
@@ -177,8 +177,14 @@ const { toggleSidebar, collapseSidebar, broken, rtl, collapsed, toggled } = useP
          <tr>
             <td>active</td>
             <td><code>boolean</code></td>
-            <td>Set active menu items </td>
+            <td>if <code>true</code>, the component is active</td>
             <td><code>false</code></td>
+        </tr>  
+         <tr>
+            <td>disabled</td>
+            <td><code>boolean</code></td>
+            <td>if <code>true</code>, the component is disabled </td>
+            <td>-</td>
         </tr>  
          <tr>
             <td>prefix</td>
@@ -193,7 +199,7 @@ const { toggleSidebar, collapseSidebar, broken, rtl, collapsed, toggled } = useP
             <td>-</td>
         </tr>          
         <tr>
-            <td rowspan=7>SubMenu</td>
+            <td rowspan=9>SubMenu</td>
             <td>label</td>
             <td><code>string | ReactNode</code></td>
             <td>label for the submenu </td>
@@ -215,6 +221,18 @@ const { toggleSidebar, collapseSidebar, broken, rtl, collapsed, toggled } = useP
             <td>open</td>
             <td><code>boolean</code></td>
             <td>Set open value if you want to control the state</td>
+            <td>-</td>
+        </tr>  
+                <tr>
+            <td>active</td>
+            <td><code>boolean</code></td>
+            <td>if <code>true</code>, the component is active</td>
+            <td><code>false</code></td>
+        </tr> 
+         <tr>
+            <td>disabled</td>
+            <td><code>boolean</code></td>
+            <td>if <code>true</code>, the component is disabled </td>
             <td>-</td>
         </tr>  
         <tr>

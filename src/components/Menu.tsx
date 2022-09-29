@@ -3,24 +3,31 @@ import classnames from 'classnames';
 import { StyledUl } from '../styles/StyledUl';
 import { CSSObject } from 'styled-components';
 
+interface RenderMenuItemStylesParams {
+  level: number;
+  collapsed: boolean;
+  disabled: boolean;
+  active: boolean;
+}
+
+interface RenderExpandIconParams {
+  level: number;
+  collapsed: boolean;
+  disabled: boolean;
+  active: boolean;
+  open: boolean;
+}
+
 export interface MenuProps extends React.MenuHTMLAttributes<HTMLMenuElement> {
   closeOnClick?: boolean;
-  renderMenuItemStyles?: (params: { level: number; collapsed: boolean }) => CSSObject;
-  renderExpandIcon?: (params: {
-    level: number;
-    collapsed: boolean;
-    open: boolean;
-  }) => React.ReactNode;
+  renderMenuItemStyles?: (params: RenderMenuItemStylesParams) => CSSObject;
+  renderExpandIcon?: (params: RenderExpandIconParams) => React.ReactNode;
 }
 
 interface MenuState {
   closeOnClick?: boolean;
-  renderMenuItemStyles?: (params: { level: number; collapsed: boolean }) => CSSObject;
-  renderExpandIcon?: (params: {
-    level: number;
-    collapsed: boolean;
-    open: boolean;
-  }) => React.ReactNode;
+  renderMenuItemStyles?: (params: RenderMenuItemStylesParams) => CSSObject;
+  renderExpandIcon?: (params: RenderExpandIconParams) => React.ReactNode;
 }
 
 export const MenuContext = React.createContext<MenuContextProps | undefined>(undefined);

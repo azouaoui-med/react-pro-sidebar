@@ -21,6 +21,7 @@ export interface SubMenuProps
   open?: boolean;
   defaultOpen?: boolean;
   active?: boolean;
+  disabled?: boolean;
   onOpenChange?: (open: boolean) => void;
   /**
    * @ignore
@@ -101,7 +102,8 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     open: openSubmenu,
     defaultOpen,
     level = 0,
-    active,
+    active = false,
+    disabled = false,
     onOpenChange,
     onClick,
     ...rest
@@ -204,10 +206,11 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         'sub-menu',
         'menu-item',
         { active },
+        { disabled },
         { open: openSubmenu ?? open },
         className,
       )}
-      menuItemStyles={renderMenuItemStyles?.({ level, collapsed: !!collapsed })}
+      menuItemStyles={renderMenuItemStyles?.({ level, collapsed: !!collapsed, disabled, active })}
     >
       <StyledMenuItemAnchor
         ref={anchorRef}
@@ -217,6 +220,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         collapsed={collapsed}
         className="menu-anchor"
         onClick={handleSlideToggle}
+        disabled={disabled}
         {...rest}
       >
         {icon && (
@@ -252,7 +256,13 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
           level={level}
         >
           {renderExpandIcon ? (
-            renderExpandIcon({ collapsed: !!collapsed, level, open: openSubmenu ?? open })
+            renderExpandIcon({
+              collapsed: !!collapsed,
+              level,
+              open: openSubmenu ?? open,
+              disabled,
+              active,
+            })
           ) : collapsed && level === 0 ? (
             <StyledExpandIconCollapsed />
           ) : (

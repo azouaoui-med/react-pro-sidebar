@@ -14,6 +14,7 @@ export interface MenuItemProps
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   active?: boolean;
+  disabled?: boolean;
   /**
    * @ignore
    */
@@ -32,7 +33,17 @@ const StyledMenuItem = styled.li<{ menuItemStyles?: CSSObject }>`
 `;
 
 export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemProps> = (
-  { children, icon, className, prefix, suffix, level = 0, active, ...rest },
+  {
+    children,
+    icon,
+    className,
+    prefix,
+    suffix,
+    level = 0,
+    active = false,
+    disabled = false,
+    ...rest
+  },
   ref,
 ) => {
   const { collapsed, transitionDuration, rtl } = useSidebar();
@@ -41,14 +52,15 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
   return (
     <StyledMenuItem
       ref={ref}
-      className={classnames('menu-item', { active }, className)}
-      menuItemStyles={renderMenuItemStyles?.({ level, collapsed: !!collapsed })}
+      className={classnames('menu-item', { active }, { disabled }, className)}
+      menuItemStyles={renderMenuItemStyles?.({ level, collapsed: !!collapsed, disabled, active })}
     >
       <StyledMenuItemAnchor
         className="menu-anchor"
         level={level}
         collapsed={collapsed}
         rtl={rtl}
+        disabled={disabled}
         {...rest}
       >
         {icon && (
