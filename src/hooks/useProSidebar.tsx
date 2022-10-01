@@ -1,3 +1,4 @@
+import React from 'react';
 import { useSidebar } from './useSidebar';
 
 interface ProSidebarFunction {
@@ -21,15 +22,31 @@ interface ProSidebarFunction {
 }
 
 export const useProSidebar = (): ProSidebarFunction => {
-  const { updateSidebarState, collapsed, toggled, broken, rtl } = useSidebar();
+  const {
+    updateSidebarState,
+    updateCollapseState,
+    updateToggleState,
+    collapsed,
+    toggled,
+    broken,
+    rtl,
+  } = useSidebar();
 
-  const collapseSidebar = (value?: boolean) => {
-    updateSidebarState({ collapsed: value ?? !collapsed });
-  };
+  const collapseSidebar = React.useCallback(
+    (value?: boolean) => {
+      if (value === undefined) updateCollapseState();
+      else updateSidebarState({ collapsed: value });
+    },
+    [updateCollapseState, updateSidebarState],
+  );
 
-  const toggleSidebar = (value?: boolean) => {
-    updateSidebarState({ toggled: value ?? !toggled });
-  };
+  const toggleSidebar = React.useCallback(
+    (value?: boolean) => {
+      if (value === undefined) updateToggleState();
+      else updateSidebarState({ toggled: value });
+    },
+    [updateToggleState, updateSidebarState],
+  );
 
   return {
     collapseSidebar,
