@@ -25,10 +25,6 @@ const StyledMenuItem = styled.li<{ menuItemStyles?: CSSObject }>`
   display: inline-block;
   width: 100%;
 
-  &.active > .menu-anchor {
-    background-color: #e2eef9;
-  }
-
   ${({ menuItemStyles }) => menuItemStyles};
 `;
 
@@ -61,6 +57,7 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
         collapsed={collapsed}
         rtl={rtl}
         disabled={disabled}
+        active={active}
         {...rest}
       >
         {icon && (

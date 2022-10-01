@@ -5,6 +5,7 @@ interface StyledMenuItemAnchorProps {
   collapsed?: boolean;
   rtl?: boolean;
   disabled?: boolean;
+  active?: boolean;
 }
 
 export const StyledMenuItemAnchor = styled.a<StyledMenuItemAnchorProps>`
@@ -36,4 +37,6 @@ export const StyledMenuItemAnchor = styled.a<StyledMenuItemAnchorProps>`
     cursor: default;
     color:#adadad;
       `}
+
+  ${({ active }) => active && 'background-color: #e2eef9;'}
 `;

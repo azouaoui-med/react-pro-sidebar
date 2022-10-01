@@ -83,10 +83,6 @@ const StyledSubMenu = styled.li<{ menuItemStyles?: CSSObject }>`
   position: relative;
   width: 100%;
 
-  &.active > .menu-anchor {
-    background-color: #e2eef9;
-  }
-
   ${({ menuItemStyles }) => menuItemStyles};
 `;
 
@@ -221,6 +217,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         className="menu-anchor"
         onClick={handleSlideToggle}
         disabled={disabled}
+        active={active}
         {...rest}
       >
         {icon && (
