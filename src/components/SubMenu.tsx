@@ -10,6 +10,7 @@ import { StyledMenuPrefix } from '../styles/StyledMenuPrefix';
 import { MenuItemProps } from './MenuItem';
 import { StyledMenuItemAnchor } from '../styles/StyledMenuItemAnchor';
 import { useMenu } from '../hooks/useMenu';
+import { StyledMenuSuffix } from '../styles/StyledMenuSuffix';
 
 export interface SubMenuProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
@@ -241,9 +242,14 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         <StyledMenuLabel className="menu-label">{label}</StyledMenuLabel>
 
         {suffix && (
-          <span className="menu-suffix" style={{ margin: '0 5px' }}>
+          <StyledMenuSuffix
+            collapsed={collapsed}
+            transitionDuration={transitionDuration}
+            firstLevel={level === 0}
+            className="menu-suffix"
+          >
             {suffix}
-          </span>
+          </StyledMenuSuffix>
         )}
 
         <StyledExpandIconWrapper

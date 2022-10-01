@@ -7,6 +7,7 @@ import { StyledMenuPrefix } from '../styles/StyledMenuPrefix';
 import { useSidebar } from '../hooks/useSidebar';
 import { StyledMenuItemAnchor } from '../styles/StyledMenuItemAnchor';
 import { useMenu } from '../hooks/useMenu';
+import { StyledMenuSuffix } from '../styles/StyledMenuSuffix';
 
 export interface MenuItemProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
@@ -81,9 +82,14 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
         <StyledMenuLabel className="menu-label">{children}</StyledMenuLabel>
 
         {suffix && (
-          <span className="menu-suffix" style={{ margin: '0 5px' }}>
+          <StyledMenuSuffix
+            collapsed={collapsed}
+            transitionDuration={transitionDuration}
+            firstLevel={level === 0}
+            className="menu-suffix"
+          >
             {suffix}
-          </span>
+          </StyledMenuSuffix>
         )}
       </StyledMenuItemAnchor>
     </StyledMenuItem>
