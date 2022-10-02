@@ -146,7 +146,7 @@ const SidebarFR: React.ForwardRefRenderFunction<HTMLHtmlElement, SidebarProps> =
     children,
     breakPoint,
     customBreakPoint,
-    backgroundColor = 'rgba(249, 249, 249, 0.7)',
+    backgroundColor = 'rgb(249, 249, 249, 0.7)',
     transitionDuration = 300,
     overlayColor = 'rgb(0, 0, 0, 0.3)',
     image,
