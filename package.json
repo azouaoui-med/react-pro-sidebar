@@ -21,7 +21,8 @@
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "yarn lint --fix",
     "format": "prettier --write .",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "gh-pages": "yarn build:storybook && gh-pages -d storybook-static"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -56,6 +57,7 @@
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-testing-library": "^5.0.1",
+    "gh-pages": "^4.0.0",
     "husky": "^7.0.0",
     "jest": "^27.4.3",
     "lint-staged": ">=10",
