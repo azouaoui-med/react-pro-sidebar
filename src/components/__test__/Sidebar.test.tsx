@@ -39,7 +39,7 @@ describe('Sidebar', () => {
   it('should set the width to 80px when defaultCollapsed is true ', () => {
     customRender(<Sidebar defaultCollapsed>Sidebar</Sidebar>);
     const sidebarElem = screen.getByTestId('sidebar-test-id');
-
+    expect(sidebarElem).toHaveClass('collapsed');
     expect(sidebarElem).toHaveStyle({
       width: '80px',
       'min-width': '80px',
@@ -90,6 +90,8 @@ describe('Sidebar', () => {
   it('should sidebar have a correct positioning when broken', () => {
     jest.spyOn(sidebarHooks, 'useSidebar').mockImplementation(() => ({
       updateSidebarState: jest.fn(),
+      updateCollapseState: jest.fn(),
+      updateToggleState: jest.fn(),
       collapsed: false,
       fixed: false,
       width: '250px',
@@ -114,6 +116,8 @@ describe('Sidebar', () => {
   it('should sidebar have a correct positioning when broken and collapsed', () => {
     jest.spyOn(sidebarHooks, 'useSidebar').mockImplementation(() => ({
       updateSidebarState: jest.fn(),
+      updateCollapseState: jest.fn(),
+      updateToggleState: jest.fn(),
       collapsed: true,
       fixed: false,
       width: '250px',
@@ -135,6 +139,8 @@ describe('Sidebar', () => {
   it('should display overlay position sidebar to the left when broken and toggled', () => {
     jest.spyOn(sidebarHooks, 'useSidebar').mockImplementation(() => ({
       updateSidebarState: jest.fn(),
+      updateCollapseState: jest.fn(),
+      updateToggleState: jest.fn(),
       collapsed: false,
       fixed: false,
       width: '250px',
@@ -157,6 +163,8 @@ describe('Sidebar', () => {
   it('should position and hide sidebar to the right when rtl is true and broken', () => {
     jest.spyOn(sidebarHooks, 'useSidebar').mockImplementation(() => ({
       updateSidebarState: jest.fn(),
+      updateCollapseState: jest.fn(),
+      updateToggleState: jest.fn(),
       collapsed: false,
       fixed: false,
       width: '250px',
@@ -182,6 +190,8 @@ describe('Sidebar', () => {
   it('should display and position sidebar to the right when rtl is true and broken and toggled', () => {
     jest.spyOn(sidebarHooks, 'useSidebar').mockImplementation(() => ({
       updateSidebarState: jest.fn(),
+      updateCollapseState: jest.fn(),
+      updateToggleState: jest.fn(),
       collapsed: false,
       fixed: false,
       width: '250px',

@@ -7,7 +7,7 @@ exports[`Sidebar basic snapshot  1`] = `
   width="250px"
 >
   <div
-    class="sc-dkPtRN ctBAHu sidebar-inner"
+    class="sc-dkPtRN gYAoGP sidebar-inner"
     data-testid="inner-sidebar-test-id"
   >
     Sidebar
