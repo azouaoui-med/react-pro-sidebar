@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSidebar } from './useSidebar';
 
-interface ProSidebarFunction {
+interface ProSidebarResult {
   /**
    * a function that enables you to update the sidebar's collapsed status
    */
@@ -21,7 +21,7 @@ interface ProSidebarFunction {
   rtl: boolean;
 }
 
-export const useProSidebar = (): ProSidebarFunction => {
+export const useProSidebar = (): ProSidebarResult => {
   const {
     updateSidebarState,
     updateCollapseState,
