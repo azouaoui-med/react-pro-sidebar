@@ -1,6 +1,5 @@
 import React from 'react';
-import { Sidebar } from '../src';
-import { Menu, MenuItem, SubMenu, useProSidebar } from '../src';
+import { Sidebar, Menu, MenuItem, SubMenu, useProSidebar } from '../src';
 import { Icon } from './icons/Icon';
 
 export const Playground: React.FC = () => {
