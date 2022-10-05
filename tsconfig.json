@@ -12,6 +12,6 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true
   },
-  "include": ["src", "setupTests.ts", "storybook"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }
