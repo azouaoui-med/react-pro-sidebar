@@ -16,17 +16,15 @@
 
 React Pro Sidebar provides a set of components for creating high level and customizable side navigation
 
-## Old versions
+## Live Preview
 
-- [V0.x](https://github.com/azouaoui-med/react-pro-sidebar/tree/v0.x)
+- [Demo](https://azouaoui-med.github.io/react-pro-sidebar/iframe.html?id=playground--playground&args=&viewMode=story)
 
-## Demo
-
-[Live preview](https://azouaoui-med.github.io/react-pro-sidebar)
+- [Storybook](https://azouaoui-med.github.io/react-pro-sidebar)
 
 ## Screenshot
 
-![react-pro-sidebar](https://user-images.githubusercontent.com/25878302/83899865-0c5f8e80-a751-11ea-9689-a7fad94843a1.gif)
+![react-pro-sidebar](https://user-images.githubusercontent.com/25878302/193430306-6ad7ec2b-d089-453c-9e52-80051138c31b.png)
 
 ## Installation
 
@@ -61,23 +59,43 @@ import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 
 <Sidebar>
   <Menu>
-    <MenuItem>MenuItem</MenuItem>
-    <SubMenu label="Submenu">
-      <MenuItem>MenuItem 1</MenuItem>
-      <MenuItem>MenuItem 2</MenuItem>
+    <SubMenu label="Charts">
+      <MenuItem> Pie charts </MenuItem>
+      <MenuItem> Line charts </MenuItem>
     </SubMenu>
+    <MenuItem> Documentation </MenuItem>
+    <MenuItem> Calendar </MenuItem>
   </Menu>
 </Sidebar>;
 ```
 
 ## Hook
 
-The library comes with a `useProSidebar` hook that lets you access and handle sidebar state
+The library comes with a `useProSidebar` hook that lets you access and manage sidebar state
 
-**Usage**
+**Example Usage**
 
-```tsx
-const { toggleSidebar, collapseSidebar, broken, rtl, collapsed, toggled } = useProSidebar();
+```jsx
+import { Sidebar, Menu, MenuItem, useProSidebar } from 'react-pro-sidebar';
+
+function Layout() {
+  const { collapseSidebar } = useProSidebar();
+
+  return (
+    <div style={{ display: 'flex', height: '100%' }}>
+      <Sidebar>
+        <Menu>
+          <MenuItem> Documentation</MenuItem>
+          <MenuItem> Calendar</MenuItem>
+          <MenuItem> E-commerce</MenuItem>
+        </Menu>
+      </Sidebar>
+      <main>
+        <button onClick={() => collapseSidebar()}>Collapse</button>
+      </main>
+    </div>
+  );
+}
 ```
 
 ## API
@@ -94,16 +112,10 @@ const { toggleSidebar, collapseSidebar, broken, rtl, collapsed, toggled } = useP
     </thead>
     <tbody>
         <tr>
-            <td rowspan=9>Sidebar</td>
-            <td>collapsed</td>
+            <td rowspan=10>Sidebar</td>
+            <td >defaultCollapsed</td>
             <td><code>boolean</code></td>
-            <td>collapsed status of the sidebar </td>
-            <td><code>false</code></td>
-        </tr>
-        <tr>
-            <td>defaultCollapsed</td>
-            <td><code>boolean</code></td>
-            <td>initial collapsed status</td>
+            <td>Initial collapsed status</td>
             <td><code>false</code></td>
         </tr>
         <tr>
@@ -119,27 +131,39 @@ const { toggleSidebar, collapseSidebar, broken, rtl, collapsed, toggled } = useP
             <td><code>80px</code></td>
         </tr>
         <tr>
-            <td>breakPoint</td>
-            <td><code>xs</code> | <code>sm</code> | <code>md</code> | <code>lg</code> | <code>xl</code> | <code>xxl</code> | <code>always</code></td>
-            <td>set when the sidebar should trigger responsiveness behavior </td>
-            <td>-</td>
+            <td>backgroundColor</td>
+            <td><code>string</code></td>
+            <td>Set background color for sidebar</td>
+            <td><code>rgb(249, 249, 249, 0.7)</code></td>
         </tr>
         <tr>
             <td>image</td>
             <td><code>string</code></td>
-            <td>Url of the image to use in the sidebar background</td>
+            <td>Url of the image to use in the sidebar background, need to apply transparency to background color </td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>breakPoint</td>
+            <td><code>xs</code> | <code>sm</code> | <code>md</code> | <code>lg</code> | <code>xl</code> | <code>xxl</code> | <code>always</code></td>
+            <td>Set when the sidebar should trigger responsiveness behavior </td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>customBreakPoint</td>
+            <td><code>string</code></td>
+            <td>Set custom breakpoint value, this will override breakPoint prop </td>
             <td>-</td>
         </tr>
         <tr>
             <td>transitionDuration</td>
             <td><code>number</code></td>
-            <td>duration for the transition in milliseconds to be used in collapse and toggle behavior</td>
+            <td>Duration for the transition in milliseconds to be used in collapse and toggle behavior</td>
             <td><code>300</code></td>
         </tr>
         <tr>
             <td>overlayColor</td>
             <td><code>string</code></td>
-            <td>set overlay color</td>
+            <td>Set overlay color</td>
             <td><code>rgb(0, 0, 0, 0.3)</code></td>
         </tr>
         <tr>
@@ -152,95 +176,95 @@ const { toggleSidebar, collapseSidebar, broken, rtl, collapsed, toggled } = useP
             <td rowspan=3>Menu</td>
             <td>closeOnClick</td>
             <td><code>boolean</code></td>
-            <td>if <code>true</code>, submenu popper will close when clicking on MenuItem</td>
+            <td>If <code>true</code>, submenu popper will close when clicking on MenuItem</td>
             <td><code>false</code></td>
-        </tr>  
-         <tr>          
+        </tr>
+         <tr>
             <td>renderMenuItemStyles</td>
             <td><code>(params: { level: number; collapsed: boolean; disabled: boolean; active: boolean; }) => CSSObject</code></td>
-            <td>render method for style customization on MenuItem and SubMenu components </td>
+            <td>Render method for style customization on MenuItem and SubMenu components </td>
             <td>-</td>
-        </tr>  
-         <tr>          
+        </tr>
+         <tr>
             <td>renderExpandIcon</td>
             <td><code>(params: { level: number; collapsed: boolean; disabled: boolean; active: boolean; open: boolean; }) => React.ReactNode</code></td>
             <td>Render method for customizing submenu expand icon</td>
             <td>-</td>
-        </tr>         
+        </tr>
          <tr>
             <td rowspan=5>MenuItem</td>
             <td>icon</td>
             <td><code>ReactNode</code></td>
             <td>Icon for the menu item </td>
             <td>-</td>
-        </tr>  
+        </tr>
          <tr>
             <td>active</td>
             <td><code>boolean</code></td>
-            <td>if <code>true</code>, the component is active</td>
+            <td>If <code>true</code>, the component is active</td>
             <td><code>false</code></td>
-        </tr>  
+        </tr>
          <tr>
             <td>disabled</td>
             <td><code>boolean</code></td>
-            <td>if <code>true</code>, the component is disabled </td>
+            <td>If <code>true</code>, the component is disabled </td>
             <td>-</td>
-        </tr>  
+        </tr>
          <tr>
             <td>prefix</td>
             <td><code>ReactNode</code></td>
             <td>Add a prefix to the menuItem </td>
             <td>-</td>
-        </tr>  
+        </tr>
          <tr>
             <td>suffix</td>
             <td><code>ReactNode</code></td>
             <td>Add a suffix to the menuItem </td>
             <td>-</td>
-        </tr>          
+        </tr>
         <tr>
             <td rowspan=9>SubMenu</td>
             <td>label</td>
             <td><code>string | ReactNode</code></td>
-            <td>label for the submenu </td>
+            <td>Label for the submenu </td>
             <td>-</td>
-        </tr>  
+        </tr>
          <tr>
             <td>icon</td>
             <td><code>ReactNode</code></td>
             <td>Icon for submenu</td>
             <td>-</td>
-        </tr>  
+        </tr>
          <tr>
             <td>defaultOpen</td>
             <td><code>boolean</code></td>
             <td>Set if the submenu is open by default</td>
             <td><code>false</code></td>
-        </tr>  
+        </tr>
          <tr>
             <td>open</td>
             <td><code>boolean</code></td>
             <td>Set open value if you want to control the state</td>
             <td>-</td>
-        </tr>  
+        </tr>
                 <tr>
             <td>active</td>
             <td><code>boolean</code></td>
-            <td>if <code>true</code>, the component is active</td>
+            <td>If <code>true</code>, the component is active</td>
             <td><code>false</code></td>
-        </tr> 
+        </tr>
          <tr>
             <td>disabled</td>
             <td><code>boolean</code></td>
-            <td>if <code>true</code>, the component is disabled </td>
+            <td>If <code>true</code>, the component is disabled </td>
             <td>-</td>
-        </tr>  
+        </tr>
         <tr>
             <td>prefix</td>
             <td><code>ReactNode</code></td>
             <td>Add a prefix to the submenu </td>
             <td>-</td>
-        </tr>  
+        </tr>
         <tr>
             <td>suffix</td>
             <td><code>ReactNode</code></td>
@@ -254,8 +278,9 @@ const { toggleSidebar, collapseSidebar, broken, rtl, collapsed, toggled } = useP
             <td>-</td>
         </tr>
     </tbody>
+
 </table>
 
 ## License
 
-MIT © [Mohamed Azouaoui](https://azouaoui.netlify.com)
+MIT © [Mohamed Azouaoui](https://azouaoui.netlify.app)
