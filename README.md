@@ -14,15 +14,17 @@
 [npm-url]: https://www.npmjs.com/package/react-pro-sidebar
 [github-url]: https://github.com/azouaoui-med/react-pro-sidebar
 
-Customizable and responsive react sidebar library with dropdown menus and unlimited number of nested submenus
+React Pro Sidebar provides a set of components for creating high level and customizable side navigation
 
-## Demo
+## Live Preview
 
-[Live preview](https://azouaoui-med.github.io/react-pro-sidebar)
+- [Demo](https://azouaoui-med.github.io/react-pro-sidebar/iframe.html?id=playground--playground&args=&viewMode=story)
+
+- [Storybook](https://azouaoui-med.github.io/react-pro-sidebar)
 
 ## Screenshot
 
-![react-pro-sidebar](https://user-images.githubusercontent.com/25878302/83899865-0c5f8e80-a751-11ea-9689-a7fad94843a1.gif)
+![react-pro-sidebar](https://user-images.githubusercontent.com/25878302/193430306-6ad7ec2b-d089-453c-9e52-80051138c31b.png)
 
 ## Installation
 
@@ -40,115 +42,60 @@ npm install react-pro-sidebar
 
 ## Usage
 
-```jsx
-import { ProSidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import 'react-pro-sidebar/dist/css/styles.css';
+First you need to make sure that your components are wrapped within a `<ProSidebarProvider>` component
 
-<ProSidebar>
-  <Menu iconShape="square">
-    <MenuItem icon={<FaGem />}>Dashboard</MenuItem>
-    <SubMenu title="Components" icon={<FaHeart />}>
-      <MenuItem>Component 1</MenuItem>
-      <MenuItem>Component 2</MenuItem>
+```tsx
+import { ProSidebarProvider } from 'react-pro-sidebar';
+
+<ProSidebarProvider>
+  <App />
+</ProSidebarProvider>;
+```
+
+Then in your layout component you can add sidebar navigation
+
+```tsx
+import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+
+<Sidebar>
+  <Menu>
+    <SubMenu label="Charts">
+      <MenuItem> Pie charts </MenuItem>
+      <MenuItem> Line charts </MenuItem>
     </SubMenu>
+    <MenuItem> Documentation </MenuItem>
+    <MenuItem> Calendar </MenuItem>
   </Menu>
-</ProSidebar>;
+</Sidebar>;
 ```
 
-If you are using sass then you can import the `styles.scss` directly into your scss file
+## Hook
 
-```scss
-@import '~react-pro-sidebar/dist/scss/styles.scss';
-```
+The library comes with a `useProSidebar` hook that lets you access and manage sidebar state
 
-## Sidebar Layout
-
-You can take advantage of the sidebar layout components to organize the content of your sidebar
+**Example Usage**
 
 ```jsx
-import { ProSidebar, SidebarHeader, SidebarFooter, SidebarContent } from 'react-pro-sidebar';
+import { Sidebar, Menu, MenuItem, useProSidebar } from 'react-pro-sidebar';
 
-<ProSidebar>
-  <SidebarHeader>
-    {/**
-     *  You can add a header for the sidebar ex: logo
-     */}
-  </SidebarHeader>
-  <SidebarContent>
-    {/**
-     *  You can add the content of the sidebar ex: menu, profile details, ...
-     */}
-  </SidebarContent>
-  <SidebarFooter>
-    {/**
-     *  You can add a footer for the sidebar ex: copyright
-     */}
-  </SidebarFooter>
-</ProSidebar>;
-```
+function Layout() {
+  const { collapseSidebar } = useProSidebar();
 
-## Custom Styling
-
-There are sets of sass variables available which you can override to define your own styles
-
-You need to include your override variables before importing the scss file
-
-Your `custom.scss` file should look something like this
-
-```scss
-// Your variable overrides
-$sidebar-bg-color: #1d1d1d;
-
-@import '~react-pro-sidebar/dist/scss/styles.scss';
-```
-
-Available scss variables
-
-```scss
-$sidebar-bg-color: #1d1d1d !default;
-$sidebar-color: #adadad !default;
-$sidebar-width: 270px !default;
-$sidebar-collapsed-width: 80px !default;
-$highlight-color: #d8d8d8 !default;
-$submenu-bg-color: #2b2b2b !default;
-$submenu-bg-color-collapsed: #2b2b2b !default;
-$icon-bg-color: #2b2b2b !default;
-$icon-size: 35px !default;
-$submenu-indent: 24px !default;
-$breakpoint-xs: 480px !default;
-$breakpoint-sm: 576px !default;
-$breakpoint-md: 768px !default;
-$breakpoint-lg: 992px !default;
-$breakpoint-xl: 1200px !default;
-$breakpoint-xxl: 1600px !default;
-```
-
-## Using nested sub-menus
-
-You can have as many nested menu-items and sub-menus as you like, and the syntax is very simple
-
-```jsx
-<Menu iconShape="square">
-  <SubMenu title="Components" icon={<FaGem />}>
-    <MenuItem>Component 1</MenuItem>
-    <SubMenu title="Sub Component 1" icon={<FaHeart />}>
-      {/* you can have more nested submenus ... */}
-    </SubMenu>
-  </SubMenu>
-</Menu>
-```
-
-## Using React Router Dom
-
-Here is an example on how to use [react router dom](https://github.com/ReactTraining/react-router) in the menu item
-
-```jsx
-import { Link } from 'react-router-dom';
-
-<MenuItem icon={<FaGem />}>
-  Dashboard
-  <Link to="/" />
-</MenuItem>;
+  return (
+    <div style={{ display: 'flex', height: '100%' }}>
+      <Sidebar>
+        <Menu>
+          <MenuItem> Documentation</MenuItem>
+          <MenuItem> Calendar</MenuItem>
+          <MenuItem> E-commerce</MenuItem>
+        </Menu>
+      </Sidebar>
+      <main>
+        <button onClick={() => collapseSidebar()}>Collapse</button>
+      </main>
+    </div>
+  );
+}
 ```
 
 ## API
@@ -165,150 +112,175 @@ import { Link } from 'react-router-dom';
     </thead>
     <tbody>
         <tr>
-            <td rowspan=7>ProSidebar</td>
-            <td>collapsed</td>
-            <td>boolean</td>
-            <td>collapsed status of the sidebar </td>
+            <td rowspan=10>Sidebar</td>
+            <td >defaultCollapsed</td>
+            <td><code>boolean</code></td>
+            <td>Initial collapsed status</td>
             <td><code>false</code></td>
-        </tr>
-        <tr>
-            <td>rtl</td>
-            <td>boolean</td>
-            <td>RTL direction</td>
-            <td><code>false</code></td>
-        </tr>
-        <tr>
-            <td>toggled</td>
-            <td>string</td>
-            <td>Toggle status of the sidebar when break point is enabled</td>
-            <td><code>false</code></td>
-        </tr>
-        <tr>
-            <td>onToggle</td>
-            <td><code>(value:boolean)=>{}</code></td>
-            <td>Callback function called when toggled status changes, happens when overlay is clicked</td>
-            <td>-</td>
-        </tr>
-        <tr>
-            <td>breakPoint</td>
-            <td><code>xs</code> | <code>sm</code> | <code>md</code> | <code>lg</code> | <code>xl</code></td>
-            <td>Set break point to specify when the sidebar should be responsive </td>
-            <td>-</td>
         </tr>
         <tr>
             <td>width</td>
-            <td>number | string</td>
+            <td><code>number | string</code></td>
             <td>Width of the sidebar</td>
             <td><code>270px</code></td>
         </tr>
         <tr>
             <td>collapsedWidth</td>
-            <td>number | string</td>
+            <td><code>number | string</code></td>
             <td>Width of the sidebar on collapsed state</td>
             <td><code>80px</code></td>
         </tr>
         <tr>
+            <td>backgroundColor</td>
+            <td><code>string</code></td>
+            <td>Set background color for sidebar</td>
+            <td><code>rgb(249, 249, 249, 0.7)</code></td>
+        </tr>
+        <tr>
             <td>image</td>
-            <td>string</td>
-            <td>Url of the image to use in the sidebar background</td>
+            <td><code>string</code></td>
+            <td>Url of the image to use in the sidebar background, need to apply transparency to background color </td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>breakPoint</td>
+            <td><code>xs</code> | <code>sm</code> | <code>md</code> | <code>lg</code> | <code>xl</code> | <code>xxl</code> | <code>always</code></td>
+            <td>Set when the sidebar should trigger responsiveness behavior </td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>customBreakPoint</td>
+            <td><code>string</code></td>
+            <td>Set custom breakpoint value, this will override breakPoint prop </td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>transitionDuration</td>
+            <td><code>number</code></td>
+            <td>Duration for the transition in milliseconds to be used in collapse and toggle behavior</td>
+            <td><code>300</code></td>
+        </tr>
+        <tr>
+            <td>overlayColor</td>
+            <td><code>string</code></td>
+            <td>Set overlay color</td>
+            <td><code>rgb(0, 0, 0, 0.3)</code></td>
+        </tr>
+        <tr>
+            <td>rtl</td>
+            <td><code>boolean</code></td>
+            <td>RTL direction</td>
+            <td><code>false</code></td>
+        </tr>
+         <tr>
+            <td rowspan=3>Menu</td>
+            <td>closeOnClick</td>
+            <td><code>boolean</code></td>
+            <td>If <code>true</code>, submenu popper will close when clicking on MenuItem</td>
+            <td><code>false</code></td>
+        </tr>
+         <tr>
+            <td>renderMenuItemStyles</td>
+            <td><code>(params: { level: number; collapsed: boolean; disabled: boolean; active: boolean; }) => CSSObject</code></td>
+            <td>Render method for style customization on MenuItem and SubMenu components </td>
             <td>-</td>
         </tr>
          <tr>
-            <td rowspan=4>Menu</td>
-            <td>iconShape</td>
-            <td><code>'square'</code> | <code>'round'</code> | <code>'circle'</code></td>
-            <td>Shape of the menu icons </td>
+            <td>renderExpandIcon</td>
+            <td><code>(params: { level: number; collapsed: boolean; disabled: boolean; active: boolean; open: boolean; }) => React.ReactNode</code></td>
+            <td>Render method for customizing submenu expand icon</td>
             <td>-</td>
-        </tr>  
-         <tr>          
-            <td>popperArrow</td>
-            <td>boolean</td>
-            <td>if <code>true</code>, an arrow will be displayed when sidebar collapsed to point to sub-menu wrapper</td>
-            <td><code>false</code></td>
-        </tr>  
-         <tr>          
-            <td>innerSubMenuArrows</td>
-            <td>boolean</td>
-            <td>if <code>true</code>, arrows will be displayed for each inner submenu</td>
-            <td><code>true</code></td>
-        </tr>  
-         <tr>          
-            <td>subMenuBullets</td>
-            <td>boolean</td>
-            <td>if <code>true</code>, bullets will be displayed for each inner submenu/menuItem</td>
-            <td><code>false</code></td>
-        </tr>  
+        </tr>
          <tr>
-            <td rowspan=4>MenuItem</td>
+            <td rowspan=5>MenuItem</td>
             <td>icon</td>
-            <td>ReactNode</td>
+            <td><code>ReactNode</code></td>
             <td>Icon for the menu item </td>
             <td>-</td>
-        </tr>  
+        </tr>
          <tr>
             <td>active</td>
-            <td>boolean</td>
-            <td>Set active menu items </td>
+            <td><code>boolean</code></td>
+            <td>If <code>true</code>, the component is active</td>
             <td><code>false</code></td>
-        </tr>  
+        </tr>
+         <tr>
+            <td>disabled</td>
+            <td><code>boolean</code></td>
+            <td>If <code>true</code>, the component is disabled </td>
+            <td>-</td>
+        </tr>
          <tr>
             <td>prefix</td>
-            <td>ReactNode</td>
+            <td><code>ReactNode</code></td>
             <td>Add a prefix to the menuItem </td>
             <td>-</td>
-        </tr>  
+        </tr>
          <tr>
             <td>suffix</td>
-            <td>ReactNode</td>
+            <td><code>ReactNode</code></td>
             <td>Add a suffix to the menuItem </td>
             <td>-</td>
-        </tr>          
+        </tr>
         <tr>
-            <td rowspan=7>SubMenu</td>
-            <td>title</td>
-            <td>string | ReactNode</td>
-            <td>Title for the submenu </td>
+            <td rowspan=9>SubMenu</td>
+            <td>label</td>
+            <td><code>string | ReactNode</code></td>
+            <td>Label for the submenu </td>
             <td>-</td>
-        </tr>  
+        </tr>
          <tr>
             <td>icon</td>
-            <td>ReactNode</td>
+            <td><code>ReactNode</code></td>
             <td>Icon for submenu</td>
             <td>-</td>
-        </tr>  
+        </tr>
          <tr>
             <td>defaultOpen</td>
-            <td>boolean</td>
+            <td><code>boolean</code></td>
             <td>Set if the submenu is open by default</td>
             <td><code>false</code></td>
-        </tr>  
+        </tr>
          <tr>
             <td>open</td>
-            <td>boolean</td>
+            <td><code>boolean</code></td>
             <td>Set open value if you want to control the state</td>
             <td>-</td>
-        </tr>  
+        </tr>
+                <tr>
+            <td>active</td>
+            <td><code>boolean</code></td>
+            <td>If <code>true</code>, the component is active</td>
+            <td><code>false</code></td>
+        </tr>
+         <tr>
+            <td>disabled</td>
+            <td><code>boolean</code></td>
+            <td>If <code>true</code>, the component is disabled </td>
+            <td>-</td>
+        </tr>
         <tr>
             <td>prefix</td>
-            <td>ReactNode</td>
+            <td><code>ReactNode</code></td>
             <td>Add a prefix to the submenu </td>
             <td>-</td>
-        </tr>  
+        </tr>
         <tr>
             <td>suffix</td>
-            <td>ReactNode</td>
+            <td><code>ReactNode</code></td>
             <td>Add a suffix to the submenu </td>
             <td>-</td>
         </tr>
         <tr>
             <td>onOpenChange</td>
-            <td><code>(open: boolean)=>{}</code></td>
+            <td><code>(open: boolean) => void</code></td>
             <td>Callback function called when submenu state changes</td>
             <td>-</td>
         </tr>
     </tbody>
+
 </table>
 
 ## License
 
-MIT © [Mohamed Azouaoui](https://azouaoui.netlify.com)
+MIT © [Mohamed Azouaoui](https://azouaoui.netlify.app)

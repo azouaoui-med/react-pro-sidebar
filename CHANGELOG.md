@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0-alpha.1] - 2022-10-05
+
+### Breaking changes
+
+- Removed scss in favor of css-in-js(styled component)
+- [Sidebar] Rename ProSidebar to Sidebar
+
+```diff
+ - import { ProSidebar } from 'react-pro-sidebar';## [Unreleased]
+ + import { Sidebar } from 'react-pro-sidebar';
+```
+
+- [Sidebar] Removed `collapsed`, `toggled` and `onToggle` props (`useProSidebar` hook will be used instead)
+- [Sidebar] Added `defaultCollapsed` prop
+- [Sidebar] Added `always` option to breakPoint prop
+- [Sidebar] Added `customBreakPoint` prop
+- [Sidebar] Added `backgroundColor` prop
+- [Sidebar] Added `transitionDuration` prop
+- [Sidebar] Added `overlayColor` prop
+- [Menu] removed `iconShape`, `popperArrow`, `subMenuBullets` and `innerSubMenuArrows` props
+- [Menu] added `renderMenuItemStyles` prop for customizing `MenuItem` & `SubMenu` components
+- [Menu] added `renderExpandIcon` prop
+- [Menu] added `closeOnClick` prop (useful when wanting to close popper on menuItem click when collapsed is `true`)
+- [MenuItem] added `disabled` props
+- [SubMenu] added `disabled` props
+- [SubMenu] renamed `title` prop to `label`
+- Introduced `ProSidebarProvider` component and `useProSidebar` hook to access and manage sidebar state
+
 ## [0.7.1] - 2021-09-23
 
 ### Fixed

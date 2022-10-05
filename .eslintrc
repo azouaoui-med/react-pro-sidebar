@@ -1,7 +1,7 @@
 {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 2021,
     "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
@@ -15,11 +15,21 @@
       }
     }
   },
-  "plugins": ["react", "@typescript-eslint", "prettier"],
-  "extends": ["airbnb-typescript", "prettier"],
+  "plugins": ["react", "@typescript-eslint", "prettier", "import", "testing-library", "jest-dom"],
+  "extends": [
+    "airbnb-typescript",
+    "airbnb/hooks",
+    "prettier",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "plugin:testing-library/react",
+    "plugin:jest-dom/recommended"
+  ],
   "env": {
     "browser": true,
-    "es6": true
+    "es2021": true,
+    "jest": true,
+    "node": true
   },
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
