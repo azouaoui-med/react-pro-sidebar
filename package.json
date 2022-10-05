@@ -17,6 +17,7 @@
     "storybook": "start-storybook -p 9001",
     "build:storybook": "build-storybook",
     "test": "jest",
+    "test:ci": "yarn test --coverage --watchAll=false --runInBand --forceExit",
     "test:watch": "jest --watch",
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "yarn lint --fix",
