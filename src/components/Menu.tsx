@@ -22,6 +22,7 @@ export interface MenuProps extends React.MenuHTMLAttributes<HTMLMenuElement> {
   closeOnClick?: boolean;
   renderMenuItemStyles?: (params: RenderMenuItemStylesParams) => CSSObject;
   renderExpandIcon?: (params: RenderExpandIconParams) => React.ReactNode;
+  children?: React.ReactNode;
 }
 
 interface MenuState {

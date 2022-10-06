@@ -9,6 +9,7 @@ interface SubMenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
   firstLevel?: boolean;
   collapsed?: boolean;
   defaultOpen?: boolean;
+  children?: React.ReactNode;
 }
 
 let timer: NodeJS.Timer;

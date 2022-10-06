@@ -16,6 +16,7 @@ export interface MenuItemProps
   suffix?: React.ReactNode;
   active?: boolean;
   disabled?: boolean;
+  children?: React.ReactNode;
   /**
    * @ignore
    */

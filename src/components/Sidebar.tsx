@@ -71,6 +71,8 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
   overlayColor?: string;
 
   rtl?: boolean;
+
+  children?: React.ReactNode;
 }
 
 interface StyledSidebarProps extends Omit<SidebarProps, 'backgroundColor'> {

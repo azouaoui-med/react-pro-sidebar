@@ -23,6 +23,7 @@ export interface SubMenuProps
   defaultOpen?: boolean;
   active?: boolean;
   disabled?: boolean;
+  children?: React.ReactNode;
   onOpenChange?: (open: boolean) => void;
   /**
    * @ignore

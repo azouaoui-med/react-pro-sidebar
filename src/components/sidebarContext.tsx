@@ -16,9 +16,13 @@ export interface SidebarContextProps extends SidebarState {
   updateToggleState: () => void;
 }
 
+interface SidebarProviderProps {
+  children?: React.ReactNode;
+}
+
 export const SidebarContext = React.createContext<SidebarContextProps | undefined>(undefined);
 
-export const SidebarProvider: React.FC = ({ children }) => {
+export const SidebarProvider: React.FC<SidebarProviderProps> = ({ children }) => {
   const [sidebarState, setSidebarState] = React.useState<SidebarState>();
 
   const updateSidebarState = React.useCallback((values: Partial<SidebarState>) => {
