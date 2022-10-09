@@ -2,12 +2,12 @@
 
 exports[`Sidebar basic snapshot  1`] = `
 <aside
-  class="sc-gsDKAQ dxhTAs sidebar"
+  class="sc-gswNZR bOQEtf sidebar"
   data-testid="sidebar-test-id"
   width="250px"
 >
   <div
-    class="sc-dkPtRN gYAoGP sidebar-inner"
+    class="sc-dkrFOg fpTHfu sidebar-inner"
     data-testid="inner-sidebar-test-id"
   >
     Sidebar

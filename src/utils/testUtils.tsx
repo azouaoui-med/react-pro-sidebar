@@ -7,7 +7,11 @@ type CustomRender = (
   options?: Omit<RenderOptions, 'wrapper'>,
 ) => RenderResult;
 
-const AllTheProviders: React.FC = ({ children }) => {
+interface AllTheProvidersProps {
+  children?: React.ReactNode;
+}
+
+const AllTheProviders: React.FC<AllTheProvidersProps> = ({ children }) => {
   return <ProSidebarProvider>{children}</ProSidebarProvider>;
 };
 
