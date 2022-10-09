@@ -1,6 +1,6 @@
 {
   "name": "react-pro-sidebar",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "high level and customizable side navigation",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
@@ -12,7 +12,8 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "rollup -c",
+    "clean": "rimraf dist",
+    "build": "yarn clean && rollup -c",
     "start": "rollup -c -w",
     "storybook": "start-storybook -p 9001",
     "build:storybook": "build-storybook",
@@ -33,16 +34,16 @@
     "@babel/core": "^7.16.0",
     "@babel/preset-env": "^7.16.4",
     "@babel/preset-react": "^7.16.0",
-    "@rollup/plugin-commonjs": "^21.0.1",
-    "@rollup/plugin-node-resolve": "^13.0.6",
+    "@rollup/plugin-commonjs": "^21.1.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
     "@storybook/addon-essentials": "^6.4.7",
     "@storybook/react": "^6.4.7",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@types/jest": "^27.0.3",
-    "@types/react": "^17.0.37",
-    "@types/react-dom": "^17.0.11",
-    "@types/styled-components": "^5.1.17",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.5.0",
     "@typescript-eslint/parser": "^5.5.0",
     "babel-jest": "^27.4.2",
@@ -63,11 +64,12 @@
     "jest": "^27.4.3",
     "lint-staged": ">=10",
     "prettier": "^2.5.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "rollup": "^2.60.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.79.1",
     "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-typescript2": "^0.31.1",
+    "rollup-plugin-typescript2": "^0.31.2",
     "typescript": "^4.5.2"
   },
   "keywords": [
@@ -82,8 +84,8 @@
     "rtl"
   ],
   "dependencies": {
-    "@popperjs/core": "^2.11.2",
-    "classnames": "^2.3.1",
-    "styled-components": "^5.3.3"
+    "@popperjs/core": "^2.11.6",
+    "classnames": "^2.3.2",
+    "styled-components": "^5.3.6"
   }
 }
