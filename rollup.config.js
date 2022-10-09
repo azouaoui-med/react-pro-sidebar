@@ -21,7 +21,12 @@ export default {
     peerDepsExternal(),
     resolve(),
     commonjs(),
-    typescript({ useTsconfigDeclarationDir: true }),
+    typescript({
+      useTsconfigDeclarationDir: true,
+      tsconfigOverride: {
+        exclude: ['**/__test__', '**/*.test.tsx', 'storybook'],
+      },
+    }),
   ],
   external: ['react', 'react-dom', 'prop-types'],
 };
