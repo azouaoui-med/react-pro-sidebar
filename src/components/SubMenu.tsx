@@ -125,7 +125,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
 
   const handleSlideToggle = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void => {
     onClick?.(event);
-    if (level === 0 && collapsed) setOpenWhenCollapsed(!openWhenCollapsed);
+    if (level === 0 && collapsed) setOpenWhenCollapsed((prevState) => !prevState);
     else if (typeof openSubmenu === 'undefined') {
       onOpenChange?.(!open);
       setOpen(!open);
@@ -139,6 +139,14 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
       const instance = createPopper(anchorRef.current, SubMenuContentRef.current, {
         placement: 'right',
         strategy: 'fixed',
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: [0, 5],
+            },
+          },
+        ],
       });
 
       setPopperInstance(instance);

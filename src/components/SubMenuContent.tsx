@@ -35,8 +35,7 @@ const StyledSubMenuContent = styled.div<SubMenuContentProps>`
   ${({ collapsed, firstLevel, openWhenCollapsed }) =>
     collapsed && firstLevel
       ? `
-      margin-left: 5px!important;
-      margin-right: 5px!important;
+    
       padding-left: 0px;
       width: 200px;
       border-radius: 4px;

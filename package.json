@@ -1,6 +1,6 @@
 {
   "name": "react-pro-sidebar",
-  "version": "1.0.0-alpha.4",
+  "version": "1.0.0-alpha.5",
   "description": "high level and customizable side navigation",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
