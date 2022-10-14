@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0-alpha.6] - 2022-10-14
+
+- fixed submenu content not displayed when collapsed [issue #124](https://github.com/azouaoui-med/react-pro-sidebar/issues/124)
+
+## [1.0.0-alpha.4] - 2022-10-10
+
+- Build updates
+- Upgrade dependencies
+- Tests fixes
+
+## [1.0.0-alpha.3] - 2022-10-06
+
+- Fixed children prop typing
+
+## [1.0.0-alpha.2] - 2022-10-05
+
+- Fixed build
+
 ## [1.0.0-alpha.1] - 2022-10-05
 
 ### Breaking changes
