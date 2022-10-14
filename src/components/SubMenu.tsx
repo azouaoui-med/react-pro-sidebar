@@ -125,8 +125,8 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
 
   const handleSlideToggle = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void => {
     onClick?.(event);
-    if (level === 0 && collapsed) setOpenWhenCollapsed((prevState) => !prevState);
-    else if (typeof openSubmenu === 'undefined') {
+
+    if (typeof openSubmenu === 'undefined' && !(level === 0 && collapsed)) {
       onOpenChange?.(!open);
       setOpen(!open);
     } else {
@@ -183,17 +183,18 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
 
   React.useEffect(() => {
     const handleDocumentClick = (event: MouseEvent) => {
-      if (
+      if (!openWhenCollapsed && anchorRef.current?.contains(event.target as Node))
+        setOpenWhenCollapsed(true);
+      else if (
         (closeOnClick &&
-          !(event.target as HTMLElement).closest('.menu-item')?.classList.contains('sub-menu') &&
-          openWhenCollapsed) ||
+          !(event.target as HTMLElement).closest('.menu-item')?.classList.contains('sub-menu')) ||
         (!SubMenuContentRef.current?.contains(event.target as Node) && openWhenCollapsed)
-      )
+      ) {
         setOpenWhenCollapsed(false);
+      }
     };
-
+    document.removeEventListener('click', handleDocumentClick);
     if (collapsed && level === 0) document.addEventListener('click', handleDocumentClick, false);
-    else document.removeEventListener('click', handleDocumentClick);
 
     return () => {
       document.removeEventListener('click', handleDocumentClick);
