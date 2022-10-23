@@ -73,6 +73,26 @@ import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 
 The library comes with a `useProSidebar` hook that lets you access and manage sidebar state
 
+### API
+
+```tsx
+const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } = useProSidebar();
+```
+
+**Returns**
+
+- `collapseSidebar: (collapsed?: boolean) => void` : A function that enables you to update the sidebar's collapsed state
+
+- `toggleSidebar: (toggled?: boolean) => void` : A function that enables you to update the sidebar's toggled state
+
+- `collapsed: boolean` : Sidebar collapsed state
+
+- `toggled: boolean` : Sidebar toggled state
+
+- `broken: boolean` : Sidebar breakPoint state
+
+- `rtl: boolean` : Sidebar direction state
+
 **Example Usage**
 
 ```jsx
