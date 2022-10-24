@@ -118,6 +118,25 @@ function Layout() {
 }
 ```
 
+## Using React Router
+
+We provide compatibility with [React Router](https://reactrouter.com/en/main) using `routerLink` prop
+
+**Example Usage**
+
+```tsx
+import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
+import { Link } from 'react-router-dom';
+
+<Sidebar>
+  <Menu>
+    <MenuItem routerLink={<Link to="/documentation" />}> Documentation</MenuItem>
+    <MenuItem routerLink={<Link to="/calendar" />}> Calendar</MenuItem>
+    <MenuItem routerLink={<Link to="/e-commerce" />}> E-commerce</MenuItem>
+  </Menu>
+</Sidebar>;
+```
+
 ## API
 
 <table>
@@ -212,7 +231,7 @@ function Layout() {
             <td>-</td>
         </tr>
          <tr>
-            <td rowspan=5>MenuItem</td>
+            <td rowspan=6>MenuItem</td>
             <td>icon</td>
             <td><code>ReactNode</code></td>
             <td>Icon for the menu item </td>
@@ -240,6 +259,12 @@ function Layout() {
             <td>suffix</td>
             <td><code>ReactNode</code></td>
             <td>Add a suffix to the menuItem </td>
+            <td>-</td>
+        </tr>
+         <tr>
+            <td>routerLink</td>
+            <td><code>React.ReactElement</code></td>
+            <td>React router Link or NavLink component that will be used to handle routing </td>
             <td>-</td>
         </tr>
         <tr>

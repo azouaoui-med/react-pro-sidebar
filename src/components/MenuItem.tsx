@@ -17,15 +17,22 @@ export interface MenuItemProps
   active?: boolean;
   disabled?: boolean;
   children?: React.ReactNode;
+  routerLink?: React.ReactElement;
   /**
    * @ignore
    */
   level?: number;
 }
 
+const StyledRouterLinkWrapper = styled.div`
+  position: absolute;
+  visibility: hidden;
+`;
+
 const StyledMenuItem = styled.li<{ menuItemStyles?: CSSObject }>`
   display: inline-block;
   width: 100%;
+  position: relative;
 
   ${({ menuItemStyles }) => menuItemStyles};
 `;
@@ -40,12 +47,21 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
     level = 0,
     active = false,
     disabled = false,
+    onClick,
+    routerLink,
     ...rest
   },
   ref,
 ) => {
   const { collapsed, transitionDuration, rtl } = useSidebar();
   const { renderMenuItemStyles } = useMenu();
+
+  const routerRef = React.useRef<HTMLAnchorElement>();
+
+  const handleClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    routerRef.current?.click();
+    onClick?.(event);
+  };
 
   return (
     <StyledMenuItem
@@ -55,11 +71,13 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
     >
       <StyledMenuItemAnchor
         className="menu-anchor"
+        data-testid="menuitem-anchor-test-id"
         level={level}
         collapsed={collapsed}
         rtl={rtl}
         disabled={disabled}
         active={active}
+        onClick={handleClick}
         {...rest}
       >
         {icon && (
@@ -93,6 +111,11 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
           </StyledMenuSuffix>
         )}
       </StyledMenuItemAnchor>
+      {routerLink && (
+        <StyledRouterLinkWrapper>
+          {React.cloneElement(routerLink, { ref: routerRef })}
+        </StyledRouterLinkWrapper>
+      )}
     </StyledMenuItem>
   );
 };

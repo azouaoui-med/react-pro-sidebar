@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0-alpha.7] - 2022-10-24
+
+- added support for react router to MenuItem via routerLink prop
+
 ## [1.0.0-alpha.6] - 2022-10-14
 
 - fixed submenu content not displayed when collapsed [issue #124](https://github.com/azouaoui-med/react-pro-sidebar/issues/124)
@@ -33,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Sidebar] Rename ProSidebar to Sidebar
 
 ```diff
- - import { ProSidebar } from 'react-pro-sidebar';## [Unreleased]
+ - import { ProSidebar } from 'react-pro-sidebar';
  + import { Sidebar } from 'react-pro-sidebar';
 ```
 
