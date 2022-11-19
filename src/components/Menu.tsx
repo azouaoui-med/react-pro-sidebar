@@ -1,66 +1,70 @@
 import React from 'react';
 import classnames from 'classnames';
 import { StyledUl } from '../styles/StyledUl';
-import { CSSObject } from 'styled-components';
+import styled, { CSSObject } from 'styled-components';
+import { menuClasses } from '../utils/utilityClasses';
 
-interface RenderMenuItemStylesParams {
+export interface MenuItemStylesParams {
   level: number;
-  collapsed: boolean;
   disabled: boolean;
   active: boolean;
+  open?: boolean;
+  isSubmenu: boolean;
 }
 
-interface RenderExpandIconParams {
+export interface RenderExpandIconParams {
   level: number;
-  collapsed: boolean;
   disabled: boolean;
   active: boolean;
   open: boolean;
 }
 
-export interface MenuProps extends React.MenuHTMLAttributes<HTMLMenuElement> {
+export interface MenuContextProps {
   closeOnClick?: boolean;
-  renderMenuItemStyles?: (params: RenderMenuItemStylesParams) => CSSObject;
+  menuItemStyles?: CSSObject | ((params: MenuItemStylesParams) => CSSObject);
   renderExpandIcon?: (params: RenderExpandIconParams) => React.ReactNode;
+}
+
+export interface MenuProps extends MenuContextProps, React.MenuHTMLAttributes<HTMLMenuElement> {
+  rootStyles?: CSSObject;
   children?: React.ReactNode;
 }
 
-interface MenuState {
-  closeOnClick?: boolean;
-  renderMenuItemStyles?: (params: RenderMenuItemStylesParams) => CSSObject;
-  renderExpandIcon?: (params: RenderExpandIconParams) => React.ReactNode;
-}
+const StyledMenu = styled.nav<Pick<MenuProps, 'rootStyles'>>`
+  &.${menuClasses.root} {
+    ${({ rootStyles }) => rootStyles}
+  }
+`;
 
 export const MenuContext = React.createContext<MenuContextProps | undefined>(undefined);
 
-export interface MenuContextProps extends MenuState {
-  updateMenuState: (values: MenuState) => void;
-}
-
 const MenuFR: React.ForwardRefRenderFunction<HTMLMenuElement, MenuProps> = (
-  { children, className, closeOnClick = false, renderMenuItemStyles, renderExpandIcon, ...rest },
+  {
+    children,
+    className,
+    closeOnClick = false,
+    rootStyles,
+    menuItemStyles,
+    renderExpandIcon,
+    ...rest
+  },
   ref,
 ) => {
-  const [menuState, setMenuState] = React.useState<MenuState>();
-
-  const updateMenuState = React.useCallback((values: Partial<MenuState>) => {
-    setMenuState((prevState) => ({ ...prevState, ...values }));
-  }, []);
-
   const providerValue = React.useMemo(
-    () => ({ ...menuState, updateMenuState }),
-    [menuState, updateMenuState],
+    () => ({ closeOnClick, menuItemStyles, renderExpandIcon }),
+    [closeOnClick, menuItemStyles, renderExpandIcon],
   );
-
-  React.useEffect(() => {
-    updateMenuState({ renderMenuItemStyles, renderExpandIcon, closeOnClick });
-  }, [renderExpandIcon, renderMenuItemStyles, closeOnClick, updateMenuState]);
 
   return (
     <MenuContext.Provider value={providerValue}>
-      <nav ref={ref} className={classnames('menu', className)} {...rest}>
+      <StyledMenu
+        ref={ref}
+        className={classnames(menuClasses.root, className)}
+        rootStyles={rootStyles}
+        {...rest}
+      >
         <StyledUl>{children}</StyledUl>
-      </nav>
+      </StyledMenu>
     </MenuContext.Provider>
   );
 };

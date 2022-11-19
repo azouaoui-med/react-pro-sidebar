@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { menuClasses } from '../utils/utilityClasses';
 
-interface StyledMenuItemAnchorProps {
+interface StyledMenuButtonProps {
   level: number;
   collapsed?: boolean;
   rtl?: boolean;
@@ -8,7 +9,7 @@ interface StyledMenuItemAnchorProps {
   active?: boolean;
 }
 
-export const StyledMenuItemAnchor = styled.a<StyledMenuItemAnchorProps>`
+export const StyledMenuButton = styled.a<StyledMenuButtonProps>`
   display: flex;
   align-items: center;
   height: 50px;
@@ -20,11 +21,11 @@ export const StyledMenuItemAnchor = styled.a<StyledMenuItemAnchorProps>`
   ${({ rtl, level, collapsed }) =>
     rtl
       ? `padding-left: 20px;
-    padding-right: ${level === 0 ? 20 : (collapsed ? level : level + 1) * 20}px;
-    `
+           padding-right: ${level === 0 ? 20 : (collapsed ? level : level + 1) * 20}px;
+          `
       : `padding-right: 20px;
-    padding-left: ${level === 0 ? 20 : (collapsed ? level : level + 1) * 20}px;
-    `}
+           padding-left: ${level === 0 ? 20 : (collapsed ? level : level + 1) * 20}px;
+         `}
 
   &:hover {
     background-color: #f3f3f3;

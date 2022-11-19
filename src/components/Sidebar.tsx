@@ -1,9 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { CSSObject } from 'styled-components';
 import classnames from 'classnames';
 import { useSidebar } from '../hooks/useSidebar';
 import { useMediaQuery } from '../hooks/useMediaQuery';
-import { Overlay } from './Overlay';
+import { Backdrop } from './Backdrop';
+import { sidebarClasses } from '../utils/utilityClasses';
 
 type BreakPoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'always';
 
@@ -64,13 +65,11 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
    */
   image?: string;
 
-  /**
-   * set overlay color
-   * @default ```rgb(0, 0, 0, 0.3)```
-   */
-  overlayColor?: string;
-
   rtl?: boolean;
+
+  rootStyles?: CSSObject;
+
+  backdropStyles?: CSSObject;
 
   children?: React.ReactNode;
 }
@@ -88,55 +87,75 @@ const StyledSidebar = styled.aside<StyledSidebarProps>`
   position: relative;
   border-right: 1px solid #efefef;
 
-  width: ${({ width, collapsed, collapsedWidth }) => (collapsed ? collapsedWidth : width)};
-  min-width: ${({ width, collapsed, collapsedWidth }) => (collapsed ? collapsedWidth : width)};
   transition: ${({ transitionDuration }) => `width, left, right, ${transitionDuration}ms`};
 
-  ${({ rtl }) => (rtl ? 'direction: rtl' : '')};
+  width: ${({ width }) => width};
+  min-width: ${({ width }) => width};
 
-  ${({ broken, collapsed, collapsedWidth, toggled, width, rtl }) =>
-    broken
-      ? ` 
-        position: fixed;
-        height: 100%;
-        top: 0px;
-        z-index: 100;
-        ${
-          rtl
-            ? `
-            right: -${width};
-            ${collapsed ? `right:-${collapsedWidth};` : ''}
-            ${toggled ? 'right:0;' : ''}
-            `
-            : `
-            left: -${width};
-            ${collapsed ? `left:-${collapsedWidth};` : ''}
-            ${toggled ? 'left:0;' : ''}`
-        }
+  &.${sidebarClasses.collapsed} {
+    width: ${({ collapsedWidth }) => collapsedWidth};
+    min-width: ${({ collapsedWidth }) => collapsedWidth};
+  }
 
-      
-        `
-      : ''}
+  &.${sidebarClasses.rtl} {
+    direction: rtl;
+  }
+
+  &.${sidebarClasses.broken} {
+    position: fixed;
+    height: 100%;
+    top: 0px;
+    z-index: 100;
+
+    ${({ rtl, width }) => (!rtl ? `left: -${width};` : '')}
+
+    &.${sidebarClasses.collapsed} {
+      ${({ rtl, collapsedWidth }) => (!rtl ? `left: -${collapsedWidth}; ` : '')}
+    }
+
+    &.${sidebarClasses.toggled} {
+      ${({ rtl }) => (!rtl ? `left: 0;` : '')}
+    }
+
+    &.${sidebarClasses.rtl} {
+      right: -${({ width }) => width};
+
+      &.${sidebarClasses.collapsed} {
+        right: -${({ collapsedWidth }) => collapsedWidth};
+      }
+
+      &.${sidebarClasses.toggled} {
+        right: 0;
+      }
+    }
+  }
+
+  ${({ rootStyles }) => rootStyles}
 `;
 
 const StyledInnerSidebar = styled.div<StyledInnerSidebarProps>`
-  position: relative;
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  z-index: 3;
-  ${({ backgroundColor }) => (backgroundColor ? `background-color:${backgroundColor};` : '')}
+  &.${sidebarClasses.container} {
+    position: relative;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 3;
+
+    ${({ backgroundColor }) => (backgroundColor ? `background-color:${backgroundColor};` : '')}
+  }
 `;
 
 const StyledSidebarImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 2;
+  &.${sidebarClasses.image} {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 2;
+  }
 `;
 
 const SidebarFR: React.ForwardRefRenderFunction<HTMLHtmlElement, SidebarProps> = (
@@ -150,9 +169,10 @@ const SidebarFR: React.ForwardRefRenderFunction<HTMLHtmlElement, SidebarProps> =
     customBreakPoint,
     backgroundColor = 'rgb(249, 249, 249, 0.7)',
     transitionDuration = 300,
-    overlayColor = 'rgb(0, 0, 0, 0.3)',
     image,
     rtl,
+    rootStyles,
+    backdropStyles,
     ...rest
   },
   ref,
@@ -172,7 +192,7 @@ const SidebarFR: React.ForwardRefRenderFunction<HTMLHtmlElement, SidebarProps> =
     rtl: rtlContext,
   } = useSidebar();
 
-  const handleOverlayClick = () => {
+  const handleBackdropClick = () => {
     updateSidebarState({ toggled: false });
   };
 
@@ -191,24 +211,27 @@ const SidebarFR: React.ForwardRefRenderFunction<HTMLHtmlElement, SidebarProps> =
   return (
     <StyledSidebar
       ref={ref}
-      data-testid="sidebar-test-id"
-      collapsed={collapsedContext}
-      broken={brokenContext}
-      toggled={toggledContext}
+      data-testid={`${sidebarClasses.root}-test-id`}
       rtl={rtlContext}
+      rootStyles={rootStyles}
       width={widthContext}
       collapsedWidth={collapsedWidthContext}
       transitionDuration={transitionDurationContext ?? 300}
       className={classnames(
-        'sidebar',
-        { collapsed: collapsedContext, toggled: toggledContext, broken: brokenContext },
+        sidebarClasses.root,
+        {
+          [sidebarClasses.collapsed]: collapsedContext,
+          [sidebarClasses.toggled]: toggledContext,
+          [sidebarClasses.broken]: brokenContext,
+          [sidebarClasses.rtl]: rtlContext,
+        },
         className,
       )}
       {...rest}
     >
       <StyledInnerSidebar
-        data-testid="inner-sidebar-test-id"
-        className="sidebar-inner"
+        data-testid={`${sidebarClasses.container}-test-id`}
+        className={sidebarClasses.container}
         backgroundColor={backgroundColor}
       >
         {children}
@@ -216,15 +239,20 @@ const SidebarFR: React.ForwardRefRenderFunction<HTMLHtmlElement, SidebarProps> =
 
       {image && (
         <StyledSidebarImage
-          data-testid="sidebar-img-test-id"
+          data-testid={`${sidebarClasses.image}-test-id`}
           src={image}
           alt="sidebar background"
-          className="sidebar-bg"
+          className={sidebarClasses.image}
         />
       )}
 
       {brokenContext && toggledContext && (
-        <Overlay onOverlayClick={handleOverlayClick} overlayColor={overlayColor} />
+        <Backdrop
+          onClick={handleBackdropClick}
+          onKeyPress={handleBackdropClick}
+          rootStyles={backdropStyles}
+          className={sidebarClasses.backdrop}
+        />
       )}
     </StyledSidebar>
   );

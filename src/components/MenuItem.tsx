@@ -5,9 +5,10 @@ import { StyledMenuLabel } from '../styles/StyledMenuLabel';
 import { StyledMenuIcon } from '../styles/StyledMenuIcon';
 import { StyledMenuPrefix } from '../styles/StyledMenuPrefix';
 import { useSidebar } from '../hooks/useSidebar';
-import { StyledMenuItemAnchor } from '../styles/StyledMenuItemAnchor';
+import { StyledMenuButton } from '../styles/StyledMenuButton';
 import { useMenu } from '../hooks/useMenu';
 import { StyledMenuSuffix } from '../styles/StyledMenuSuffix';
+import { menuClasses } from '../utils/utilityClasses';
 
 export interface MenuItemProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
@@ -18,23 +19,30 @@ export interface MenuItemProps
   disabled?: boolean;
   children?: React.ReactNode;
   routerLink?: React.ReactElement;
+  rootStyles?: CSSObject;
   /**
    * @ignore
    */
   level?: number;
 }
 
-const StyledRouterLinkWrapper = styled.div`
-  position: absolute;
-  visibility: hidden;
-`;
+interface StyledMenuItemProps extends Pick<MenuItemProps, 'rootStyles'> {
+  menuItemStyles?: CSSObject;
+}
 
-const StyledMenuItem = styled.li<{ menuItemStyles?: CSSObject }>`
+const StyledMenuItem = styled.li<StyledMenuItemProps>`
   display: inline-block;
   width: 100%;
   position: relative;
 
   ${({ menuItemStyles }) => menuItemStyles};
+
+  ${({ rootStyles }) => rootStyles};
+`;
+
+const StyledRouterLinkWrapper = styled.div`
+  position: absolute;
+  visibility: hidden;
 `;
 
 export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemProps> = (
@@ -49,12 +57,13 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
     disabled = false,
     onClick,
     routerLink,
+    rootStyles,
     ...rest
   },
   ref,
 ) => {
   const { collapsed, transitionDuration, rtl } = useSidebar();
-  const { renderMenuItemStyles } = useMenu();
+  const { menuItemStyles } = useMenu();
 
   const routerRef = React.useRef<HTMLAnchorElement>();
 
@@ -66,11 +75,21 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
   return (
     <StyledMenuItem
       ref={ref}
-      className={classnames('menu-item', { active }, { disabled }, className)}
-      menuItemStyles={renderMenuItemStyles?.({ level, collapsed: !!collapsed, disabled, active })}
+      className={classnames(
+        menuClasses.menuItemRoot,
+        { [menuClasses.active]: active },
+        { [menuClasses.disabled]: disabled },
+        className,
+      )}
+      menuItemStyles={
+        typeof menuItemStyles === 'function'
+          ? menuItemStyles({ level, disabled, active, isSubmenu: false })
+          : menuItemStyles
+      }
+      rootStyles={rootStyles}
     >
-      <StyledMenuItemAnchor
-        className="menu-anchor"
+      <StyledMenuButton
+        className={menuClasses.button}
         data-testid="menuitem-anchor-test-id"
         level={level}
         collapsed={collapsed}
@@ -81,7 +100,7 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
         {...rest}
       >
         {icon && (
-          <StyledMenuIcon rtl={rtl} className="menu-icon">
+          <StyledMenuIcon rtl={rtl} className={menuClasses.icon}>
             {icon}
           </StyledMenuIcon>
         )}
@@ -91,26 +110,26 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
             collapsed={collapsed}
             transitionDuration={transitionDuration}
             firstLevel={level === 0}
-            className="menu-prefix"
+            className={menuClasses.prefix}
             rtl={rtl}
           >
             {prefix}
           </StyledMenuPrefix>
         )}
 
-        <StyledMenuLabel className="menu-label">{children}</StyledMenuLabel>
+        <StyledMenuLabel className={menuClasses.label}>{children}</StyledMenuLabel>
 
         {suffix && (
           <StyledMenuSuffix
             collapsed={collapsed}
             transitionDuration={transitionDuration}
             firstLevel={level === 0}
-            className="menu-suffix"
+            className={menuClasses.suffix}
           >
             {suffix}
           </StyledMenuSuffix>
         )}
-      </StyledMenuItemAnchor>
+      </StyledMenuButton>
       {routerLink && (
         <StyledRouterLinkWrapper>
           {React.cloneElement(routerLink, { ref: routerRef })}

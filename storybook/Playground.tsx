@@ -46,7 +46,7 @@ export const Playground: React.FC = () => {
         <div style={{ display: 'flex', padding: 10 }}>
           <button
             className="sb-button"
-            style={{ marginRight: '8px' }}
+            style={{ margin: '0 8px' }}
             onClick={() => collapseSidebar()}
           >
             Collapse

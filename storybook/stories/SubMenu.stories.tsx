@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Menu, MenuItem, Sidebar, SubMenu } from '../../src';
+import { Menu, menuClasses, MenuItem, Sidebar, SubMenu } from '../../src';
 import { ProSidebarProvider } from '../../src/components/ProSidebarProvider';
 import { Icon } from '../icons/Icon';
 
@@ -222,3 +222,43 @@ export const DefaultOpen: ComponentStory<typeof SubMenu> = () => (
   </div>
 );
 DefaultOpen.storyName = 'defaultOpen';
+
+export const RootStyles: ComponentStory<typeof MenuItem> = () => (
+  <div style={{ display: 'flex', height: '100%' }}>
+    <Sidebar>
+      <Menu>
+        <Menu>
+          <SubMenu
+            defaultOpen
+            label="Charts"
+            rootStyles={{
+              ['& > .' + menuClasses.button]: {
+                backgroundColor: '#eaabff',
+                color: '#9f0099',
+                '&:hover': {
+                  backgroundColor: '#eecef9',
+                },
+              },
+              ['.' + menuClasses.subMenuContent]: {
+                backgroundColor: '#fbedff',
+              },
+            }}
+          >
+            <MenuItem> Pie charts</MenuItem>
+            <MenuItem> Line charts</MenuItem>
+            <MenuItem> Bar charts</MenuItem>
+          </SubMenu>
+          <SubMenu label="Maps">
+            <MenuItem> Google maps</MenuItem>
+            <MenuItem> Open street maps</MenuItem>
+          </SubMenu>
+          <SubMenu label="Theme">
+            <MenuItem> Dark</MenuItem>
+            <MenuItem> Light</MenuItem>
+          </SubMenu>
+        </Menu>
+      </Menu>
+    </Sidebar>
+  </div>
+);
+RootStyles.storyName = 'rootStyles';

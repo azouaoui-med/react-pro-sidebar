@@ -2,6 +2,7 @@ import React from 'react';
 import { customRender, screen } from '../../utils/testUtils';
 import { Sidebar } from '../Sidebar';
 import * as sidebarHooks from '../../hooks/useSidebar';
+import { sidebarClasses } from '../../utils/utilityClasses';
 
 describe('Sidebar', () => {
   it('basic snapshot ', () => {
@@ -12,12 +13,12 @@ describe('Sidebar', () => {
 
   it('should initialize Sidebar correctly', () => {
     customRender(<Sidebar>Sidebar</Sidebar>);
-    const sidebarElem = screen.getByTestId('sidebar-test-id');
-    const SidebarImgElem = screen.queryByTestId('sidebar-img-test-id');
+    const sidebarElem = screen.getByTestId(`${sidebarClasses.root}-test-id`);
+    const SidebarImgElem = screen.queryByTestId(`${sidebarClasses.image}-test-id`);
 
     expect(sidebarElem).toBeInTheDocument();
     expect(SidebarImgElem).not.toBeInTheDocument();
-    expect(sidebarElem).toHaveClass('sidebar');
+    expect(sidebarElem).toHaveClass(sidebarClasses.root);
     expect(sidebarElem).toHaveStyle({
       position: 'relative',
       width: '250px',
@@ -28,7 +29,7 @@ describe('Sidebar', () => {
 
   it('should set the width to 300px ', () => {
     customRender(<Sidebar width="300px">Sidebar</Sidebar>);
-    const sidebarElem = screen.getByTestId('sidebar-test-id');
+    const sidebarElem = screen.getByTestId(`${sidebarClasses.root}-test-id`);
 
     expect(sidebarElem).toHaveStyle({
       width: '300px',
@@ -38,8 +39,8 @@ describe('Sidebar', () => {
 
   it('should set the width to 80px when defaultCollapsed is true ', () => {
     customRender(<Sidebar defaultCollapsed>Sidebar</Sidebar>);
-    const sidebarElem = screen.getByTestId('sidebar-test-id');
-    expect(sidebarElem).toHaveClass('collapsed');
+    const sidebarElem = screen.getByTestId(`${sidebarClasses.root}-test-id`);
+    expect(sidebarElem).toHaveClass(sidebarClasses.collapsed);
     expect(sidebarElem).toHaveStyle({
       width: '80px',
       'min-width': '80px',
@@ -52,7 +53,7 @@ describe('Sidebar', () => {
         Sidebar
       </Sidebar>,
     );
-    const sidebarElem = screen.getByTestId('sidebar-test-id');
+    const sidebarElem = screen.getByTestId(`${sidebarClasses.root}-test-id`);
 
     expect(sidebarElem).toHaveStyle({
       width: '100px',
@@ -62,7 +63,7 @@ describe('Sidebar', () => {
 
   it('should have apply backgroundColor:black on inner sidebar', () => {
     customRender(<Sidebar backgroundColor="black">Sidebar</Sidebar>);
-    const innerSidebarElem = screen.getByTestId('inner-sidebar-test-id');
+    const innerSidebarElem = screen.getByTestId(`${sidebarClasses.container}-test-id`);
 
     expect(innerSidebarElem).toHaveStyle({
       'background-color': 'black',
@@ -71,7 +72,7 @@ describe('Sidebar', () => {
 
   it('should have set transition duration to 0.5s', () => {
     customRender(<Sidebar transitionDuration={500}>Sidebar</Sidebar>);
-    const SidebarElem = screen.getByTestId('sidebar-test-id');
+    const SidebarElem = screen.getByTestId(`${sidebarClasses.root}-test-id`);
 
     expect(SidebarElem).toHaveStyle({
       transition: 'width,left,right,500ms',
@@ -80,11 +81,11 @@ describe('Sidebar', () => {
 
   it('should display a background image', () => {
     customRender(<Sidebar image="some-url">Sidebar</Sidebar>);
-    const SidebarImgElem = screen.getByTestId('sidebar-img-test-id');
+    const SidebarImgElem = screen.getByTestId(`${sidebarClasses.image}-test-id`);
 
     expect(SidebarImgElem).toBeInTheDocument();
     expect(SidebarImgElem).toHaveAttribute('src', 'some-url');
-    expect(SidebarImgElem).toHaveClass('sidebar-bg');
+    expect(SidebarImgElem).toHaveClass(sidebarClasses.image);
   });
 
   it('should sidebar have a correct positioning when broken', () => {
@@ -103,7 +104,7 @@ describe('Sidebar', () => {
 
     customRender(<Sidebar image="some-url">Sidebar</Sidebar>);
 
-    const SidebarElem = screen.getByTestId('sidebar-test-id');
+    const SidebarElem = screen.getByTestId(`${sidebarClasses.root}-test-id`);
 
     expect(SidebarElem).toHaveStyle({
       position: 'fixed',
@@ -129,7 +130,7 @@ describe('Sidebar', () => {
 
     customRender(<Sidebar image="some-url">Sidebar</Sidebar>);
 
-    const SidebarElem = screen.getByTestId('sidebar-test-id');
+    const SidebarElem = screen.getByTestId(`${sidebarClasses.root}-test-id`);
 
     expect(SidebarElem).toHaveStyle({
       left: '-80px',
@@ -151,9 +152,9 @@ describe('Sidebar', () => {
     }));
 
     customRender(<Sidebar image="some-url">Sidebar</Sidebar>);
-    const SidebarElem = screen.getByTestId('sidebar-test-id');
+    const SidebarElem = screen.getByTestId(`${sidebarClasses.root}-test-id`);
 
-    expect(screen.getByTestId('overlay-test-id')).toBeInTheDocument();
+    expect(screen.getByTestId(`${sidebarClasses.backdrop}-test-id`)).toBeInTheDocument();
 
     expect(SidebarElem).toHaveStyle({
       left: '0px',
@@ -180,7 +181,7 @@ describe('Sidebar', () => {
         Sidebar
       </Sidebar>,
     );
-    const SidebarElem = screen.getByTestId('sidebar-test-id');
+    const SidebarElem = screen.getByTestId(`${sidebarClasses.root}-test-id`);
 
     expect(SidebarElem).toHaveStyle({
       right: '-250px',
@@ -207,7 +208,7 @@ describe('Sidebar', () => {
         Sidebar
       </Sidebar>,
     );
-    const SidebarElem = screen.getByTestId('sidebar-test-id');
+    const SidebarElem = screen.getByTestId(`${sidebarClasses.root}-test-id`);
 
     expect(SidebarElem).toHaveStyle({
       right: '0px',

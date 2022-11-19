@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Menu, MenuItem, Sidebar, SubMenu } from '../../src';
+import { Menu, menuClasses, MenuItem, Sidebar, SubMenu } from '../../src';
 import { ProSidebarProvider } from '../../src/components/ProSidebarProvider';
 import { Icon } from '../icons/Icon';
 
@@ -73,19 +73,59 @@ export const renderExpandIcon: ComponentStory<typeof Menu> = () => (
 
 renderExpandIcon.storyName = 'renderExpandIcon';
 
-export const renderMenuItemStyles: ComponentStory<typeof Menu> = () => (
+export const MenuItemStyles: ComponentStory<typeof Menu> = () => (
   <div style={{ display: 'flex', height: '100%' }}>
     <Sidebar>
       <Menu
-        renderMenuItemStyles={({ level, disabled, active }) => ({
-          '.menu-icon': {
-            backgroundColor: '#e1e1e1',
-          },
-          '.menu-anchor': {
-            backgroundColor: active ? '#ffcaec' : 'initial',
-            color: level === 0 ? (disabled ? 'gray' : 'blue') : 'red',
-          },
+        menuItemStyles={({ level }) => ({
+          // only apply the styles on first level menu buttons
+          ...(level === 0 && {
+            [`&.${menuClasses.active} > .${menuClasses.button}`]: {
+              backgroundColor: '#d359ff',
+              color: '#f7e1ff',
+            },
+            [`& > .${menuClasses.button}`]: {
+              backgroundColor: '#eaabff',
+              color: '#9f0099',
+              '&:hover': {
+                backgroundColor: '#eecef9',
+              },
+            },
+            [`&.${menuClasses.disabled} > .${menuClasses.button}`]: {
+              backgroundColor: '#f7e1ff',
+            },
+          }),
         })}
+      >
+        <SubMenu defaultOpen label="Charts" icon={<Icon name="bar-chart" />}>
+          <MenuItem> Pie charts</MenuItem>
+          <MenuItem> Line charts</MenuItem>
+          <MenuItem> Bar charts</MenuItem>
+        </SubMenu>
+        <MenuItem active icon={<Icon name="calendar" />}>
+          Calendar (active)
+        </MenuItem>
+        <MenuItem disabled icon={<Icon name="shopping-cart" />}>
+          E-commerce (disabled)
+        </MenuItem>
+        <MenuItem icon={<Icon name="service" />}> Examples</MenuItem>
+      </Menu>
+    </Sidebar>
+  </div>
+);
+
+MenuItemStyles.storyName = 'menuItemStyles';
+
+export const RootStyles: ComponentStory<typeof Menu> = () => (
+  <div style={{ display: 'flex', height: '100%' }}>
+    <Sidebar>
+      <Menu
+        rootStyles={{
+          [`.${menuClasses.icon}`]: {
+            backgroundColor: '#e1e1e1',
+            color: '#344cff',
+          },
+        }}
       >
         <SubMenu label="Charts" icon={<Icon name="bar-chart" />}>
           <MenuItem> Pie charts</MenuItem>
@@ -104,4 +144,4 @@ export const renderMenuItemStyles: ComponentStory<typeof Menu> = () => (
   </div>
 );
 
-renderMenuItemStyles.storyName = 'renderMenuItemStyles';
+RootStyles.storyName = 'rootStyles';

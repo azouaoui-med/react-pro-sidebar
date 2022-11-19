@@ -4,7 +4,6 @@ import { Menu, MenuItem, Sidebar, useProSidebar } from '../../src';
 import { ProSidebarProvider } from '../../src/components/ProSidebarProvider';
 import { Icon } from '../icons/Icon';
 
-// TODO : use controls to test props (collapsed, toggled, rtl,...)
 const StoryParams: ComponentMeta<typeof Sidebar> = {
   title: 'Sidebar',
   component: Sidebar,
@@ -244,3 +243,78 @@ export const RTL: ComponentStory<typeof Sidebar> = () => {
   );
 };
 RTL.storyName = 'rtl';
+
+export const RootStyles: ComponentStory<typeof Sidebar> = () => {
+  return (
+    <div
+      style={{
+        display: 'flex',
+        height: '100%',
+        minHeight: '400px',
+      }}
+    >
+      <Sidebar
+        rootStyles={{
+          background:
+            'linear-gradient(180deg, rgba(166,240,255,1) 0%, rgba(220,250,255,1) 49%, rgba(230,252,255,1) 100%)',
+        }}
+      >
+        <Menu>
+          <MenuItem> Documentation</MenuItem>
+          <MenuItem> Calendar</MenuItem>
+          <MenuItem> E-commerce</MenuItem>
+          <MenuItem> Examples</MenuItem>
+        </Menu>
+      </Sidebar>
+    </div>
+  );
+};
+RootStyles.storyName = 'rootStyles';
+
+export const BackdropStyles: ComponentStory<typeof Sidebar> = () => {
+  const { toggleSidebar } = useProSidebar();
+
+  React.useEffect(() => {
+    toggleSidebar();
+  }, [toggleSidebar]);
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        height: '100%',
+        minHeight: '400px',
+      }}
+    >
+      <Sidebar
+        breakPoint="always"
+        backdropStyles={{
+          background: 'rgba(169, 0, 255, 0.15)',
+        }}
+      >
+        <Menu>
+          <MenuItem> Documentation</MenuItem>
+          <MenuItem> Calendar</MenuItem>
+          <MenuItem> E-commerce</MenuItem>
+          <MenuItem> Examples</MenuItem>
+        </Menu>
+      </Sidebar>
+      <main>
+        <div style={{ display: 'flex', padding: 10 }}>
+          <button className="sb-button" onClick={() => toggleSidebar()}>
+            Toggle
+          </button>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+BackdropStyles.storyName = 'backdropStyles';
+
+BackdropStyles.parameters = {
+  docs: {
+    inlineStories: false,
+    iframeHeight: 500,
+  },
+};

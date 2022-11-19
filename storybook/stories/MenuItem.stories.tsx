@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Menu, MenuItem, Sidebar } from '../../src';
+import { Menu, menuClasses, MenuItem, Sidebar } from '../../src';
 import { ProSidebarProvider } from '../../src/components/ProSidebarProvider';
 import { Icon } from '../icons/Icon';
 
@@ -123,3 +123,29 @@ export const Disabled: ComponentStory<typeof MenuItem> = () => (
   </div>
 );
 Disabled.storyName = 'disabled';
+
+export const RootStyles: ComponentStory<typeof MenuItem> = () => (
+  <div style={{ display: 'flex', height: '100%' }}>
+    <Sidebar>
+      <Menu>
+        <MenuItem
+          rootStyles={{
+            ['.' + menuClasses.button]: {
+              backgroundColor: '#eaabff',
+              color: '#9f0099',
+              '&:hover': {
+                backgroundColor: '#eecef9',
+              },
+            },
+          }}
+        >
+          Documentation
+        </MenuItem>
+        <MenuItem> Calendar</MenuItem>
+        <MenuItem> E-commerce</MenuItem>
+        <MenuItem> Examples</MenuItem>
+      </Menu>
+    </Sidebar>
+  </div>
+);
+RootStyles.storyName = 'rootStyles';

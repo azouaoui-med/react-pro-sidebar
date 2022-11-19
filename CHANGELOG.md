@@ -7,13 +7,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added rootStyles to all components
+- [Sidebar] Added backdropStyles
+- [Sidebar] Removed overlayColor prop
+- [Menu] Renamed `renderMenuItemStyles` to `menuItemStyles` which now is of type `CSSObject | ((params: MenuItemStylesParams) => CSSObject)`
+- updated classnames, the following are the new names:
+
+  - `ps-sidebar-root`
+  - `ps-sidebar-container`
+  - `ps-sidebar-image`
+  - `ps-sidebar-backdrop`
+  - `ps-collapsed`
+  - `ps-toggled`
+  - `ps-rtl`
+  - `ps-broken`
+  - `ps-menu-root`
+  - `ps-menuitem-root`
+  - `ps-submenu-root`
+  - `ps-menu-button`
+  - `ps-menu-prefix`
+  - `ps-menu-suffix`
+  - `ps-menu-label`
+  - `ps-menu-icon`
+  - `ps-submenu-content`
+  - `ps-submenu-expand-icon`
+  - `ps-disabled`
+  - `ps-active`
+  - `ps-open`
+
+- Added utility classes that can be used to reference used classes
+
 ## [1.0.0-alpha.7] - 2022-10-24
 
-- added support for react router to MenuItem via routerLink prop
+- Added support for react router to MenuItem via routerLink prop
 
 ## [1.0.0-alpha.6] - 2022-10-14
 
-- fixed submenu content not displayed when collapsed [issue #124](https://github.com/azouaoui-med/react-pro-sidebar/issues/124)
+- Fixed submenu content not displayed when collapsed [issue #124](https://github.com/azouaoui-med/react-pro-sidebar/issues/124)
 
 ## [1.0.0-alpha.4] - 2022-10-10
 

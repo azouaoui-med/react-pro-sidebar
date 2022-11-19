@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Backdrop basic snapshot  1`] = `
+<div
+  aria-label="backdrop"
+  class="sc-bcXHqe jeMTJc"
+  data-testid="ps-sidebar-backdrop-test-id"
+  role="button"
+  tabindex="0"
+/>
+`;

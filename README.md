@@ -44,7 +44,7 @@ npm install react-pro-sidebar
 
 First you need to make sure that your components are wrapped within a `<ProSidebarProvider>` component
 
-```tsx
+```jsx
 import { ProSidebarProvider } from 'react-pro-sidebar';
 
 <ProSidebarProvider>
@@ -54,7 +54,7 @@ import { ProSidebarProvider } from 'react-pro-sidebar';
 
 Then in your layout component you can add sidebar navigation
 
-```tsx
+```jsx
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 
 <Sidebar>
@@ -75,7 +75,7 @@ The library comes with a `useProSidebar` hook that lets you access and manage si
 
 ### API
 
-```tsx
+```jsx
 const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } = useProSidebar();
 ```
 
@@ -124,7 +124,7 @@ We provide compatibility with [React Router](https://reactrouter.com/en/main) us
 
 **Example Usage**
 
-```tsx
+```jsx
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
 
@@ -151,7 +151,7 @@ import { Link } from 'react-router-dom';
     </thead>
     <tbody>
         <tr>
-            <td rowspan=10>Sidebar</td>
+            <td rowspan=11>Sidebar</td>
             <td >defaultCollapsed</td>
             <td><code>boolean</code></td>
             <td>Initial collapsed status</td>
@@ -200,28 +200,34 @@ import { Link } from 'react-router-dom';
             <td><code>300</code></td>
         </tr>
         <tr>
-            <td>overlayColor</td>
-            <td><code>string</code></td>
-            <td>Set overlay color</td>
-            <td><code>rgb(0, 0, 0, 0.3)</code></td>
-        </tr>
-        <tr>
             <td>rtl</td>
             <td><code>boolean</code></td>
             <td>RTL direction</td>
             <td><code>false</code></td>
         </tr>
+        <tr>
+            <td>rootStyles</td>
+            <td><code>CSSObject</code></td>
+            <td>Apply styles to sidebar element</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>backdropStyles</td>
+            <td><code>CSSObject</code></td>
+            <td>Apply styles to backdrop element</td>
+            <td>-</td>
+        </tr>
          <tr>
-            <td rowspan=3>Menu</td>
+            <td rowspan=4>Menu</td>
             <td>closeOnClick</td>
             <td><code>boolean</code></td>
             <td>If <code>true</code>, submenu popper will close when clicking on MenuItem</td>
             <td><code>false</code></td>
         </tr>
          <tr>
-            <td>renderMenuItemStyles</td>
-            <td><code>(params: { level: number; collapsed: boolean; disabled: boolean; active: boolean; }) => CSSObject</code></td>
-            <td>Render method for style customization on MenuItem and SubMenu components </td>
+            <td>menuItemStyles</td>
+            <td><code>CSSObject | ((params: MenuItemStylesParams) => CSSObject</code></td>
+            <td>apply styles to MenuItem and SubMenu components </td>
             <td>-</td>
         </tr>
          <tr>
@@ -230,8 +236,14 @@ import { Link } from 'react-router-dom';
             <td>Render method for customizing submenu expand icon</td>
             <td>-</td>
         </tr>
+        <tr>
+            <td>rootStyles</td>
+            <td><code>CSSObject</code></td>
+            <td>Apply styles from Menu root element</td>
+            <td>-</td>
+        </tr>
          <tr>
-            <td rowspan=6>MenuItem</td>
+            <td rowspan=7>MenuItem</td>
             <td>icon</td>
             <td><code>ReactNode</code></td>
             <td>Icon for the menu item </td>
@@ -268,7 +280,13 @@ import { Link } from 'react-router-dom';
             <td>-</td>
         </tr>
         <tr>
-            <td rowspan=9>SubMenu</td>
+            <td>rootStyles</td>
+            <td><code>CSSObject</code></td>
+            <td>Apply styles to MenuItem element</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td rowspan=10>SubMenu</td>
             <td>label</td>
             <td><code>string | ReactNode</code></td>
             <td>Label for the submenu </td>
@@ -320,6 +338,12 @@ import { Link } from 'react-router-dom';
             <td>onOpenChange</td>
             <td><code>(open: boolean) => void</code></td>
             <td>Callback function called when submenu state changes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>rootStyles</td>
+            <td><code>CSSObject</code></td>
+            <td>Apply styles to SubMenu element</td>
             <td>-</td>
         </tr>
     </tbody>

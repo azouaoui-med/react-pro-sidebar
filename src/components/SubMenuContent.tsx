@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { StyledUl } from '../styles/StyledUl';
+import { menuClasses } from '../utils/utilityClasses';
 
 interface SubMenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
   open?: boolean;
@@ -103,10 +104,10 @@ const SubMenuContentFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuCo
 
   return (
     <StyledSubMenuContent
+      data-testid={`${menuClasses.subMenuContent}-test-id`}
       ref={ref}
       firstLevel={firstLevel}
       collapsed={collapsed}
-      className="sub-menu-content"
       open={open}
       openWhenCollapsed={openWhenCollapsed}
       {...rest}

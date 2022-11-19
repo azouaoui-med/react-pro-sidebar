@@ -8,9 +8,15 @@ import { StyledMenuLabel } from '../styles/StyledMenuLabel';
 import { StyledMenuIcon } from '../styles/StyledMenuIcon';
 import { StyledMenuPrefix } from '../styles/StyledMenuPrefix';
 import { MenuItemProps } from './MenuItem';
-import { StyledMenuItemAnchor } from '../styles/StyledMenuItemAnchor';
+import { StyledMenuButton } from '../styles/StyledMenuButton';
 import { useMenu } from '../hooks/useMenu';
 import { StyledMenuSuffix } from '../styles/StyledMenuSuffix';
+import { menuClasses } from '../utils/utilityClasses';
+import {
+  StyledExpandIcon,
+  StyledExpandIconCollapsed,
+  StyledExpandIconWrapper,
+} from '../styles/StyledExpandIcon';
 
 export interface SubMenuProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
@@ -23,6 +29,7 @@ export interface SubMenuProps
   defaultOpen?: boolean;
   active?: boolean;
   disabled?: boolean;
+  rootStyles?: CSSObject;
   children?: React.ReactNode;
   onOpenChange?: (open: boolean) => void;
   /**
@@ -31,61 +38,17 @@ export interface SubMenuProps
   level?: number;
 }
 
-interface StyledExpandIconProps {
-  open?: boolean;
-  rtl?: boolean;
+interface StyledSubMenuProps extends Pick<SubMenuProps, 'rootStyles'> {
+  menuItemStyles?: CSSObject;
 }
 
-interface StyledExpandIconWrapperProps {
-  collapsed?: boolean;
-  level?: number;
-  rtl?: boolean;
-}
-
-const StyledExpandIconWrapper = styled.span<StyledExpandIconWrapperProps>`
-  ${({ collapsed, level, rtl }) =>
-    collapsed &&
-    level === 0 &&
-    `
-    position: absolute;
-    ${rtl ? 'left: 10px;' : 'right: 10px;'}
-    top: 50%;
-    transform: translateY(-50%);
-    
-    `}
-`;
-
-const StyledExpandIcon = styled.span<StyledExpandIconProps>`
-  display: inline-block;
-  transition: transform 0.3s;
-  ${({ rtl }) =>
-    rtl
-      ? `
-          border-left: 2px solid currentcolor;
-          border-top: 2px solid currentcolor;
-        `
-      : ` border-right: 2px solid currentcolor;
-          border-bottom: 2px solid currentcolor;
-        `}
-
-  width: 5px;
-  height: 5px;
-  transform: rotate(${({ open, rtl }) => (open ? (rtl ? '-135deg' : '45deg') : '-45deg')});
-`;
-
-const StyledExpandIconCollapsed = styled.span`
-  width: 5px;
-  height: 5px;
-  background-color: currentcolor;
-  border-radius: 50%;
-  display: inline-block;
-`;
-
-const StyledSubMenu = styled.li<{ menuItemStyles?: CSSObject }>`
+const StyledSubMenu = styled.li<StyledSubMenuProps>`
   position: relative;
   width: 100%;
 
   ${({ menuItemStyles }) => menuItemStyles};
+
+  ${({ rootStyles }) => rootStyles};
 `;
 
 export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuProps> = (
@@ -102,6 +65,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     level = 0,
     active = false,
     disabled = false,
+    rootStyles,
     onOpenChange,
     onClick,
     ...rest
@@ -109,7 +73,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
   ref,
 ) => {
   const { collapsed, transitionDuration, toggled, rtl } = useSidebar();
-  const { renderMenuItemStyles, renderExpandIcon, closeOnClick } = useMenu();
+  const { renderExpandIcon, closeOnClick, menuItemStyles } = useMenu();
 
   const [open, setOpen] = React.useState<boolean>(!!defaultOpen);
   const [openDefault, setOpenDefault] = React.useState<boolean>(!!defaultOpen);
@@ -210,29 +174,41 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     <StyledSubMenu
       ref={ref}
       className={classnames(
-        'sub-menu',
-        'menu-item',
-        { active },
-        { disabled },
-        { open: openSubmenu ?? open },
+        menuClasses.menuItemRoot,
+        menuClasses.subMenuRoot,
+        { [menuClasses.active]: active },
+        { [menuClasses.disabled]: disabled },
+        { [menuClasses.open]: openSubmenu ?? open },
         className,
       )}
-      menuItemStyles={renderMenuItemStyles?.({ level, collapsed: !!collapsed, disabled, active })}
+      menuItemStyles={
+        typeof menuItemStyles === 'function'
+          ? menuItemStyles({
+              level,
+              disabled,
+              active,
+              isSubmenu: true,
+              open: openSubmenu ?? open,
+            })
+          : menuItemStyles
+      }
+      rootStyles={rootStyles}
     >
-      <StyledMenuItemAnchor
+      <StyledMenuButton
+        data-testid={`${menuClasses.button}-test-id`}
         ref={anchorRef}
         rtl={rtl}
         title={title}
         level={level}
         collapsed={collapsed}
-        className="menu-anchor"
+        className={menuClasses.button}
         onClick={handleSlideToggle}
         disabled={disabled}
         active={active}
         {...rest}
       >
         {icon && (
-          <StyledMenuIcon rtl={rtl} className="menu-icon">
+          <StyledMenuIcon rtl={rtl} className={menuClasses.icon}>
             {icon}
           </StyledMenuIcon>
         )}
@@ -242,21 +218,21 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
             collapsed={collapsed}
             transitionDuration={transitionDuration}
             firstLevel={level === 0}
-            className="menu-prefix"
+            className={menuClasses.prefix}
             rtl={rtl}
           >
             {prefix}
           </StyledMenuPrefix>
         )}
 
-        <StyledMenuLabel className="menu-label">{label}</StyledMenuLabel>
+        <StyledMenuLabel className={menuClasses.label}>{label}</StyledMenuLabel>
 
         {suffix && (
           <StyledMenuSuffix
             collapsed={collapsed}
             transitionDuration={transitionDuration}
             firstLevel={level === 0}
-            className="menu-suffix"
+            className={menuClasses.suffix}
           >
             {suffix}
           </StyledMenuSuffix>
@@ -264,17 +240,16 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
 
         <StyledExpandIconWrapper
           rtl={rtl}
-          className="expand-icon"
+          className={menuClasses.SubMenuExpandIcon}
           collapsed={collapsed}
           level={level}
         >
           {renderExpandIcon ? (
             renderExpandIcon({
-              collapsed: !!collapsed,
               level,
-              open: openSubmenu ?? open,
               disabled,
               active,
+              open: openSubmenu ?? open,
             })
           ) : collapsed && level === 0 ? (
             <StyledExpandIconCollapsed />
@@ -282,7 +257,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
             <StyledExpandIcon rtl={rtl} open={openSubmenu ?? open} />
           )}
         </StyledExpandIconWrapper>
-      </StyledMenuItemAnchor>
+      </StyledMenuButton>
       <SubMenuContent
         ref={SubMenuContentRef}
         openWhenCollapsed={openWhenCollapsed}
@@ -290,6 +265,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         firstLevel={level === 0}
         collapsed={collapsed}
         defaultOpen={openDefault}
+        className={menuClasses.subMenuContent}
       >
         {childNodes.map((node) =>
           React.cloneElement(node, {
