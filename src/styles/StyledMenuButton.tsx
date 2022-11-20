@@ -1,5 +1,4 @@
-import styled from 'styled-components';
-import { menuClasses } from '../utils/utilityClasses';
+import styled from '@emotion/styled';
 
 interface StyledMenuButtonProps {
   level: number;

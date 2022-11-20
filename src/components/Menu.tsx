@@ -1,7 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import { StyledUl } from '../styles/StyledUl';
-import styled, { CSSObject } from 'styled-components';
+import styled, { CSSObject } from '@emotion/styled';
 import { menuClasses } from '../utils/utilityClasses';
 
 export interface MenuItemStylesParams {

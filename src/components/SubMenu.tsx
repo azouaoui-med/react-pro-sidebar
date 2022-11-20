@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { CSSObject } from 'styled-components';
+import styled, { CSSObject } from '@emotion/styled';
 import classnames from 'classnames';
 import { SubMenuContent } from './SubMenuContent';
 import { createPopper, Instance } from '@popperjs/core';

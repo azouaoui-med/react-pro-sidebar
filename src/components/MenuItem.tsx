@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { CSSObject } from 'styled-components';
+import styled, { CSSObject } from '@emotion/styled';
 import classnames from 'classnames';
 import { StyledMenuLabel } from '../styles/StyledMenuLabel';
 import { StyledMenuIcon } from '../styles/StyledMenuIcon';
@@ -90,7 +90,7 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
     >
       <StyledMenuButton
         className={menuClasses.button}
-        data-testid="menuitem-anchor-test-id"
+        data-testid={`${menuClasses.button}-test-id`}
         level={level}
         collapsed={collapsed}
         rtl={rtl}

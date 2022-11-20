@@ -1,5 +1,4 @@
 import React from 'react';
-import { GlobalStyle } from '../styles/globalStyles';
 import { SidebarProvider } from './sidebarContext';
 
 interface ProSidebarProviderProps {
@@ -7,10 +6,5 @@ interface ProSidebarProviderProps {
 }
 
 export const ProSidebarProvider: React.FC<ProSidebarProviderProps> = ({ children }) => {
-  return (
-    <SidebarProvider>
-      <GlobalStyle />
-      {children}
-    </SidebarProvider>
-  );
+  return <SidebarProvider>{children}</SidebarProvider>;
 };

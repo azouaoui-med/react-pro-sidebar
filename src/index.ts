@@ -5,4 +5,4 @@ export * from './components/MenuItem';
 export * from './components/ProSidebarProvider';
 export * from './hooks/useProSidebar';
 export * from './utils/utilityClasses';
-export type { CSSObject } from 'styled-components';
+export type { CSSObject } from '@emotion/styled';

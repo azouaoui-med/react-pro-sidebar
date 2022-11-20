@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import React from 'react';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { StyledUl } from '../styles/StyledUl';
 import { menuClasses } from '../utils/utilityClasses';
 

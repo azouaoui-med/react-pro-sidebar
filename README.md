@@ -16,6 +16,10 @@
 
 React Pro Sidebar provides a set of components for creating high level and customizable side navigation
 
+## Old versions
+
+- [v0.x](https://github.com/azouaoui-med/react-pro-sidebar/tree/v0.x)
+
 ## Live Preview
 
 - [Demo](https://azouaoui-med.github.io/react-pro-sidebar/iframe.html?id=playground--playground&args=&viewMode=story)

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { CSSObject } from 'styled-components';
+import styled, { CSSObject } from '@emotion/styled';
 import { sidebarClasses } from '../utils/utilityClasses';
 
 interface BackdropProps extends React.HTMLAttributes<HTMLDivElement> {

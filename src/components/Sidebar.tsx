@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { CSSObject } from 'styled-components';
+import styled, { CSSObject } from '@emotion/styled';
 import classnames from 'classnames';
 import { useSidebar } from '../hooks/useSidebar';
 import { useMediaQuery } from '../hooks/useMediaQuery';
