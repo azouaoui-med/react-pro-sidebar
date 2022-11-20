@@ -5,12 +5,6 @@ import * as sidebarHooks from '../../hooks/useSidebar';
 import { sidebarClasses } from '../../utils/utilityClasses';
 
 describe('Sidebar', () => {
-  it('basic snapshot ', () => {
-    const { container } = customRender(<Sidebar>Sidebar</Sidebar>);
-
-    expect(container.firstChild).toMatchSnapshot();
-  });
-
   it('should initialize Sidebar correctly', () => {
     customRender(<Sidebar>Sidebar</Sidebar>);
     const sidebarElem = screen.getByTestId(`${sidebarClasses.root}-test-id`);

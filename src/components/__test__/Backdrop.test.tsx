@@ -4,12 +4,6 @@ import { sidebarClasses } from '../../utils/utilityClasses';
 import { Backdrop } from '../Backdrop';
 
 describe('Backdrop', () => {
-  it('basic snapshot ', () => {
-    const { container } = customRender(<Backdrop />);
-
-    expect(container.firstChild).toMatchSnapshot();
-  });
-
   it('should initialize Backdrop correctly', async () => {
     customRender(<Backdrop />);
     const backdropElem = screen.getByTestId(`${sidebarClasses.backdrop}-test-id`);
