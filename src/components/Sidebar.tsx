@@ -3,8 +3,8 @@ import styled, { CSSObject } from '@emotion/styled';
 import classnames from 'classnames';
 import { useSidebar } from '../hooks/useSidebar';
 import { useMediaQuery } from '../hooks/useMediaQuery';
-import { Backdrop } from './Backdrop';
 import { sidebarClasses } from '../utils/utilityClasses';
+import { StyledBackdrop } from '../styles/StyledBackdrop';
 
 type BreakPoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'always';
 
@@ -69,8 +69,6 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
 
   rootStyles?: CSSObject;
 
-  backdropStyles?: CSSObject;
-
   children?: React.ReactNode;
 }
 
@@ -81,7 +79,7 @@ interface StyledSidebarProps extends Omit<SidebarProps, 'backgroundColor'> {
   rtl?: boolean;
 }
 
-type StyledInnerSidebarProps = Pick<SidebarProps, 'backgroundColor'>;
+type StyledSidebarContainerProps = Pick<SidebarProps, 'backgroundColor'>;
 
 const StyledSidebar = styled.aside<StyledSidebarProps>`
   position: relative;
@@ -133,16 +131,14 @@ const StyledSidebar = styled.aside<StyledSidebarProps>`
   ${({ rootStyles }) => rootStyles}
 `;
 
-const StyledInnerSidebar = styled.div<StyledInnerSidebarProps>`
-  &.${sidebarClasses.container} {
-    position: relative;
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    z-index: 3;
+const StyledSidebarContainer = styled.div<StyledSidebarContainerProps>`
+  position: relative;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 3;
 
-    ${({ backgroundColor }) => (backgroundColor ? `background-color:${backgroundColor};` : '')}
-  }
+  ${({ backgroundColor }) => (backgroundColor ? `background-color:${backgroundColor};` : '')}
 `;
 
 const StyledSidebarImage = styled.img`
@@ -172,7 +168,6 @@ const SidebarFR: React.ForwardRefRenderFunction<HTMLHtmlElement, SidebarProps> =
     image,
     rtl,
     rootStyles,
-    backdropStyles,
     ...rest
   },
   ref,
@@ -229,13 +224,13 @@ const SidebarFR: React.ForwardRefRenderFunction<HTMLHtmlElement, SidebarProps> =
       )}
       {...rest}
     >
-      <StyledInnerSidebar
+      <StyledSidebarContainer
         data-testid={`${sidebarClasses.container}-test-id`}
         className={sidebarClasses.container}
         backgroundColor={backgroundColor}
       >
         {children}
-      </StyledInnerSidebar>
+      </StyledSidebarContainer>
 
       {image && (
         <StyledSidebarImage
@@ -247,10 +242,13 @@ const SidebarFR: React.ForwardRefRenderFunction<HTMLHtmlElement, SidebarProps> =
       )}
 
       {brokenContext && toggledContext && (
-        <Backdrop
+        <StyledBackdrop
+          data-testid={`${sidebarClasses.backdrop}-test-id`}
+          role="button"
+          tabIndex={0}
+          aria-label="backdrop"
           onClick={handleBackdropClick}
           onKeyPress={handleBackdropClick}
-          rootStyles={backdropStyles}
           className={sidebarClasses.backdrop}
         />
       )}
