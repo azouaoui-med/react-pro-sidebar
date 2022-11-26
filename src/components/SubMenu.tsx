@@ -42,6 +42,16 @@ interface StyledSubMenuProps extends Pick<SubMenuProps, 'rootStyles'> {
   menuItemStyles?: CSSObject;
 }
 
+type MenuItemElement =
+  | 'root'
+  | 'button'
+  | 'label'
+  | 'prefix'
+  | 'suffix'
+  | 'icon'
+  | 'subMenuContent'
+  | 'SubMenuExpandIcon';
+
 const StyledSubMenu = styled.li<StyledSubMenuProps>`
   position: relative;
   width: 100%;
@@ -95,6 +105,55 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
       setOpen(!open);
     } else {
       onOpenChange?.(!openSubmenu);
+    }
+  };
+
+  const getSubMenuItemStyles = (element: MenuItemElement): CSSObject | undefined => {
+    if (menuItemStyles) {
+      const params = { level, disabled, active, isSubmenu: true, open: openSubmenu ?? open };
+      const {
+        root: rootElStyles,
+        button: buttonElStyles,
+        label: labelElStyles,
+        icon: iconElStyles,
+        prefix: prefixElStyles,
+        suffix: suffixElStyles,
+        subMenuContent: subMenuContentElStyles,
+        SubMenuExpandIcon: SubMenuExpandIconElStyles,
+      } = menuItemStyles;
+
+      switch (element) {
+        case 'root':
+          return typeof rootElStyles === 'function' ? rootElStyles(params) : rootElStyles;
+
+        case 'button':
+          return typeof buttonElStyles === 'function' ? buttonElStyles(params) : buttonElStyles;
+
+        case 'label':
+          return typeof labelElStyles === 'function' ? labelElStyles(params) : labelElStyles;
+
+        case 'icon':
+          return typeof iconElStyles === 'function' ? iconElStyles(params) : iconElStyles;
+
+        case 'prefix':
+          return typeof prefixElStyles === 'function' ? prefixElStyles(params) : prefixElStyles;
+
+        case 'suffix':
+          return typeof suffixElStyles === 'function' ? suffixElStyles(params) : suffixElStyles;
+
+        case 'SubMenuExpandIcon':
+          return typeof SubMenuExpandIconElStyles === 'function'
+            ? SubMenuExpandIconElStyles(params)
+            : SubMenuExpandIconElStyles;
+
+        case 'subMenuContent':
+          return typeof subMenuContentElStyles === 'function'
+            ? subMenuContentElStyles(params)
+            : subMenuContentElStyles;
+
+        default:
+          return undefined;
+      }
     }
   };
 
@@ -181,17 +240,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         { [menuClasses.open]: openSubmenu ?? open },
         className,
       )}
-      menuItemStyles={
-        typeof menuItemStyles === 'function'
-          ? menuItemStyles({
-              level,
-              disabled,
-              active,
-              isSubmenu: true,
-              open: openSubmenu ?? open,
-            })
-          : menuItemStyles
-      }
+      menuItemStyles={getSubMenuItemStyles('root')}
       rootStyles={rootStyles}
     >
       <StyledMenuButton
@@ -205,10 +254,15 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         onClick={handleSlideToggle}
         disabled={disabled}
         active={active}
+        rootStyles={getSubMenuItemStyles('button')}
         {...rest}
       >
         {icon && (
-          <StyledMenuIcon rtl={rtl} className={menuClasses.icon}>
+          <StyledMenuIcon
+            rtl={rtl}
+            className={menuClasses.icon}
+            rootStyles={getSubMenuItemStyles('icon')}
+          >
             {icon}
           </StyledMenuIcon>
         )}
@@ -220,12 +274,15 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
             firstLevel={level === 0}
             className={menuClasses.prefix}
             rtl={rtl}
+            rootStyles={getSubMenuItemStyles('prefix')}
           >
             {prefix}
           </StyledMenuPrefix>
         )}
 
-        <StyledMenuLabel className={menuClasses.label}>{label}</StyledMenuLabel>
+        <StyledMenuLabel className={menuClasses.label} rootStyles={getSubMenuItemStyles('label')}>
+          {label}
+        </StyledMenuLabel>
 
         {suffix && (
           <StyledMenuSuffix
@@ -233,6 +290,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
             transitionDuration={transitionDuration}
             firstLevel={level === 0}
             className={menuClasses.suffix}
+            rootStyles={getSubMenuItemStyles('suffix')}
           >
             {suffix}
           </StyledMenuSuffix>
@@ -243,6 +301,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
           className={menuClasses.SubMenuExpandIcon}
           collapsed={collapsed}
           level={level}
+          rootStyles={getSubMenuItemStyles('SubMenuExpandIcon')}
         >
           {renderExpandIcon ? (
             renderExpandIcon({
@@ -258,6 +317,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
           )}
         </StyledExpandIconWrapper>
       </StyledMenuButton>
+
       <SubMenuContent
         ref={SubMenuContentRef}
         openWhenCollapsed={openWhenCollapsed}
@@ -266,6 +326,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         collapsed={collapsed}
         defaultOpen={openDefault}
         className={menuClasses.subMenuContent}
+        rootStyles={getSubMenuItemStyles('subMenuContent')}
       >
         {childNodes.map((node) =>
           React.cloneElement(node, {

@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled, { CSSObject } from '@emotion/styled';
 
 interface StyledMenuButtonProps {
   level: number;
@@ -6,6 +6,7 @@ interface StyledMenuButtonProps {
   rtl?: boolean;
   disabled?: boolean;
   active?: boolean;
+  rootStyles?: CSSObject;
 }
 
 export const StyledMenuButton = styled.a<StyledMenuButtonProps>`
@@ -39,4 +40,6 @@ export const StyledMenuButton = styled.a<StyledMenuButtonProps>`
       `}
 
   ${({ active }) => active && 'background-color: #e2eef9;'}
+
+  ${({ rootStyles }) => rootStyles};
 `;

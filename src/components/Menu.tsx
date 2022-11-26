@@ -8,8 +8,21 @@ export interface MenuItemStylesParams {
   level: number;
   disabled: boolean;
   active: boolean;
-  open?: boolean;
   isSubmenu: boolean;
+  open?: boolean;
+}
+
+export type ElementStyles = CSSObject | ((params: MenuItemStylesParams) => CSSObject | undefined);
+
+export interface MenuItemStyles {
+  root?: ElementStyles;
+  button?: ElementStyles;
+  label?: ElementStyles;
+  prefix?: ElementStyles;
+  suffix?: ElementStyles;
+  icon?: ElementStyles;
+  subMenuContent?: ElementStyles;
+  SubMenuExpandIcon?: ElementStyles;
 }
 
 export interface RenderExpandIconParams {
@@ -21,7 +34,7 @@ export interface RenderExpandIconParams {
 
 export interface MenuContextProps {
   closeOnClick?: boolean;
-  menuItemStyles?: CSSObject | ((params: MenuItemStylesParams) => CSSObject);
+  menuItemStyles?: MenuItemStyles;
   renderExpandIcon?: (params: RenderExpandIconParams) => React.ReactNode;
 }
 

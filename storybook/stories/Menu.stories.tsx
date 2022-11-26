@@ -77,25 +77,16 @@ export const MenuItemStyles: ComponentStory<typeof Menu> = () => (
   <div style={{ display: 'flex', height: '100%' }}>
     <Sidebar>
       <Menu
-        menuItemStyles={({ level }) => ({
-          // only apply the styles on first level menu buttons
-          ...(level === 0 && {
-            [`&.${menuClasses.active} > .${menuClasses.button}`]: {
-              backgroundColor: '#d359ff',
-              color: '#f7e1ff',
-            },
-            [`& > .${menuClasses.button}`]: {
-              backgroundColor: '#eaabff',
-              color: '#9f0099',
-              '&:hover': {
-                backgroundColor: '#eecef9',
-              },
-            },
-            [`&.${menuClasses.disabled} > .${menuClasses.button}`]: {
-              backgroundColor: '#f7e1ff',
-            },
-          }),
-        })}
+        menuItemStyles={{
+          button: ({ level, active, disabled }) => {
+            // only apply styles on first level elements of the tree
+            if (level === 0)
+              return {
+                color: disabled ? '#f5d9ff' : '#d359ff',
+                backgroundColor: active ? '#eecef9' : undefined,
+              };
+          },
+        }}
       >
         <SubMenu defaultOpen label="Charts" icon={<Icon name="bar-chart" />}>
           <MenuItem> Pie charts</MenuItem>

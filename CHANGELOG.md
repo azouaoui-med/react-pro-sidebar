@@ -10,7 +10,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added rootStyles to all components
 - [Sidebar] Added backdropStyles
 - [Sidebar] Removed overlayColor prop
-- [Menu] Renamed `renderMenuItemStyles` to `menuItemStyles` which now is of type `CSSObject | ((params: MenuItemStylesParams) => CSSObject)`
+- [Menu] Renamed `renderMenuItemStyles` to `menuItemStyles` which now is of type `MenuItemStyles`, the prop now provide a way to apply styles directly to MenuItem/SubMenu component and their children
+
+**Type definition**:
+
+```ts
+type ElementStyles = CSSObject | ((params: MenuItemStylesParams) => CSSObject | undefined);
+
+interface MenuItemStyles {
+  root?: ElementStyles;
+  button?: ElementStyles;
+  label?: ElementStyles;
+  prefix?: ElementStyles;
+  suffix?: ElementStyles;
+  icon?: ElementStyles;
+  subMenuContent?: ElementStyles;
+  SubMenuExpandIcon?: ElementStyles;
+}
+```
+
 - updated classnames, the following are the new names:
 
   - `ps-sidebar-root`
@@ -67,8 +85,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Sidebar] Rename ProSidebar to Sidebar
 
 ```diff
- - import { ProSidebar } from 'react-pro-sidebar';
- + import { Sidebar } from 'react-pro-sidebar';
+- import { ProSidebar } from 'react-pro-sidebar';
++ import { Sidebar } from 'react-pro-sidebar';
 ```
 
 - [Sidebar] Removed `collapsed`, `toggled` and `onToggle` props (`useProSidebar` hook will be used instead)

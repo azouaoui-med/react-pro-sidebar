@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled, { CSSObject } from '@emotion/styled';
 
 interface StyledExpandIconProps {
   open?: boolean;
@@ -9,6 +9,7 @@ interface StyledExpandIconWrapperProps {
   collapsed?: boolean;
   level?: number;
   rtl?: boolean;
+  rootStyles?: CSSObject;
 }
 
 export const StyledExpandIconWrapper = styled.span<StyledExpandIconWrapperProps>`
@@ -22,6 +23,8 @@ export const StyledExpandIconWrapper = styled.span<StyledExpandIconWrapperProps>
     transform: translateY(-50%);
     
     `}
+
+  ${({ rootStyles }) => rootStyles};
 `;
 
 export const StyledExpandIcon = styled.span<StyledExpandIconProps>`

@@ -30,6 +30,8 @@ interface StyledMenuItemProps extends Pick<MenuItemProps, 'rootStyles'> {
   menuItemStyles?: CSSObject;
 }
 
+type MenuItemElement = 'root' | 'button' | 'label' | 'prefix' | 'suffix' | 'icon';
+
 const StyledMenuItem = styled.li<StyledMenuItemProps>`
   display: inline-block;
   width: 100%;
@@ -72,6 +74,43 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
     onClick?.(event);
   };
 
+  const getMenuItemStyles = (element: MenuItemElement): CSSObject | undefined => {
+    if (menuItemStyles) {
+      const params = { level, disabled, active, isSubmenu: false };
+      const {
+        root: rootElStyles,
+        button: buttonElStyles,
+        label: labelElStyles,
+        icon: iconElStyles,
+        prefix: prefixElStyles,
+        suffix: suffixElStyles,
+      } = menuItemStyles;
+
+      switch (element) {
+        case 'root':
+          return typeof rootElStyles === 'function' ? rootElStyles(params) : rootElStyles;
+
+        case 'button':
+          return typeof buttonElStyles === 'function' ? buttonElStyles(params) : buttonElStyles;
+
+        case 'label':
+          return typeof labelElStyles === 'function' ? labelElStyles(params) : labelElStyles;
+
+        case 'icon':
+          return typeof iconElStyles === 'function' ? iconElStyles(params) : iconElStyles;
+
+        case 'prefix':
+          return typeof prefixElStyles === 'function' ? prefixElStyles(params) : prefixElStyles;
+
+        case 'suffix':
+          return typeof suffixElStyles === 'function' ? suffixElStyles(params) : suffixElStyles;
+
+        default:
+          return undefined;
+      }
+    }
+  };
+
   return (
     <StyledMenuItem
       ref={ref}
@@ -81,11 +120,7 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
         { [menuClasses.disabled]: disabled },
         className,
       )}
-      menuItemStyles={
-        typeof menuItemStyles === 'function'
-          ? menuItemStyles({ level, disabled, active, isSubmenu: false })
-          : menuItemStyles
-      }
+      menuItemStyles={getMenuItemStyles('root')}
       rootStyles={rootStyles}
     >
       <StyledMenuButton
@@ -97,10 +132,15 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
         disabled={disabled}
         active={active}
         onClick={handleClick}
+        rootStyles={getMenuItemStyles('button')}
         {...rest}
       >
         {icon && (
-          <StyledMenuIcon rtl={rtl} className={menuClasses.icon}>
+          <StyledMenuIcon
+            rtl={rtl}
+            className={menuClasses.icon}
+            rootStyles={getMenuItemStyles('icon')}
+          >
             {icon}
           </StyledMenuIcon>
         )}
@@ -112,12 +152,15 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
             firstLevel={level === 0}
             className={menuClasses.prefix}
             rtl={rtl}
+            rootStyles={getMenuItemStyles('prefix')}
           >
             {prefix}
           </StyledMenuPrefix>
         )}
 
-        <StyledMenuLabel className={menuClasses.label}>{children}</StyledMenuLabel>
+        <StyledMenuLabel className={menuClasses.label} rootStyles={getMenuItemStyles('label')}>
+          {children}
+        </StyledMenuLabel>
 
         {suffix && (
           <StyledMenuSuffix
@@ -125,11 +168,13 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
             transitionDuration={transitionDuration}
             firstLevel={level === 0}
             className={menuClasses.suffix}
+            rootStyles={getMenuItemStyles('suffix')}
           >
             {suffix}
           </StyledMenuSuffix>
         )}
       </StyledMenuButton>
+
       {routerLink && (
         <StyledRouterLinkWrapper>
           {React.cloneElement(routerLink, { ref: routerRef })}

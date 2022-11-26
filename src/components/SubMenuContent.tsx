@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 import React from 'react';
-import styled from '@emotion/styled';
+import styled, { CSSObject } from '@emotion/styled';
 import { StyledUl } from '../styles/StyledUl';
 import { menuClasses } from '../utils/utilityClasses';
 
@@ -10,6 +10,7 @@ interface SubMenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
   firstLevel?: boolean;
   collapsed?: boolean;
   defaultOpen?: boolean;
+  rootStyles?: CSSObject;
   children?: React.ReactNode;
 }
 
@@ -49,6 +50,8 @@ const StyledSubMenuContent = styled.div<SubMenuContentProps>`
       position: static!important;
       transform: none!important;
       `};
+
+  ${({ rootStyles }) => rootStyles};
 `;
 
 const duration = 300;

@@ -1,8 +1,14 @@
-import styled from '@emotion/styled';
+import styled, { CSSObject } from '@emotion/styled';
 
-export const StyledMenuLabel = styled.span`
+interface StyledMenuLabelProps {
+  rootStyles?: CSSObject;
+}
+
+export const StyledMenuLabel = styled.span<StyledMenuLabelProps>`
   flex-grow: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  ${({ rootStyles }) => rootStyles};
 `;

@@ -1,7 +1,8 @@
-import styled from '@emotion/styled';
+import styled, { CSSObject } from '@emotion/styled';
 
 interface StyledMenuIconProps {
   rtl?: boolean;
+  rootStyles?: CSSObject;
 }
 
 export const StyledMenuIcon = styled.span<StyledMenuIconProps>`
@@ -17,4 +18,6 @@ export const StyledMenuIcon = styled.span<StyledMenuIconProps>`
   justify-content: center;
 
   ${({ rtl }) => (rtl ? 'margin-left: 10px;' : 'margin-right: 10px;')}
+
+  ${({ rootStyles }) => rootStyles};
 `;
