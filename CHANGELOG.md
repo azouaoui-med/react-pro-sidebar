@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0-alpha.8] - 2022-11-27
+
 - Added rootStyles to all components
 - [Sidebar] Added backdropStyles
 - [Sidebar] Removed overlayColor prop
