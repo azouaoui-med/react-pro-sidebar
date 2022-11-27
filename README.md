@@ -24,7 +24,7 @@ React Pro Sidebar provides a set of components for creating high level and custo
 
 - [Demo](https://azouaoui-med.github.io/react-pro-sidebar/iframe.html?id=playground--playground&args=&viewMode=story)
 
-- [Storybook](https://azouaoui-med.github.io/react-pro-sidebar)
+- [Storybook](https://azouaoui-med.github.io/react-pro-sidebar/?path=/docs/sidebar--basic)
 
 ## Screenshot
 
@@ -141,6 +141,48 @@ import { Link } from 'react-router-dom';
 </Sidebar>;
 ```
 
+## Customization
+
+We provide for each component `rootStyles` prop that can be use to customize the styles
+its recommended using utility classes (`sidebarClasses`, `menuClasses`) for selecting target child nodes
+
+**Example usage**
+
+```jsx
+<Sidebar
+  rootStyles={{
+    [`.${sidebarClasses.container}`]: {
+      backgroundColor: 'red',
+    },
+  }}
+>
+  // ...
+</Sidebar>
+```
+
+For `Menu` component, you can use `menuItemStyles` prop for customizing all `MenuItem` & `SubMenu` components and their children
+
+**Example usage**
+
+```jsx
+<Sidebar>
+  <Menu
+    menuItemStyles={{
+      button: ({ level, active, disabled }) => {
+        // only apply styles on first level elements of the tree
+        if (level === 0)
+          return {
+            color: disabled ? '#f5d9ff' : '#d359ff',
+            backgroundColor: active ? '#eecef9' : undefined,
+          };
+      },
+    }}
+  >
+    //...
+  </Menu>
+</Sidebar>
+```
+
 ## API
 
 <table>
@@ -155,7 +197,7 @@ import { Link } from 'react-router-dom';
     </thead>
     <tbody>
         <tr>
-            <td rowspan=11>Sidebar</td>
+            <td rowspan=10>Sidebar</td>
             <td >defaultCollapsed</td>
             <td><code>boolean</code></td>
             <td>Initial collapsed status</td>
@@ -215,12 +257,6 @@ import { Link } from 'react-router-dom';
             <td>Apply styles to sidebar element</td>
             <td>-</td>
         </tr>
-        <tr>
-            <td>backdropStyles</td>
-            <td><code>CSSObject</code></td>
-            <td>Apply styles to backdrop element</td>
-            <td>-</td>
-        </tr>
          <tr>
             <td rowspan=4>Menu</td>
             <td>closeOnClick</td>
@@ -230,8 +266,8 @@ import { Link } from 'react-router-dom';
         </tr>
          <tr>
             <td>menuItemStyles</td>
-            <td><code>CSSObject | ((params: MenuItemStylesParams) => CSSObject</code></td>
-            <td>apply styles to MenuItem and SubMenu components </td>
+            <td><code>MenuItemStyles</code></td>
+            <td>Apply styles to MenuItem and SubMenu components and their children </td>
             <td>-</td>
         </tr>
          <tr>
