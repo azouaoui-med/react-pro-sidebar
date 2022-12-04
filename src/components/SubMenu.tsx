@@ -17,10 +17,10 @@ import {
   StyledExpandIconCollapsed,
   StyledExpandIconWrapper,
 } from '../styles/StyledExpandIcon';
+import { usePopper } from '../hooks/usePopper';
 
 export interface SubMenuProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
-  className?: string;
   label?: string | React.ReactNode;
   icon?: React.ReactNode;
   prefix?: React.ReactNode;
@@ -88,14 +88,19 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
   const [open, setOpen] = React.useState<boolean>(!!defaultOpen);
   const [openDefault, setOpenDefault] = React.useState<boolean>(!!defaultOpen);
   const [openWhenCollapsed, setOpenWhenCollapsed] = React.useState<boolean>(false);
-  const [popperInstance, setPopperInstance] = React.useState<Instance | undefined>();
 
   const childNodes = React.Children.toArray(children).filter(Boolean) as [
     React.ReactElement<SubMenuProps | MenuItemProps>,
   ];
 
-  const anchorRef = React.useRef<HTMLAnchorElement>(null);
-  const SubMenuContentRef = React.useRef<HTMLDivElement>(null);
+  const buttonRef = React.useRef<HTMLAnchorElement>(null);
+  const contentRef = React.useRef<HTMLDivElement>(null);
+
+  const { popperInstance } = usePopper({
+    level,
+    buttonRef,
+    contentRef,
+  });
 
   const handleSlideToggle = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void => {
     onClick?.(event);
@@ -157,44 +162,6 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     }
   };
 
-  React.useEffect(() => {
-    if (level === 0 && collapsed && SubMenuContentRef.current && anchorRef.current) {
-      const instance = createPopper(anchorRef.current, SubMenuContentRef.current, {
-        placement: 'right',
-        strategy: 'fixed',
-        modifiers: [
-          {
-            name: 'offset',
-            options: {
-              offset: [0, 5],
-            },
-          },
-        ],
-      });
-
-      setPopperInstance(instance);
-    }
-  }, [level, collapsed]);
-
-  React.useEffect(() => {
-    if (SubMenuContentRef.current && anchorRef.current) {
-      const ro = new ResizeObserver(() => {
-        if (popperInstance) {
-          popperInstance.update();
-        }
-      });
-
-      ro.observe(SubMenuContentRef.current);
-      ro.observe(anchorRef.current);
-    }
-
-    setTimeout(() => {
-      if (popperInstance) {
-        popperInstance.update();
-      }
-    }, transitionDuration);
-  }, [popperInstance, transitionDuration, toggled]);
-
   React.useLayoutEffect(() => {
     setTimeout(() => popperInstance?.update(), transitionDuration);
     if (collapsed && level === 0) {
@@ -206,12 +173,12 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
 
   React.useEffect(() => {
     const handleDocumentClick = (event: MouseEvent) => {
-      if (!openWhenCollapsed && anchorRef.current?.contains(event.target as Node))
+      if (!openWhenCollapsed && buttonRef.current?.contains(event.target as Node))
         setOpenWhenCollapsed(true);
       else if (
         (closeOnClick &&
           !(event.target as HTMLElement).closest('.menu-item')?.classList.contains('sub-menu')) ||
-        (!SubMenuContentRef.current?.contains(event.target as Node) && openWhenCollapsed)
+        (!contentRef.current?.contains(event.target as Node) && openWhenCollapsed)
       ) {
         setOpenWhenCollapsed(false);
       }
@@ -245,7 +212,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     >
       <StyledMenuButton
         data-testid={`${menuClasses.button}-test-id`}
-        ref={anchorRef}
+        ref={buttonRef}
         rtl={rtl}
         title={title}
         level={level}
@@ -319,7 +286,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
       </StyledMenuButton>
 
       <SubMenuContent
-        ref={SubMenuContentRef}
+        ref={contentRef}
         openWhenCollapsed={openWhenCollapsed}
         open={openSubmenu ?? open}
         firstLevel={level === 0}
