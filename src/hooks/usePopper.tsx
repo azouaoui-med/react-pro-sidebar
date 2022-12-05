@@ -13,14 +13,17 @@ interface PopperResult {
 }
 
 export const usePopper = (options: PopperOptions): PopperResult => {
-  const [popperInstance, setPopperInstance] = React.useState<ReturnType<typeof createPopper>>();
-  const { collapsed, transitionDuration, toggled } = useSidebar();
-
   const { level, buttonRef, contentRef } = options;
 
+  const { collapsed, transitionDuration, toggled } = useSidebar();
+  const popperInstanceRef = React.useRef<ReturnType<typeof createPopper> | undefined>();
+
+  /**
+   * create popper instance only on first level submenu components and when sidebar is collapsed
+   */
   React.useEffect(() => {
     if (level === 0 && collapsed && contentRef.current && buttonRef.current) {
-      const instance = createPopper(buttonRef.current, contentRef.current, {
+      popperInstanceRef.current = createPopper(buttonRef.current, contentRef.current, {
         placement: 'right',
         strategy: 'fixed',
         modifiers: [
@@ -32,15 +35,18 @@ export const usePopper = (options: PopperOptions): PopperResult => {
           },
         ],
       });
-
-      setPopperInstance(instance);
     }
+
+    return () => popperInstanceRef.current?.destroy();
   }, [level, collapsed, contentRef, buttonRef]);
 
+  /**
+   * update popper instance (position) when buttonRef or contentRef changes
+   */
   React.useEffect(() => {
     if (contentRef.current && buttonRef.current) {
       const ro = new ResizeObserver(() => {
-        popperInstance?.update();
+        popperInstanceRef.current?.update();
       });
 
       ro.observe(contentRef.current);
@@ -48,9 +54,9 @@ export const usePopper = (options: PopperOptions): PopperResult => {
     }
 
     setTimeout(() => {
-      popperInstance?.update();
+      popperInstanceRef.current?.update();
     }, transitionDuration);
-  }, [popperInstance, transitionDuration, toggled, contentRef, buttonRef]);
+  }, [transitionDuration, toggled, contentRef, buttonRef]);
 
-  return { popperInstance };
+  return { popperInstance: popperInstanceRef.current };
 };
