@@ -82,7 +82,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
   },
   ref,
 ) => {
-  const { collapsed, transitionDuration, toggled, rtl } = useSidebar();
+  const { collapsed, transitionDuration, rtl } = useSidebar();
   const { renderExpandIcon, closeOnClick, menuItemStyles } = useMenu();
 
   const [open, setOpen] = React.useState<boolean>(!!defaultOpen);
