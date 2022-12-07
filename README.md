@@ -143,7 +143,8 @@ import { Link } from 'react-router-dom';
 
 ## Customization
 
-We provide for each component `rootStyles` prop that can be use to customize the styles
+We provide for each component `rootStyles` prop that can be used to customize the styles
+
 its recommended using utility classes (`sidebarClasses`, `menuClasses`) for selecting target child nodes
 
 **Example usage**
