@@ -55,6 +55,7 @@ export const Switch = ({ id, label, checked, ...rest }: SwitchProps) => {
             width: '32px',
             height: '20px',
             opacity: 0,
+            zIndex: 2,
           }}
           checked={checked}
           {...rest}
