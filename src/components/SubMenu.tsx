@@ -196,15 +196,19 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const sharedClasses = {
+    [menuClasses.active]: active,
+    [menuClasses.disabled]: disabled,
+    [menuClasses.open]: openSubmenu ?? open,
+  };
+
   return (
     <StyledSubMenu
       ref={ref}
       className={classnames(
         menuClasses.menuItemRoot,
         menuClasses.subMenuRoot,
-        { [menuClasses.active]: active },
-        { [menuClasses.disabled]: disabled },
-        { [menuClasses.open]: openSubmenu ?? open },
+        sharedClasses,
         className,
       )}
       menuItemStyles={getSubMenuItemStyles('root')}
@@ -217,7 +221,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         title={title}
         level={level}
         collapsed={collapsed}
-        className={menuClasses.button}
+        className={classnames(menuClasses.button, sharedClasses)}
         onClick={handleSlideToggle}
         disabled={disabled}
         active={active}
@@ -227,7 +231,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         {icon && (
           <StyledMenuIcon
             rtl={rtl}
-            className={menuClasses.icon}
+            className={classnames(menuClasses.icon, sharedClasses)}
             rootStyles={getSubMenuItemStyles('icon')}
           >
             {icon}
@@ -239,7 +243,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
             collapsed={collapsed}
             transitionDuration={transitionDuration}
             firstLevel={level === 0}
-            className={menuClasses.prefix}
+            className={classnames(menuClasses.prefix, sharedClasses)}
             rtl={rtl}
             rootStyles={getSubMenuItemStyles('prefix')}
           >
@@ -247,7 +251,10 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
           </StyledMenuPrefix>
         )}
 
-        <StyledMenuLabel className={menuClasses.label} rootStyles={getSubMenuItemStyles('label')}>
+        <StyledMenuLabel
+          className={classnames(menuClasses.label, sharedClasses)}
+          rootStyles={getSubMenuItemStyles('label')}
+        >
           {label}
         </StyledMenuLabel>
 
@@ -256,7 +263,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
             collapsed={collapsed}
             transitionDuration={transitionDuration}
             firstLevel={level === 0}
-            className={menuClasses.suffix}
+            className={classnames(menuClasses.suffix, sharedClasses)}
             rootStyles={getSubMenuItemStyles('suffix')}
           >
             {suffix}
@@ -265,7 +272,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
 
         <StyledExpandIconWrapper
           rtl={rtl}
-          className={menuClasses.SubMenuExpandIcon}
+          className={classnames(menuClasses.SubMenuExpandIcon, sharedClasses)}
           collapsed={collapsed}
           level={level}
           rootStyles={getSubMenuItemStyles('SubMenuExpandIcon')}
@@ -292,7 +299,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         firstLevel={level === 0}
         collapsed={collapsed}
         defaultOpen={openDefault}
-        className={menuClasses.subMenuContent}
+        className={classnames(menuClasses.subMenuContent, sharedClasses)}
         rootStyles={getSubMenuItemStyles('subMenuContent')}
       >
         {childNodes.map((node) =>

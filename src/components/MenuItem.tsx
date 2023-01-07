@@ -111,20 +111,20 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
     }
   };
 
+  const sharedClasses = {
+    [menuClasses.active]: active,
+    [menuClasses.disabled]: disabled,
+  };
+
   return (
     <StyledMenuItem
       ref={ref}
-      className={classnames(
-        menuClasses.menuItemRoot,
-        { [menuClasses.active]: active },
-        { [menuClasses.disabled]: disabled },
-        className,
-      )}
+      className={classnames(menuClasses.menuItemRoot, sharedClasses, className)}
       menuItemStyles={getMenuItemStyles('root')}
       rootStyles={rootStyles}
     >
       <StyledMenuButton
-        className={menuClasses.button}
+        className={classnames(menuClasses.button, sharedClasses)}
         data-testid={`${menuClasses.button}-test-id`}
         level={level}
         collapsed={collapsed}
@@ -138,7 +138,7 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
         {icon && (
           <StyledMenuIcon
             rtl={rtl}
-            className={menuClasses.icon}
+            className={classnames(menuClasses.icon, sharedClasses)}
             rootStyles={getMenuItemStyles('icon')}
           >
             {icon}
@@ -150,7 +150,7 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
             collapsed={collapsed}
             transitionDuration={transitionDuration}
             firstLevel={level === 0}
-            className={menuClasses.prefix}
+            className={classnames(menuClasses.prefix, sharedClasses)}
             rtl={rtl}
             rootStyles={getMenuItemStyles('prefix')}
           >
@@ -158,7 +158,10 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
           </StyledMenuPrefix>
         )}
 
-        <StyledMenuLabel className={menuClasses.label} rootStyles={getMenuItemStyles('label')}>
+        <StyledMenuLabel
+          className={classnames(menuClasses.label, sharedClasses)}
+          rootStyles={getMenuItemStyles('label')}
+        >
           {children}
         </StyledMenuLabel>
 
@@ -167,7 +170,7 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
             collapsed={collapsed}
             transitionDuration={transitionDuration}
             firstLevel={level === 0}
-            className={menuClasses.suffix}
+            className={classnames(menuClasses.suffix, sharedClasses)}
             rootStyles={getMenuItemStyles('suffix')}
           >
             {suffix}
