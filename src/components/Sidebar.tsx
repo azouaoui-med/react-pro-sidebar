@@ -83,7 +83,9 @@ type StyledSidebarContainerProps = Pick<SidebarProps, 'backgroundColor'>;
 
 const StyledSidebar = styled.aside<StyledSidebarProps>`
   position: relative;
-  border-right: 1px solid #efefef;
+  border-right-width: 1px;
+  border-right-style: solid;
+  border-color: #efefef;
 
   transition: ${({ transitionDuration }) => `width, left, right, ${transitionDuration}ms`};
 
@@ -97,6 +99,10 @@ const StyledSidebar = styled.aside<StyledSidebarProps>`
 
   &.${sidebarClasses.rtl} {
     direction: rtl;
+    border-right-width: none;
+    border-left-width: 1px;
+    border-right-style: none;
+    border-left-style: solid;
   }
 
   &.${sidebarClasses.broken} {
