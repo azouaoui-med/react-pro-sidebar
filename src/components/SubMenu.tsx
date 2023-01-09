@@ -78,6 +78,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     rootStyles,
     onOpenChange,
     onClick,
+    onKeyUp,
     ...rest
   },
   ref,
@@ -102,14 +103,24 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     contentRef,
   });
 
-  const handleSlideToggle = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>): void => {
-    onClick?.(event);
-
+  const handleSlideToggle = (): void => {
     if (typeof openSubmenu === 'undefined' && !(level === 0 && collapsed)) {
       onOpenChange?.(!open);
       setOpen(!open);
     } else {
       onOpenChange?.(!openSubmenu);
+    }
+  };
+
+  const handleOnClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    onClick?.(event);
+    handleSlideToggle();
+  };
+
+  const handleOnKeyUp = (event: React.KeyboardEvent<HTMLAnchorElement>) => {
+    onKeyUp?.(event);
+    if (event.key === 'Enter') {
+      handleSlideToggle();
     }
   };
 
@@ -222,10 +233,12 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         level={level}
         collapsed={collapsed}
         className={classnames(menuClasses.button, sharedClasses)}
-        onClick={handleSlideToggle}
+        onClick={handleOnClick}
+        onKeyUp={handleOnKeyUp}
         disabled={disabled}
         active={active}
         rootStyles={getSubMenuItemStyles('button')}
+        tabIndex={0}
         {...rest}
       >
         {icon && (

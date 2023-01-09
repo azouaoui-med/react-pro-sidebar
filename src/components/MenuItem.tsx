@@ -133,6 +133,7 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
         active={active}
         onClick={handleClick}
         rootStyles={getMenuItemStyles('button')}
+        tabIndex={0}
         {...rest}
       >
         {icon && (
