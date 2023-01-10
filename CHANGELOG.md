@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0-alpha.10] - 2023-01-10
+
+- [MenuItem] [SubMenu] Apply root classes to child nodes (Button, label, prefix, ...)
+- [MenuItem] [SubMenu] Improve accessibility
+- [Sidebar] Fix sidebar border not changing when rtl is set to true
+
 ## [1.0.0-alpha.9] - 2022-11-27
 
 - Fix build
