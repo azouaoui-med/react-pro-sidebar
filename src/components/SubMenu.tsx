@@ -183,22 +183,43 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
   }, [collapsed, level, transitionDuration, popperInstance]);
 
   React.useEffect(() => {
-    const handleDocumentClick = (event: MouseEvent) => {
-      if (!openWhenCollapsed && buttonRef.current?.contains(event.target as Node))
-        setOpenWhenCollapsed(true);
+    const handleTogglePopper = (target: Node) => {
+      if (!openWhenCollapsed && buttonRef.current?.contains(target)) setOpenWhenCollapsed(true);
       else if (
         (closeOnClick &&
-          !(event.target as HTMLElement).closest('.menu-item')?.classList.contains('sub-menu')) ||
-        (!contentRef.current?.contains(event.target as Node) && openWhenCollapsed)
+          !(target as HTMLElement).closest('.menu-item')?.classList.contains('sub-menu')) ||
+        (!contentRef.current?.contains(target) && openWhenCollapsed)
       ) {
         setOpenWhenCollapsed(false);
       }
     };
-    document.removeEventListener('click', handleDocumentClick);
-    if (collapsed && level === 0) document.addEventListener('click', handleDocumentClick, false);
+
+    const handleDocumentClick = (event: MouseEvent) => {
+      handleTogglePopper(event.target as Node);
+    };
+
+    const handleDocumentKeyUp = (event: KeyboardEvent) => {
+      if (event.key === 'Enter') {
+        handleTogglePopper(event.target as Node);
+      } else if (event.key === 'Escape') {
+        setOpenWhenCollapsed(false);
+      }
+    };
+
+    const removeEventListeners = () => {
+      document.removeEventListener('click', handleDocumentClick);
+      document.removeEventListener('keyup', handleDocumentKeyUp);
+    };
+
+    removeEventListeners();
+
+    if (collapsed && level === 0) {
+      document.addEventListener('click', handleDocumentClick, false);
+      document.addEventListener('keyup', handleDocumentKeyUp, false);
+    }
 
     return () => {
-      document.removeEventListener('click', handleDocumentClick);
+      removeEventListeners();
     };
   }, [collapsed, level, closeOnClick, openWhenCollapsed]);
 
