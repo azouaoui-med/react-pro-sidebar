@@ -13,6 +13,8 @@ const CheckBoxWrapper = styled.div`
 const CheckBoxLabel = styled.label`
   margin-left: 10px;
   margin-right: 10px;
+  font-size: 13px;
+  cursor: pointer;
 `;
 
 const CheckBox = styled.div<{ checked?: boolean }>`
@@ -22,7 +24,7 @@ const CheckBox = styled.div<{ checked?: boolean }>`
   height: 20px;
   border-radius: 30px;
 
-  background-color: ${({ checked }) => (checked ? '#0ed693' : '#ccc')};
+  background-color: ${({ checked }) => (checked ? '#0ed693' : '#dde0e7')};
 `;
 
 const CheckBoxCircle = styled.div<{ checked?: boolean }>`
