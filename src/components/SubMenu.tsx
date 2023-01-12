@@ -2,13 +2,11 @@ import React from 'react';
 import styled, { CSSObject } from '@emotion/styled';
 import classnames from 'classnames';
 import { SubMenuContent } from './SubMenuContent';
-import { createPopper, Instance } from '@popperjs/core';
 import { useSidebar } from '../hooks/useSidebar';
 import { StyledMenuLabel } from '../styles/StyledMenuLabel';
 import { StyledMenuIcon } from '../styles/StyledMenuIcon';
 import { StyledMenuPrefix } from '../styles/StyledMenuPrefix';
 import { MenuItemProps } from './MenuItem';
-import { StyledMenuButton } from '../styles/StyledMenuButton';
 import { useMenu } from '../hooks/useMenu';
 import { StyledMenuSuffix } from '../styles/StyledMenuSuffix';
 import { menuClasses } from '../utils/utilityClasses';
@@ -18,6 +16,7 @@ import {
   StyledExpandIconWrapper,
 } from '../styles/StyledExpandIcon';
 import { usePopper } from '../hooks/usePopper';
+import { MenuButton } from './MenuButton';
 
 export interface SubMenuProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
@@ -30,6 +29,7 @@ export interface SubMenuProps
   active?: boolean;
   disabled?: boolean;
   rootStyles?: CSSObject;
+  component?: string | React.ReactElement;
   children?: React.ReactNode;
   onOpenChange?: (open: boolean) => void;
   /**
@@ -76,6 +76,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     active = false,
     disabled = false,
     rootStyles,
+    component,
     onOpenChange,
     onClick,
     onKeyUp,
@@ -246,7 +247,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
       menuItemStyles={getSubMenuItemStyles('root')}
       rootStyles={rootStyles}
     >
-      <StyledMenuButton
+      <MenuButton
         data-testid={`${menuClasses.button}-test-id`}
         ref={buttonRef}
         rtl={rtl}
@@ -259,6 +260,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         disabled={disabled}
         active={active}
         rootStyles={getSubMenuItemStyles('button')}
+        component={component}
         tabIndex={0}
         {...rest}
       >
@@ -324,7 +326,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
             <StyledExpandIcon rtl={rtl} open={openSubmenu ?? open} />
           )}
         </StyledExpandIconWrapper>
-      </StyledMenuButton>
+      </MenuButton>
 
       <SubMenuContent
         ref={contentRef}

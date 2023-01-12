@@ -5,10 +5,10 @@ import { StyledMenuLabel } from '../styles/StyledMenuLabel';
 import { StyledMenuIcon } from '../styles/StyledMenuIcon';
 import { StyledMenuPrefix } from '../styles/StyledMenuPrefix';
 import { useSidebar } from '../hooks/useSidebar';
-import { StyledMenuButton } from '../styles/StyledMenuButton';
 import { useMenu } from '../hooks/useMenu';
 import { StyledMenuSuffix } from '../styles/StyledMenuSuffix';
 import { menuClasses } from '../utils/utilityClasses';
+import { MenuButton } from './MenuButton';
 
 export interface MenuItemProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
@@ -18,7 +18,7 @@ export interface MenuItemProps
   active?: boolean;
   disabled?: boolean;
   children?: React.ReactNode;
-  routerLink?: React.ReactElement;
+  component?: string | React.ReactElement;
   rootStyles?: CSSObject;
   /**
    * @ignore
@@ -42,11 +42,6 @@ const StyledMenuItem = styled.li<StyledMenuItemProps>`
   ${({ rootStyles }) => rootStyles};
 `;
 
-const StyledRouterLinkWrapper = styled.div`
-  position: absolute;
-  visibility: hidden;
-`;
-
 export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemProps> = (
   {
     children,
@@ -57,8 +52,7 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
     level = 0,
     active = false,
     disabled = false,
-    onClick,
-    routerLink,
+    component,
     rootStyles,
     ...rest
   },
@@ -66,13 +60,6 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
 ) => {
   const { collapsed, transitionDuration, rtl } = useSidebar();
   const { menuItemStyles } = useMenu();
-
-  const routerRef = React.useRef<HTMLAnchorElement>();
-
-  const handleClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
-    routerRef.current?.click();
-    onClick?.(event);
-  };
 
   const getMenuItemStyles = (element: MenuItemElement): CSSObject | undefined => {
     if (menuItemStyles) {
@@ -123,7 +110,7 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
       menuItemStyles={getMenuItemStyles('root')}
       rootStyles={rootStyles}
     >
-      <StyledMenuButton
+      <MenuButton
         className={classnames(menuClasses.button, sharedClasses)}
         data-testid={`${menuClasses.button}-test-id`}
         level={level}
@@ -131,8 +118,8 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
         rtl={rtl}
         disabled={disabled}
         active={active}
-        onClick={handleClick}
         rootStyles={getMenuItemStyles('button')}
+        component={component}
         tabIndex={0}
         {...rest}
       >
@@ -177,13 +164,7 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
             {suffix}
           </StyledMenuSuffix>
         )}
-      </StyledMenuButton>
-
-      {routerLink && (
-        <StyledRouterLinkWrapper>
-          {React.cloneElement(routerLink, { ref: routerRef })}
-        </StyledRouterLinkWrapper>
-      )}
+      </MenuButton>
     </StyledMenuItem>
   );
 };
