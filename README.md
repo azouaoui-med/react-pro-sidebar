@@ -124,7 +124,7 @@ function Layout() {
 
 ## Using React Router
 
-We provide compatibility with [React Router](https://reactrouter.com/en/main) using `routerLink` prop
+You can make use of the `component` prop to integrate [React Router](https://reactrouter.com/en/main) link
 
 **Example Usage**
 
@@ -134,9 +134,9 @@ import { Link } from 'react-router-dom';
 
 <Sidebar>
   <Menu>
-    <MenuItem routerLink={<Link to="/documentation" />}> Documentation</MenuItem>
-    <MenuItem routerLink={<Link to="/calendar" />}> Calendar</MenuItem>
-    <MenuItem routerLink={<Link to="/e-commerce" />}> E-commerce</MenuItem>
+    <MenuItem component={<Link to="/documentation" />}> Documentation</MenuItem>
+    <MenuItem component={<Link to="/calendar" />}> Calendar</MenuItem>
+    <MenuItem component={<Link to="/e-commerce" />}> E-commerce</MenuItem>
   </Menu>
 </Sidebar>;
 ```
@@ -315,9 +315,9 @@ For `Menu` component, you can use `menuItemStyles` prop for customizing all `Men
             <td>-</td>
         </tr>
          <tr>
-            <td>routerLink</td>
-            <td><code>React.ReactElement</code></td>
-            <td>React router Link or NavLink component that will be used to handle routing </td>
+            <td>component</td>
+            <td><code>string | ReactElement</code></td>
+            <td>A component used for menu button node, can be string (ex: 'div') or a component </td>
             <td>-</td>
         </tr>
         <tr>
@@ -327,7 +327,7 @@ For `Menu` component, you can use `menuItemStyles` prop for customizing all `Men
             <td>-</td>
         </tr>
         <tr>
-            <td rowspan=10>SubMenu</td>
+            <td rowspan=11>SubMenu</td>
             <td>label</td>
             <td><code>string | ReactNode</code></td>
             <td>Label for the submenu </td>
@@ -379,6 +379,12 @@ For `Menu` component, you can use `menuItemStyles` prop for customizing all `Men
             <td>onOpenChange</td>
             <td><code>(open: boolean) => void</code></td>
             <td>Callback function called when submenu state changes</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>component</td>
+            <td><code>string | React.ReactElement</code></td>
+            <td>A component used for menu button node, can be string (ex: 'div') or a component </td>
             <td>-</td>
         </tr>
         <tr>
