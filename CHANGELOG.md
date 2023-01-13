@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0-beta.1] - 2023-01-13
+
+- [MenuItem] Removed `routerLink` prop in favor of `component`
+- [SUbMenu] Added `component` prop
+
 ## [1.0.0-alpha.10] - 2023-01-10
 
 - [MenuItem] [SubMenu] Apply root classes to child nodes (Button, label, prefix, ...)
@@ -21,7 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added rootStyles to all components
 - [Sidebar] Added backdropStyles
-- [Sidebar] Removed overlayColor prop
+- [Sidebar] Removed `overlayColor` prop
 - [Menu] Renamed `renderMenuItemStyles` to `menuItemStyles` which now is of type `MenuItemStyles`, the prop now provide a way to apply styles directly to MenuItem/SubMenu component and their children
 
 **Type definition**:
