@@ -3,8 +3,10 @@ import React from 'react';
 import styled, { CSSObject } from '@emotion/styled';
 import { StyledUl } from '../styles/StyledUl';
 import { menuClasses } from '../utils/utilityClasses';
+import { useMenu } from '../hooks/useMenu';
 
 interface SubMenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  transitionDuration?: number;
   open?: boolean;
   openWhenCollapsed?: boolean;
   firstLevel?: boolean;
@@ -20,7 +22,7 @@ const StyledSubMenuContent = styled.div<SubMenuContentProps>`
   display: none;
   overflow: hidden;
   z-index: 999;
-  transition: height 300ms;
+  transition: height ${({ transitionDuration }) => transitionDuration}ms;
   box-sizing: border-box;
   background-color: white;
 
@@ -54,11 +56,11 @@ const StyledSubMenuContent = styled.div<SubMenuContentProps>`
   ${({ rootStyles }) => rootStyles};
 `;
 
-const duration = 300;
 const SubMenuContentFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuContentProps> = (
   { children, open, openWhenCollapsed, firstLevel, collapsed, ...rest },
   ref,
 ) => {
+  const { transitionDuration } = useMenu();
   const SubMenuContentRef = ref as React.MutableRefObject<HTMLDivElement>;
 
   const [mounted, setMounted] = React.useState(false);
@@ -80,7 +82,7 @@ const SubMenuContentFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuCo
           timer = setTimeout(() => {
             target.style.overflow = 'auto';
             target.style.height = 'auto';
-          }, duration);
+          }, transitionDuration);
         }
       } else {
         const target = SubMenuContentRef?.current;
@@ -93,7 +95,7 @@ const SubMenuContentFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuCo
           timer = setTimeout(() => {
             target.style.overflow = 'auto';
             target.style.display = 'none';
-          }, duration);
+          }, transitionDuration);
         }
       }
     }
@@ -113,6 +115,7 @@ const SubMenuContentFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuCo
       collapsed={collapsed}
       open={open}
       openWhenCollapsed={openWhenCollapsed}
+      transitionDuration={transitionDuration}
       {...rest}
     >
       <StyledUl>{children}</StyledUl>

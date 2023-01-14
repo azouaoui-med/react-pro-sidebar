@@ -107,6 +107,25 @@ export const MenuItemStyles: ComponentStory<typeof Menu> = () => (
 
 MenuItemStyles.storyName = 'menuItemStyles';
 
+export const TransitionDuration: ComponentStory<typeof Menu> = () => (
+  <div style={{ display: 'flex', height: '100%' }}>
+    <Sidebar>
+      <Menu transitionDuration={1000}>
+        <SubMenu label="Charts">
+          <MenuItem> Pie charts</MenuItem>
+          <MenuItem> Line charts</MenuItem>
+          <MenuItem> Bar charts</MenuItem>
+        </SubMenu>
+        <MenuItem> Calendar</MenuItem>
+        <MenuItem> E-commerce</MenuItem>
+        <MenuItem> Examples</MenuItem>
+      </Menu>
+    </Sidebar>
+  </div>
+);
+
+TransitionDuration.storyName = 'transitionDuration';
+
 export const RootStyles: ComponentStory<typeof Menu> = () => (
   <div style={{ display: 'flex', height: '100%' }}>
     <Sidebar>

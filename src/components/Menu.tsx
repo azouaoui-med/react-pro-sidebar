@@ -33,6 +33,11 @@ export interface RenderExpandIconParams {
 }
 
 export interface MenuContextProps {
+  /**
+   * Transition duration in milliseconds
+   * @default ```300```
+   */
+  transitionDuration?: number;
   closeOnClick?: boolean;
   menuItemStyles?: MenuItemStyles;
   renderExpandIcon?: (params: RenderExpandIconParams) => React.ReactNode;
@@ -55,6 +60,7 @@ const MenuFR: React.ForwardRefRenderFunction<HTMLMenuElement, MenuProps> = (
   {
     children,
     className,
+    transitionDuration = 300,
     closeOnClick = false,
     rootStyles,
     menuItemStyles,
@@ -64,8 +70,8 @@ const MenuFR: React.ForwardRefRenderFunction<HTMLMenuElement, MenuProps> = (
   ref,
 ) => {
   const providerValue = React.useMemo(
-    () => ({ closeOnClick, menuItemStyles, renderExpandIcon }),
-    [closeOnClick, menuItemStyles, renderExpandIcon],
+    () => ({ transitionDuration, closeOnClick, menuItemStyles, renderExpandIcon }),
+    [transitionDuration, closeOnClick, menuItemStyles, renderExpandIcon],
   );
 
   return (
