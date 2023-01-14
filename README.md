@@ -28,7 +28,7 @@ React Pro Sidebar provides a set of components for creating high level and custo
 
 ## Screenshot
 
-![react-pro-sidebar](https://user-images.githubusercontent.com/25878302/211398549-ba9838cb-5f92-428e-ace9-1914c12d5ed3.jpg)
+![react-pro-sidebar](https://user-images.githubusercontent.com/25878302/212479928-553c2d37-793b-4bcd-ac53-352f26337955.jpg)
 
 ## Installation
 
@@ -161,7 +161,7 @@ its recommended using utility classes (`sidebarClasses`, `menuClasses`) for sele
 </Sidebar>
 ```
 
-For `Menu` component, you can use `menuItemStyles` prop for customizing all `MenuItem` & `SubMenu` components and their children
+For `Menu` component, in addition to `rootStyles` you can also use `menuItemStyles` prop for customizing all `MenuItem` & `SubMenu` components and their children
 
 **Example usage**
 
@@ -259,7 +259,7 @@ For `Menu` component, you can use `menuItemStyles` prop for customizing all `Men
             <td>-</td>
         </tr>
          <tr>
-            <td rowspan=4>Menu</td>
+            <td rowspan=5>Menu</td>
             <td>closeOnClick</td>
             <td><code>boolean</code></td>
             <td>If <code>true</code>, submenu popper will close when clicking on MenuItem</td>
@@ -276,6 +276,12 @@ For `Menu` component, you can use `menuItemStyles` prop for customizing all `Men
             <td><code>(params: { level: number; collapsed: boolean; disabled: boolean; active: boolean; open: boolean; }) => React.ReactNode</code></td>
             <td>Render method for customizing submenu expand icon</td>
             <td>-</td>
+        </tr>
+          <tr>
+            <td>transitionDuration</td>
+            <td><code>number</code></td>
+            <td>Transition duration in milliseconds to use when sliding submenu content</td>
+            <td><code>300</code></td>
         </tr>
         <tr>
             <td>rootStyles</td>
