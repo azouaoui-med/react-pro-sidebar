@@ -124,6 +124,19 @@ export const Disabled: ComponentStory<typeof MenuItem> = () => (
 );
 Disabled.storyName = 'disabled';
 
+export const Component: ComponentStory<typeof MenuItem> = () => (
+  <div style={{ display: 'flex', height: '100%' }}>
+    <Sidebar>
+      <Menu>
+        <MenuItem component="div">Documentation</MenuItem>
+        <MenuItem> Calendar</MenuItem>
+        <MenuItem> E-commerce</MenuItem>
+      </Menu>
+    </Sidebar>
+  </div>
+);
+Component.storyName = 'component';
+
 export const RootStyles: ComponentStory<typeof MenuItem> = () => (
   <div style={{ display: 'flex', height: '100%' }}>
     <Sidebar>

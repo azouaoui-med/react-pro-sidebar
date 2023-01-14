@@ -198,6 +198,21 @@ export const Disabled: ComponentStory<typeof SubMenu> = () => (
 );
 Disabled.storyName = 'disabled';
 
+export const Component: ComponentStory<typeof MenuItem> = () => (
+  <div style={{ display: 'flex', height: '100%' }}>
+    <Sidebar>
+      <Menu>
+        <SubMenu defaultOpen label="Charts" component="div">
+          <MenuItem> Pie charts</MenuItem>
+          <MenuItem> Line charts</MenuItem>
+          <MenuItem> Bar charts</MenuItem>
+        </SubMenu>
+      </Menu>
+    </Sidebar>
+  </div>
+);
+Component.storyName = 'component';
+
 export const DefaultOpen: ComponentStory<typeof SubMenu> = () => (
   <div style={{ display: 'flex', height: '100%' }}>
     <Sidebar>
