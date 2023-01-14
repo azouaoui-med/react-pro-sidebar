@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0-beta.2] - 2023-01-14
+
+- [Menu] Added transitionDuration prop to use when sliding submenu content
+
 ## [1.0.0-beta.1] - 2023-01-13
 
 - [MenuItem] Removed `routerLink` prop in favor of `component`
