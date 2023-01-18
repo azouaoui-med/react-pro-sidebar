@@ -16,7 +16,7 @@ import {
   StyledExpandIconWrapper,
 } from '../styles/StyledExpandIcon';
 import { usePopper } from '../hooks/usePopper';
-import { MenuButton } from './MenuButton';
+import { MenuButton, menuButtonStyles } from './MenuButton';
 
 export interface SubMenuProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
@@ -38,8 +38,12 @@ export interface SubMenuProps
   level?: number;
 }
 
-interface StyledSubMenuProps extends Pick<SubMenuProps, 'rootStyles'> {
+interface StyledSubMenuProps extends Pick<SubMenuProps, 'rootStyles' | 'active' | 'disabled'> {
+  level: number;
   menuItemStyles?: CSSObject;
+  collapsed?: boolean;
+  rtl?: boolean;
+  buttonStyles?: CSSObject;
 }
 
 type MenuItemElement =
@@ -59,6 +63,19 @@ const StyledSubMenu = styled.li<StyledSubMenuProps>`
   ${({ menuItemStyles }) => menuItemStyles};
 
   ${({ rootStyles }) => rootStyles};
+
+  > .${menuClasses.button} {
+    ${({ level, disabled, active, collapsed, rtl }) =>
+      menuButtonStyles({
+        level,
+        disabled,
+        active,
+        collapsed,
+        rtl,
+      })};
+
+    ${({ buttonStyles }) => buttonStyles};
+  }
 `;
 
 export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuProps> = (
@@ -245,21 +262,21 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         className,
       )}
       menuItemStyles={getSubMenuItemStyles('root')}
+      level={level}
+      collapsed={collapsed}
+      rtl={rtl}
+      disabled={disabled}
+      active={active}
+      buttonStyles={getSubMenuItemStyles('button')}
       rootStyles={rootStyles}
     >
       <MenuButton
         data-testid={`${menuClasses.button}-test-id`}
         ref={buttonRef}
-        rtl={rtl}
         title={title}
-        level={level}
-        collapsed={collapsed}
         className={classnames(menuClasses.button, sharedClasses)}
         onClick={handleOnClick}
         onKeyUp={handleOnKeyUp}
-        disabled={disabled}
-        active={active}
-        rootStyles={getSubMenuItemStyles('button')}
         component={component}
         tabIndex={0}
         {...rest}

@@ -8,7 +8,7 @@ import { useSidebar } from '../hooks/useSidebar';
 import { useMenu } from '../hooks/useMenu';
 import { StyledMenuSuffix } from '../styles/StyledMenuSuffix';
 import { menuClasses } from '../utils/utilityClasses';
-import { MenuButton } from './MenuButton';
+import { MenuButton, menuButtonStyles } from './MenuButton';
 
 export interface MenuItemProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
@@ -26,8 +26,12 @@ export interface MenuItemProps
   level?: number;
 }
 
-interface StyledMenuItemProps extends Pick<MenuItemProps, 'rootStyles'> {
+interface StyledMenuItemProps extends Pick<MenuItemProps, 'rootStyles' | 'active' | 'disabled'> {
+  level: number;
   menuItemStyles?: CSSObject;
+  collapsed?: boolean;
+  rtl?: boolean;
+  buttonStyles?: CSSObject;
 }
 
 type MenuItemElement = 'root' | 'button' | 'label' | 'prefix' | 'suffix' | 'icon';
@@ -40,6 +44,19 @@ const StyledMenuItem = styled.li<StyledMenuItemProps>`
   ${({ menuItemStyles }) => menuItemStyles};
 
   ${({ rootStyles }) => rootStyles};
+
+  > .${menuClasses.button} {
+    ${({ level, disabled, active, collapsed, rtl }) =>
+      menuButtonStyles({
+        level,
+        disabled,
+        active,
+        collapsed,
+        rtl,
+      })};
+
+    ${({ buttonStyles }) => buttonStyles};
+  }
 `;
 
 export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemProps> = (
@@ -103,22 +120,24 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
     [menuClasses.disabled]: disabled,
   };
 
+  // console.log('level - ', children, ' - ', level);
+
   return (
     <StyledMenuItem
       ref={ref}
       className={classnames(menuClasses.menuItemRoot, sharedClasses, className)}
       menuItemStyles={getMenuItemStyles('root')}
+      level={level}
+      collapsed={collapsed}
+      rtl={rtl}
+      disabled={disabled}
+      active={active}
+      buttonStyles={getMenuItemStyles('button')}
       rootStyles={rootStyles}
     >
       <MenuButton
         className={classnames(menuClasses.button, sharedClasses)}
         data-testid={`${menuClasses.button}-test-id`}
-        level={level}
-        collapsed={collapsed}
-        rtl={rtl}
-        disabled={disabled}
-        active={active}
-        rootStyles={getMenuItemStyles('button')}
         component={component}
         tabIndex={0}
         {...rest}
