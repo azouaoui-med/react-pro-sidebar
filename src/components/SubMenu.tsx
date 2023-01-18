@@ -181,7 +181,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
       // TODO: if its useful to close first level submenus on collapse sidebar uncomment the code below
       // setOpen(false);
     }
-  }, [collapsed, level, transitionDuration, popperInstance]);
+  }, [collapsed, level, rtl, transitionDuration, popperInstance]);
 
   React.useEffect(() => {
     const handleTogglePopper = (target: Node) => {
