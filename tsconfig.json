@@ -10,8 +10,9 @@
     "jsx": "react",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "resolveJsonModule": true
   },
-  "include": ["src/**/*"],
+  "include": ["src", "tests", "storybook", "setupTests.ts"],
   "exclude": ["node_modules", "dist"]
 }

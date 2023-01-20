@@ -24,7 +24,7 @@ export default {
     typescript({
       useTsconfigDeclarationDir: true,
       tsconfigOverride: {
-        exclude: ['**/__test__', '**/*.test.tsx', 'storybook'],
+        exclude: ['tests', '**/*.test.tsx', 'storybook', 'setupTests.ts'],
       },
     }),
   ],
