@@ -2,7 +2,6 @@ import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Menu, MenuItem, Sidebar, useProSidebar } from '../../src';
 import { ProSidebarProvider } from '../../src/components/ProSidebarProvider';
-import { Icon } from '../icons/Icon';
 
 const StoryParams: ComponentMeta<typeof Sidebar> = {
   title: 'Sidebar',
