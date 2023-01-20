@@ -1,8 +1,8 @@
 import React from 'react';
-import { customRender, screen } from '../../utils/testUtils';
-import { Sidebar } from '../Sidebar';
-import * as sidebarHooks from '../../hooks/useSidebar';
-import { sidebarClasses } from '../../utils/utilityClasses';
+import { customRender, screen } from './testUtils';
+import { Sidebar } from '../src/components/Sidebar';
+import * as sidebarHooks from '../src/hooks/useSidebar';
+import { sidebarClasses } from '../src/utils/utilityClasses';
 
 describe('Sidebar', () => {
   it('should initialize Sidebar correctly', () => {

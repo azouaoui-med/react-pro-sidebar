@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, RenderOptions, RenderResult } from '@testing-library/react';
-import { ProSidebarProvider } from '../components/ProSidebarProvider';
+import { ProSidebarProvider } from '../src/components/ProSidebarProvider';
 
 type CustomRender = (
   ui: React.ReactElement,
