@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0-beta.3] - 2023-01-18
+
+- [SubMenu] fixed popper placement on rtl
+
 ## [1.0.0-beta.2] - 2023-01-14
 
 - [Menu] Added transitionDuration prop to use when sliding submenu content
