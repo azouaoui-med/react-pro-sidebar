@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [1.0.0-beta.3] - 2023-01-18
+## [1.0.0] - 2023-01-21
+
+React Pro Sidebar 1.0.0 is here 🎉
+
+For full list of changes, browse changelogs matching `1.0.0-alpha.*` and `1.0.0-beta.*`
+
+## [1.0.0-beta.3] - 2023-01-20
 
 - [SubMenu] fixed popper placement on rtl
 
