@@ -50,8 +50,7 @@ Basic.parameters = {
           </Sidebar>
           <main style={{ padding: 10 }}> Main content</main>
         </div>
-    );
-      )`,
+    );`,
     },
   },
 };
