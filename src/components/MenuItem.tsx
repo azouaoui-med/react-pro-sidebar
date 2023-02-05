@@ -12,15 +12,47 @@ import { MenuButton, menuButtonStyles } from './MenuButton';
 
 export interface MenuItemProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
-  icon?: React.ReactNode;
-  prefix?: React.ReactNode;
-  suffix?: React.ReactNode;
-  active?: boolean;
-  disabled?: boolean;
-  children?: React.ReactNode;
-  component?: string | React.ReactElement;
-  rootStyles?: CSSObject;
   /**
+   * The icon to be displayed in the menu item
+   */
+  icon?: React.ReactNode;
+
+  /**
+   * The prefix to be displayed in the menu item
+   */
+  prefix?: React.ReactNode;
+
+  /**
+   * The suffix to be displayed in the menu item
+   */
+  suffix?: React.ReactNode;
+
+  /**
+   * If set to true, the menu item will have an active state
+   * @default ```false```
+   */
+  active?: boolean;
+
+  /**
+   * If set to true, the menu item will be disabled
+   * @default ```false```
+   */
+  disabled?: boolean;
+
+  /**
+   * The component to be rendered as the menu item button
+   */
+  component?: string | React.ReactElement;
+
+  /**
+   * Apply styles from the root element
+   */
+  rootStyles?: CSSObject;
+
+  children?: React.ReactNode;
+
+  /**
+   * The level is passed down automatically from the parent component
    * @ignore
    */
   level?: number;

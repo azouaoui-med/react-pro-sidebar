@@ -65,8 +65,14 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
    */
   image?: string;
 
+  /**
+   * sidebar direction
+   */
   rtl?: boolean;
 
+  /**
+   * sidebar styles to be applied from the root element
+   */
   rootStyles?: CSSObject;
 
   children?: React.ReactNode;

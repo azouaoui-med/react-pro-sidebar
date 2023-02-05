@@ -38,8 +38,22 @@ export interface MenuContextProps {
    * @default ```300```
    */
   transitionDuration?: number;
+
+  /**
+   * If set to true, the popper menu will close when a menu item is clicked
+   * This works on collapsed mode only
+   * @default ```false```
+   */
   closeOnClick?: boolean;
+
+  /**
+   * Apply styles to MenuItem and SubMenu components and their children
+   */
   menuItemStyles?: MenuItemStyles;
+
+  /**
+   * Render a custom expand icon for SubMenu components
+   */
   renderExpandIcon?: (params: RenderExpandIconParams) => React.ReactNode;
 }
 

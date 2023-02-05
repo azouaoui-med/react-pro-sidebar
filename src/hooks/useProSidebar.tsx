@@ -12,12 +12,25 @@ interface ProSidebarResult {
    */
   toggleSidebar: (toggled?: boolean) => void;
 
+  /**
+   * sidebar breakpoint status
+   * value is set to true when screen size reaches the breakpoint
+   */
   broken: boolean;
 
+  /**
+   * sidebar collapsed status
+   */
   collapsed: boolean;
 
+  /**
+   * sidebar toggled status
+   */
   toggled: boolean;
 
+  /**
+   * sidebar rtl status
+   */
   rtl: boolean;
 }
 
