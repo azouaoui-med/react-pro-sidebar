@@ -69,7 +69,6 @@ interface StyledMenuItemProps extends Pick<MenuItemProps, 'rootStyles' | 'active
 type MenuItemElement = 'root' | 'button' | 'label' | 'prefix' | 'suffix' | 'icon';
 
 const StyledMenuItem = styled.li<StyledMenuItemProps>`
-  display: inline-block;
   width: 100%;
   position: relative;
 
@@ -151,8 +150,6 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
     [menuClasses.active]: active,
     [menuClasses.disabled]: disabled,
   };
-
-  // console.log('level - ', children, ' - ', level);
 
   return (
     <StyledMenuItem
