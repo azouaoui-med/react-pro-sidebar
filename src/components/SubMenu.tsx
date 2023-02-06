@@ -252,7 +252,9 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
       if (!openWhenCollapsed && buttonRef.current?.contains(target)) setOpenWhenCollapsed(true);
       else if (
         (closeOnClick &&
-          !(target as HTMLElement).closest('.menu-item')?.classList.contains('sub-menu')) ||
+          !(target as HTMLElement)
+            .closest(`.${menuClasses.menuItemRoot}`)
+            ?.classList.contains(menuClasses.subMenuRoot)) ||
         (!contentRef.current?.contains(target) && openWhenCollapsed)
       ) {
         setOpenWhenCollapsed(false);

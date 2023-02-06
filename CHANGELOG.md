@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed `closeOnClick` triggering close on nested SubMenu click
+
 ## [1.0.0] - 2023-01-21
 
 React Pro Sidebar 1.0.0 is here 🎉
