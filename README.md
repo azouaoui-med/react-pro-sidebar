@@ -262,7 +262,7 @@ For `Menu` component, in addition to `rootStyles` you can also use `menuItemStyl
             <td rowspan=5>Menu</td>
             <td>closeOnClick</td>
             <td><code>boolean</code></td>
-            <td>If <code>true</code>, submenu popper will close when clicking on MenuItem</td>
+            <td>If <code>true</code> and sidebar is in collapsed state, submenu popper will automatically close on MenuItem click</td>
             <td><code>false</code></td>
         </tr>
          <tr>
@@ -357,7 +357,7 @@ For `Menu` component, in addition to `rootStyles` you can also use `menuItemStyl
             <td>Set open value if you want to control the state</td>
             <td>-</td>
         </tr>
-                <tr>
+        <tr>
             <td>active</td>
             <td><code>boolean</code></td>
             <td>If <code>true</code>, the component is active</td>
