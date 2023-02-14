@@ -126,6 +126,25 @@ export const TransitionDuration: ComponentStory<typeof Menu> = () => (
 
 TransitionDuration.storyName = 'transitionDuration';
 
+export const CloseOnClick: ComponentStory<typeof Menu> = () => (
+  <div style={{ display: 'flex', height: '100%' }}>
+    <Sidebar defaultCollapsed>
+      <Menu closeOnClick>
+        <SubMenu label="Charts">
+          <MenuItem> Pie charts</MenuItem>
+          <MenuItem> Line charts</MenuItem>
+          <MenuItem> Bar charts</MenuItem>
+        </SubMenu>
+        <MenuItem> Calendar</MenuItem>
+        <MenuItem> E-commerce</MenuItem>
+        <MenuItem> Examples</MenuItem>
+      </Menu>
+    </Sidebar>
+  </div>
+);
+
+CloseOnClick.storyName = 'closeOnClick';
+
 export const RootStyles: ComponentStory<typeof Menu> = () => (
   <div style={{ display: 'flex', height: '100%' }}>
     <Sidebar>
