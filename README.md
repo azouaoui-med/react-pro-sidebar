@@ -163,6 +163,23 @@ its recommended using utility classes (`sidebarClasses`, `menuClasses`) for sele
 
 For `Menu` component, in addition to `rootStyles` you can also use `menuItemStyles` prop for customizing all `MenuItem` & `SubMenu` components and their children
 
+**Type definition**
+
+```jsx
+interface MenuItemStyles {
+  root?: ElementStyles;
+  button?: ElementStyles;
+  label?: ElementStyles;
+  prefix?: ElementStyles;
+  suffix?: ElementStyles;
+  icon?: ElementStyles;
+  subMenuContent?: ElementStyles;
+  SubMenuExpandIcon?: ElementStyles;
+}
+
+type ElementStyles = CSSObject | ((params: MenuItemStylesParams) => CSSObject | undefined);
+```
+
 **Example usage**
 
 ```jsx
