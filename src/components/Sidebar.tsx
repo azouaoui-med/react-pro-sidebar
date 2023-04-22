@@ -203,6 +203,12 @@ const SidebarFR: React.ForwardRefRenderFunction<HTMLHtmlElement, SidebarProps> =
     updateSidebarState({ toggled: false });
   };
 
+  /**
+   * TODO: this is causing the sidebar to render twice on initial load, need to fix
+   * using context for this seems an overkill and need to remove it in next major release
+   * we may need to use collapsed / toggled props instead and expose onCollapsed/onToggled to update the state by the user
+   * */
+
   React.useEffect(() => {
     updateSidebarState({ width, collapsedWidth, broken, rtl });
   }, [width, collapsedWidth, broken, updateSidebarState, rtl]);

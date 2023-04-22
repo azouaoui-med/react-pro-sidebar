@@ -16,6 +16,7 @@ interface SubMenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
 }
 
+//TODO: useRef to store timer or just a const inside useEffect
 let timer: NodeJS.Timer;
 
 const StyledSubMenuContent = styled.div<SubMenuContentProps>`
@@ -100,6 +101,8 @@ const SubMenuContentFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuCo
       }
     }
     return () => clearTimeout(timer);
+
+    //TODO: need to fix deps array
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, SubMenuContentRef]);
 

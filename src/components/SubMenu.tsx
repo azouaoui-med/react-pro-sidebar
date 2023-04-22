@@ -152,8 +152,10 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
   const { renderExpandIcon, closeOnClick, menuItemStyles } = useMenu();
 
   const [open, setOpen] = React.useState<boolean>(!!defaultOpen);
-  const [openDefault, setOpenDefault] = React.useState<boolean>(!!defaultOpen);
   const [openWhenCollapsed, setOpenWhenCollapsed] = React.useState<boolean>(false);
+
+  // TODO: this state is not necessary
+  const [openDefault, setOpenDefault] = React.useState<boolean>(!!defaultOpen);
 
   const childNodes = React.Children.toArray(children).filter(Boolean) as [
     React.ReactElement<SubMenuProps | MenuItemProps>,
@@ -239,10 +241,11 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
   };
 
   React.useLayoutEffect(() => {
+    //TODO: need to cleanup the timer
     setTimeout(() => popperInstance?.update(), transitionDuration);
     if (collapsed && level === 0) {
       setOpenWhenCollapsed(false);
-      // TODO: if its useful to close first level submenus on collapse sidebar uncomment the code below
+      // ? if its useful to close first level submenus on collapse sidebar uncomment the code below
       // setOpen(false);
     }
   }, [collapsed, level, rtl, transitionDuration, popperInstance]);
@@ -290,6 +293,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     };
   }, [collapsed, level, closeOnClick, openWhenCollapsed]);
 
+  // TODO: this needs to be refactored, we don't need to use state for this
   React.useEffect(() => {
     if (openSubmenu) setOpenDefault(openSubmenu);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -404,6 +408,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         className={classnames(menuClasses.subMenuContent, sharedClasses)}
         rootStyles={getSubMenuItemStyles('subMenuContent')}
       >
+        {/* TODO: use context to pass down level to the tree */}
         {childNodes.map((node) =>
           React.cloneElement(node, {
             ...node.props,
