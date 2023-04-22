@@ -3,7 +3,6 @@ import styled, { CSSObject } from '@emotion/styled';
 import classnames from 'classnames';
 import { SubMenuContent } from './SubMenuContent';
 import { useSidebar } from '../hooks/useSidebar';
-import { useIsomorphicLayoutEffect } from '../hooks/useIsomorphicLayoutEffect';
 import { StyledMenuLabel } from '../styles/StyledMenuLabel';
 import { StyledMenuIcon } from '../styles/StyledMenuIcon';
 import { StyledMenuPrefix } from '../styles/StyledMenuPrefix';
@@ -241,7 +240,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     }
   };
 
-  useIsomorphicLayoutEffect(() => {
+  React.useEffect(() => {
     setTimeout(() => popperInstance?.update(), transitionDuration);
     if (collapsed && level === 0) {
       setOpenWhenCollapsed(false);
