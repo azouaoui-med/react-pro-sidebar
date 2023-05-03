@@ -1,7 +1,9 @@
 import React from 'react';
 
 export const useMediaQuery = (breakpoint?: string): boolean => {
-  const [matches, setMatches] = React.useState(breakpoint === 'always');
+  const [matches, setMatches] = React.useState(
+    breakpoint === 'always' || window.matchMedia(`(max-width: ${breakpoint})`).matches,
+  );
 
   React.useEffect(() => {
     if (breakpoint && breakpoint !== 'always') {
