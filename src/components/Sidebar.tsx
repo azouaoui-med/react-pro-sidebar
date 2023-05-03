@@ -20,6 +20,11 @@ const BREAK_POINTS: Record<BreakPoint, string> = {
 
 export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
   /**
+   * sidebar collapsed status
+   */
+  collapsed?: boolean;
+
+  /**
    * width of the sidebar
    * @default ```250px```
    */
@@ -69,6 +74,16 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
    * sidebar direction
    */
   rtl?: boolean;
+
+  /**
+   * sidebar toggled status
+   */
+  toggled?: boolean;
+
+  /**
+   * callback function to be called when the sidebar toggle status changes, function is called when backdrop is clicked
+   */
+  onToggle?: (toggled: boolean) => void;
 
   /**
    * sidebar styles to be applied from the root element
@@ -166,112 +181,132 @@ const StyledSidebarImage = styled.img`
   }
 `;
 
-const SidebarFR: React.ForwardRefRenderFunction<HTMLHtmlElement, SidebarProps> = (
-  {
-    width = '250px',
-    collapsedWidth = '80px',
-    defaultCollapsed = false,
-    className,
-    children,
-    breakPoint,
-    customBreakPoint,
-    backgroundColor = 'rgb(249, 249, 249, 0.7)',
-    transitionDuration = 300,
-    image,
-    rtl,
-    rootStyles,
-    ...rest
+interface SidebarContextProps {
+  collapsed?: boolean;
+  rtl?: boolean;
+  transitionDuration?: number;
+}
+
+export const SidebarContext = React.createContext<SidebarContextProps>({
+  collapsed: false,
+  rtl: false,
+  transitionDuration: 300,
+});
+
+export const Sidebar = React.forwardRef<HTMLHtmlElement, SidebarProps>(
+  (
+    {
+      collapsed,
+      toggled,
+      onToggle,
+      width = '250px',
+      collapsedWidth = '80px',
+      defaultCollapsed,
+      className,
+      children,
+      breakPoint,
+      customBreakPoint,
+      backgroundColor = 'rgb(249, 249, 249, 0.7)',
+      transitionDuration = 300,
+      image,
+      rtl,
+      rootStyles,
+      ...rest
+    },
+    ref,
+  ) => {
+    const broken = useMediaQuery(
+      customBreakPoint ?? (breakPoint ? BREAK_POINTS[breakPoint] : breakPoint),
+    );
+
+    const [mounted, setMounted] = React.useState(false);
+
+    const {
+      updateSidebarState,
+      collapsed: collapsedContext,
+      broken: brokenContext,
+      toggled: toggledContext,
+    } = useSidebar();
+
+    const collapsedValue = collapsed ?? (!mounted && defaultCollapsed ? true : collapsedContext);
+    const toggledValue = toggled ?? toggledContext;
+
+    const handleBackdropClick = () => {
+      onToggle?.(false);
+      updateSidebarState({ toggled: false });
+    };
+
+    /**
+     * TODO: this is causing the sidebar to render twice on initial load, need to fix
+     * using context for this seems an overkill and need to remove it in next major release
+     * we may need to use collapsed / toggled props instead and expose onToggled to update the state by the user
+     * */
+
+    React.useEffect(() => {
+      updateSidebarState({ broken, rtl, transitionDuration });
+    }, [broken, updateSidebarState, rtl, transitionDuration]);
+
+    React.useEffect(() => {
+      if (!mounted) {
+        updateSidebarState({
+          collapsed: defaultCollapsed,
+        });
+        setMounted(true);
+      }
+    }, [defaultCollapsed, mounted, updateSidebarState]);
+
+    return (
+      <SidebarContext.Provider value={{ collapsed: collapsedValue, rtl }}>
+        <StyledSidebar
+          ref={ref}
+          data-testid={`${sidebarClasses.root}-test-id`}
+          rtl={rtl}
+          rootStyles={rootStyles}
+          width={width}
+          collapsedWidth={collapsedWidth}
+          transitionDuration={transitionDuration}
+          className={classnames(
+            sidebarClasses.root,
+            {
+              [sidebarClasses.collapsed]: collapsedValue,
+              [sidebarClasses.toggled]: toggledValue,
+              [sidebarClasses.broken]: broken,
+              [sidebarClasses.rtl]: rtl,
+            },
+            className,
+          )}
+          {...rest}
+        >
+          <StyledSidebarContainer
+            data-testid={`${sidebarClasses.container}-test-id`}
+            className={sidebarClasses.container}
+            backgroundColor={backgroundColor}
+          >
+            {children}
+          </StyledSidebarContainer>
+
+          {image && (
+            <StyledSidebarImage
+              data-testid={`${sidebarClasses.image}-test-id`}
+              src={image}
+              alt="sidebar background"
+              className={sidebarClasses.image}
+            />
+          )}
+
+          {brokenContext && toggledValue && (
+            <StyledBackdrop
+              data-testid={`${sidebarClasses.backdrop}-test-id`}
+              role="button"
+              tabIndex={0}
+              aria-label="backdrop"
+              onClick={handleBackdropClick}
+              onKeyPress={handleBackdropClick}
+              className={sidebarClasses.backdrop}
+            />
+          )}
+        </StyledSidebar>
+      </SidebarContext.Provider>
+    );
   },
-  ref,
-) => {
-  const broken = useMediaQuery(
-    customBreakPoint ?? (breakPoint ? BREAK_POINTS[breakPoint] : breakPoint),
-  );
-
-  const {
-    updateSidebarState,
-    collapsed: collapsedContext,
-    width: widthContext,
-    collapsedWidth: collapsedWidthContext,
-    broken: brokenContext,
-    toggled: toggledContext,
-    transitionDuration: transitionDurationContext,
-    rtl: rtlContext,
-  } = useSidebar();
-
-  const handleBackdropClick = () => {
-    updateSidebarState({ toggled: false });
-  };
-
-  /**
-   * TODO: this is causing the sidebar to render twice on initial load, need to fix
-   * using context for this seems an overkill and need to remove it in next major release
-   * we may need to use collapsed / toggled props instead and expose onCollapsed/onToggled to update the state by the user
-   * */
-
-  React.useEffect(() => {
-    updateSidebarState({ width, collapsedWidth, broken, rtl });
-  }, [width, collapsedWidth, broken, updateSidebarState, rtl]);
-
-  React.useEffect(() => {
-    updateSidebarState({
-      collapsed: defaultCollapsed,
-      transitionDuration,
-      toggled: false,
-    });
-  }, [defaultCollapsed, transitionDuration, updateSidebarState]);
-
-  return (
-    <StyledSidebar
-      ref={ref}
-      data-testid={`${sidebarClasses.root}-test-id`}
-      rtl={rtlContext}
-      rootStyles={rootStyles}
-      width={widthContext}
-      collapsedWidth={collapsedWidthContext}
-      transitionDuration={transitionDurationContext ?? 300}
-      className={classnames(
-        sidebarClasses.root,
-        {
-          [sidebarClasses.collapsed]: collapsedContext,
-          [sidebarClasses.toggled]: toggledContext,
-          [sidebarClasses.broken]: brokenContext,
-          [sidebarClasses.rtl]: rtlContext,
-        },
-        className,
-      )}
-      {...rest}
-    >
-      <StyledSidebarContainer
-        data-testid={`${sidebarClasses.container}-test-id`}
-        className={sidebarClasses.container}
-        backgroundColor={backgroundColor}
-      >
-        {children}
-      </StyledSidebarContainer>
-
-      {image && (
-        <StyledSidebarImage
-          data-testid={`${sidebarClasses.image}-test-id`}
-          src={image}
-          alt="sidebar background"
-          className={sidebarClasses.image}
-        />
-      )}
-
-      {brokenContext && toggledContext && (
-        <StyledBackdrop
-          data-testid={`${sidebarClasses.backdrop}-test-id`}
-          role="button"
-          tabIndex={0}
-          aria-label="backdrop"
-          onClick={handleBackdropClick}
-          onKeyPress={handleBackdropClick}
-          className={sidebarClasses.backdrop}
-        />
-      )}
-    </StyledSidebar>
-  );
-};
-
-export const Sidebar = React.forwardRef<HTMLHtmlElement, SidebarProps>(SidebarFR);
+);

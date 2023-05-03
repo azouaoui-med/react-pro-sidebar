@@ -17,6 +17,7 @@ import {
 } from '../styles/StyledExpandIcon';
 import { usePopper } from '../hooks/usePopper';
 import { MenuButton, menuButtonStyles } from './MenuButton';
+import { SidebarContext } from './Sidebar';
 
 export interface SubMenuProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
@@ -148,7 +149,8 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
   },
   ref,
 ) => {
-  const { collapsed, transitionDuration, rtl } = useSidebar();
+  const { collapsed, rtl } = React.useContext(SidebarContext);
+  const { transitionDuration } = useSidebar();
   const { renderExpandIcon, closeOnClick, menuItemStyles } = useMenu();
 
   const [open, setOpen] = React.useState<boolean>(!!defaultOpen);

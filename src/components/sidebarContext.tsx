@@ -5,8 +5,6 @@ interface SidebarState {
   toggled?: boolean;
   broken?: boolean;
   rtl?: boolean;
-  width?: string;
-  collapsedWidth?: string;
   transitionDuration?: number;
 }
 
@@ -23,7 +21,13 @@ interface SidebarProviderProps {
 export const SidebarContext = React.createContext<SidebarContextProps | undefined>(undefined);
 
 export const SidebarProvider: React.FC<SidebarProviderProps> = ({ children }) => {
-  const [sidebarState, setSidebarState] = React.useState<SidebarState>();
+  const [sidebarState, setSidebarState] = React.useState<SidebarState>({
+    collapsed: false,
+    toggled: false,
+    broken: false,
+    rtl: false,
+    transitionDuration: 300,
+  });
 
   const updateSidebarState = React.useCallback((values: Partial<SidebarState>) => {
     setSidebarState((prevState) => ({ ...prevState, ...values }));
