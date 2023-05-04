@@ -154,11 +154,9 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
   const { transitionDuration } = useSidebar();
   const { renderExpandIcon, closeOnClick, menuItemStyles } = useMenu();
 
-  const [open, setOpen] = React.useState<boolean>(!!defaultOpen);
-  const [openWhenCollapsed, setOpenWhenCollapsed] = React.useState<boolean>(false);
-
-  // TODO: this state is not necessary
-  const [openDefault, setOpenDefault] = React.useState<boolean>(!!defaultOpen);
+  const [open, setOpen] = React.useState(!!defaultOpen);
+  const [openWhenCollapsed, setOpenWhenCollapsed] = React.useState(false);
+  const [mounted, setMounted] = React.useState(false);
 
   const childNodes = React.Children.toArray(children).filter(Boolean) as [
     React.ReactElement<SubMenuProps | MenuItemProps>,
@@ -208,12 +206,12 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
   };
 
   const handleSlideToggle = (): void => {
-    if (typeof openSubmenu === 'undefined' && !(level === 0 && collapsed)) {
-      onOpenChange?.(!open);
-      setOpen(!open);
-      open ? slideDown() : slideUp();
-    } else {
-      onOpenChange?.(!openSubmenu);
+    if (!(level === 0 && collapsed)) {
+      clearTimeout(Number(timer.current));
+      const openValue = openSubmenu ?? open;
+      openValue ? slideDown() : slideUp();
+      onOpenChange?.(!openValue);
+      typeof openSubmenu === 'undefined' && setOpen(!open);
     }
   };
 
@@ -330,10 +328,8 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     };
   }, [collapsed, level, closeOnClick, openWhenCollapsed]);
 
-  // TODO: this needs to be refactored, we don't need to use state for this
   React.useEffect(() => {
-    if (openSubmenu) setOpenDefault(openSubmenu);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setMounted(true);
   }, []);
 
   const sharedClasses = {
@@ -441,7 +437,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         open={openSubmenu ?? open}
         firstLevel={level === 0}
         collapsed={collapsed}
-        defaultOpen={openDefault}
+        defaultOpen={(openSubmenu && !mounted) || defaultOpen}
         className={classnames(menuClasses.subMenuContent, sharedClasses)}
         rootStyles={getSubMenuItemStyles('subMenuContent')}
       >

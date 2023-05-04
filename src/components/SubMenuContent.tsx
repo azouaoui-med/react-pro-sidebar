@@ -54,10 +54,11 @@ const StyledSubMenuContent = styled.div<SubMenuContentProps>`
 `;
 
 const SubMenuContentFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuContentProps> = (
-  { children, open, openWhenCollapsed, firstLevel, collapsed, ...rest },
+  { children, open, openWhenCollapsed, firstLevel, collapsed, defaultOpen, ...rest },
   ref,
 ) => {
   const { transitionDuration } = useMenu();
+  const [defaultOpenState] = React.useState(defaultOpen);
 
   return (
     <StyledSubMenuContent
@@ -68,6 +69,7 @@ const SubMenuContentFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuCo
       open={open}
       openWhenCollapsed={openWhenCollapsed}
       transitionDuration={transitionDuration}
+      defaultOpen={defaultOpenState}
       {...rest}
     >
       <StyledUl>{children}</StyledUl>
