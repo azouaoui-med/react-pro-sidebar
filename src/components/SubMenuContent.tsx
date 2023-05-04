@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import React from 'react';
 import styled, { CSSObject } from '@emotion/styled';
 import { StyledUl } from '../styles/StyledUl';
@@ -15,9 +14,6 @@ interface SubMenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
   rootStyles?: CSSObject;
   children?: React.ReactNode;
 }
-
-//TODO: useRef to store timer or just a const inside useEffect
-let timer: NodeJS.Timer;
 
 const StyledSubMenuContent = styled.div<SubMenuContentProps>`
   display: none;
@@ -62,53 +58,6 @@ const SubMenuContentFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuCo
   ref,
 ) => {
   const { transitionDuration } = useMenu();
-  const SubMenuContentRef = ref as React.MutableRefObject<HTMLDivElement>;
-
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    clearTimeout(timer);
-    if (mounted) {
-      if (open) {
-        const target = SubMenuContentRef?.current;
-        if (target) {
-          target.style.display = 'block';
-          target.style.overflow = 'hidden';
-          target.style.height = 'auto';
-          const height = target.offsetHeight;
-          target.style.height = '0px';
-          target.offsetHeight;
-          target.style.height = `${height}px`;
-
-          timer = setTimeout(() => {
-            target.style.overflow = 'auto';
-            target.style.height = 'auto';
-          }, transitionDuration);
-        }
-      } else {
-        const target = SubMenuContentRef?.current;
-        if (target) {
-          target.style.overflow = 'hidden';
-          target.style.height = `${target.offsetHeight}px`;
-          target.offsetHeight;
-          target.style.height = '0px';
-
-          timer = setTimeout(() => {
-            target.style.overflow = 'auto';
-            target.style.display = 'none';
-          }, transitionDuration);
-        }
-      }
-    }
-    return () => clearTimeout(timer);
-
-    //TODO: need to fix deps array
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, SubMenuContentRef]);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
 
   return (
     <StyledSubMenuContent

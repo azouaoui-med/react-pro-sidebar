@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 import React from 'react';
 import styled, { CSSObject } from '@emotion/styled';
 import classnames from 'classnames';
@@ -165,6 +166,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
 
   const buttonRef = React.useRef<HTMLAnchorElement>(null);
   const contentRef = React.useRef<HTMLDivElement>(null);
+  const timer = React.useRef<ReturnType<typeof setTimeout>>();
 
   const { popperInstance } = usePopper({
     level,
@@ -172,10 +174,44 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     contentRef,
   });
 
+  const slideUp = () => {
+    const target = contentRef.current;
+    if (target) {
+      target.style.display = 'block';
+      target.style.overflow = 'hidden';
+      target.style.height = 'auto';
+      const height = target.offsetHeight;
+      target.style.height = '0px';
+      target.offsetHeight;
+      target.style.height = `${height}px`;
+
+      timer.current = setTimeout(() => {
+        target.style.overflow = 'auto';
+        target.style.height = 'auto';
+      }, transitionDuration);
+    }
+  };
+
+  const slideDown = () => {
+    const target = contentRef.current;
+    if (target) {
+      target.style.overflow = 'hidden';
+      target.style.height = `${target.offsetHeight}px`;
+      target.offsetHeight;
+      target.style.height = '0px';
+
+      timer.current = setTimeout(() => {
+        target.style.overflow = 'auto';
+        target.style.display = 'none';
+      }, transitionDuration);
+    }
+  };
+
   const handleSlideToggle = (): void => {
     if (typeof openSubmenu === 'undefined' && !(level === 0 && collapsed)) {
       onOpenChange?.(!open);
       setOpen(!open);
+      open ? slideDown() : slideUp();
     } else {
       onOpenChange?.(!openSubmenu);
     }
