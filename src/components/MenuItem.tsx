@@ -9,6 +9,7 @@ import { useMenu } from '../hooks/useMenu';
 import { StyledMenuSuffix } from '../styles/StyledMenuSuffix';
 import { menuClasses } from '../utils/utilityClasses';
 import { MenuButton, menuButtonStyles } from './MenuButton';
+import { LevelContext } from './Menu';
 
 export interface MenuItemProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
@@ -50,12 +51,6 @@ export interface MenuItemProps
   rootStyles?: CSSObject;
 
   children?: React.ReactNode;
-
-  /**
-   * The level is passed down automatically from the parent component
-   * @ignore
-   */
-  level?: number;
 }
 
 interface StyledMenuItemProps extends Pick<MenuItemProps, 'rootStyles' | 'active' | 'disabled'> {
@@ -97,7 +92,6 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
     className,
     prefix,
     suffix,
-    level = 0,
     active = false,
     disabled = false,
     component,
@@ -106,6 +100,7 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
   },
   ref,
 ) => {
+  const level = React.useContext(LevelContext);
   const { collapsed, transitionDuration, rtl } = useSidebar();
   const { menuItemStyles } = useMenu();
 

@@ -70,6 +70,8 @@ const StyledMenu = styled.nav<Pick<MenuProps, 'rootStyles'>>`
 
 export const MenuContext = React.createContext<MenuContextProps | undefined>(undefined);
 
+export const LevelContext = React.createContext<number>(0);
+
 const MenuFR: React.ForwardRefRenderFunction<HTMLMenuElement, MenuProps> = (
   {
     children,
@@ -90,14 +92,16 @@ const MenuFR: React.ForwardRefRenderFunction<HTMLMenuElement, MenuProps> = (
 
   return (
     <MenuContext.Provider value={providerValue}>
-      <StyledMenu
-        ref={ref}
-        className={classnames(menuClasses.root, className)}
-        rootStyles={rootStyles}
-        {...rest}
-      >
-        <StyledUl>{children}</StyledUl>
-      </StyledMenu>
+      <LevelContext.Provider value={0}>
+        <StyledMenu
+          ref={ref}
+          className={classnames(menuClasses.root, className)}
+          rootStyles={rootStyles}
+          {...rest}
+        >
+          <StyledUl>{children}</StyledUl>
+        </StyledMenu>
+      </LevelContext.Provider>
     </MenuContext.Provider>
   );
 };

@@ -7,7 +7,6 @@ import { useSidebar } from '../hooks/useSidebar';
 import { StyledMenuLabel } from '../styles/StyledMenuLabel';
 import { StyledMenuIcon } from '../styles/StyledMenuIcon';
 import { StyledMenuPrefix } from '../styles/StyledMenuPrefix';
-import { MenuItemProps } from './MenuItem';
 import { useMenu } from '../hooks/useMenu';
 import { StyledMenuSuffix } from '../styles/StyledMenuSuffix';
 import { menuClasses } from '../utils/utilityClasses';
@@ -19,6 +18,7 @@ import {
 import { usePopper } from '../hooks/usePopper';
 import { MenuButton, menuButtonStyles } from './MenuButton';
 import { SidebarContext } from './Sidebar';
+import { LevelContext } from './Menu';
 
 export interface SubMenuProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
@@ -79,12 +79,6 @@ export interface SubMenuProps
   onOpenChange?: (open: boolean) => void;
 
   children?: React.ReactNode;
-
-  /**
-   * The level is passed down automatically from the parent component
-   * @ignore
-   */
-  level?: number;
 }
 
 interface StyledSubMenuProps extends Pick<SubMenuProps, 'rootStyles' | 'active' | 'disabled'> {
@@ -138,7 +132,6 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     suffix,
     open: openSubmenu,
     defaultOpen,
-    level = 0,
     active = false,
     disabled = false,
     rootStyles,
@@ -150,6 +143,8 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
   },
   ref,
 ) => {
+  const level = React.useContext(LevelContext);
+
   const { collapsed, rtl } = React.useContext(SidebarContext);
   const { transitionDuration } = useSidebar();
   const { renderExpandIcon, closeOnClick, menuItemStyles } = useMenu();
@@ -157,10 +152,6 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
   const [open, setOpen] = React.useState(!!defaultOpen);
   const [openWhenCollapsed, setOpenWhenCollapsed] = React.useState(false);
   const [mounted, setMounted] = React.useState(false);
-
-  const childNodes = React.Children.toArray(children).filter(Boolean) as [
-    React.ReactElement<SubMenuProps | MenuItemProps>,
-  ];
 
   const buttonRef = React.useRef<HTMLAnchorElement>(null);
   const contentRef = React.useRef<HTMLDivElement>(null);
@@ -441,13 +432,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         className={classnames(menuClasses.subMenuContent, sharedClasses)}
         rootStyles={getSubMenuItemStyles('subMenuContent')}
       >
-        {/* TODO: use context to pass down level to the tree */}
-        {childNodes.map((node) =>
-          React.cloneElement(node, {
-            ...node.props,
-            level: level + 1,
-          }),
-        )}
+        <LevelContext.Provider value={level + 1}>{children}</LevelContext.Provider>
       </SubMenuContent>
     </StyledSubMenu>
   );
