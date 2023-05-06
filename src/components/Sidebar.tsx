@@ -183,12 +183,14 @@ const StyledSidebarImage = styled.img`
 
 interface SidebarContextProps {
   collapsed?: boolean;
+  toggled?: boolean;
   rtl?: boolean;
   transitionDuration?: number;
 }
 
 export const SidebarContext = React.createContext<SidebarContextProps>({
   collapsed: false,
+  toggled: false,
   rtl: false,
   transitionDuration: 300,
 });
@@ -256,7 +258,9 @@ export const Sidebar = React.forwardRef<HTMLHtmlElement, SidebarProps>(
     }, [defaultCollapsed, mounted, updateSidebarState]);
 
     return (
-      <SidebarContext.Provider value={{ collapsed: collapsedValue, rtl }}>
+      <SidebarContext.Provider
+        value={{ collapsed: collapsedValue, toggled: toggledValue, rtl, transitionDuration }}
+      >
         <StyledSidebar
           ref={ref}
           data-testid={`${sidebarClasses.root}-test-id`}

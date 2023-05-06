@@ -3,7 +3,6 @@ import React from 'react';
 import styled, { CSSObject } from '@emotion/styled';
 import classnames from 'classnames';
 import { SubMenuContent } from './SubMenuContent';
-import { useSidebar } from '../hooks/useSidebar';
 import { StyledMenuLabel } from '../styles/StyledMenuLabel';
 import { StyledMenuIcon } from '../styles/StyledMenuIcon';
 import { StyledMenuPrefix } from '../styles/StyledMenuPrefix';
@@ -145,8 +144,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
 ) => {
   const level = React.useContext(LevelContext);
 
-  const { collapsed, rtl } = React.useContext(SidebarContext);
-  const { transitionDuration } = useSidebar();
+  const { collapsed, rtl, transitionDuration } = React.useContext(SidebarContext);
   const { renderExpandIcon, closeOnClick, menuItemStyles } = useMenu();
 
   const [open, setOpen] = React.useState(!!defaultOpen);

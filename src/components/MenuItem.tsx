@@ -4,12 +4,12 @@ import classnames from 'classnames';
 import { StyledMenuLabel } from '../styles/StyledMenuLabel';
 import { StyledMenuIcon } from '../styles/StyledMenuIcon';
 import { StyledMenuPrefix } from '../styles/StyledMenuPrefix';
-import { useSidebar } from '../hooks/useSidebar';
 import { useMenu } from '../hooks/useMenu';
 import { StyledMenuSuffix } from '../styles/StyledMenuSuffix';
 import { menuClasses } from '../utils/utilityClasses';
 import { MenuButton, menuButtonStyles } from './MenuButton';
 import { LevelContext } from './Menu';
+import { SidebarContext } from './Sidebar';
 
 export interface MenuItemProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
@@ -101,7 +101,7 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
   ref,
 ) => {
   const level = React.useContext(LevelContext);
-  const { collapsed, transitionDuration, rtl } = useSidebar();
+  const { collapsed, rtl, transitionDuration } = React.useContext(SidebarContext);
   const { menuItemStyles } = useMenu();
 
   const getMenuItemStyles = (element: MenuItemElement): CSSObject | undefined => {
