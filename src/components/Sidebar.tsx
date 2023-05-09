@@ -86,6 +86,11 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
   onBackdropClick?: () => void;
 
   /**
+   * callback function to be called when sidebar's broken state changes
+   */
+  onBreakPoint?: (broken: boolean) => void;
+
+  /**
    * sidebar styles to be applied from the root element
    */
   rootStyles?: CSSObject;
@@ -201,6 +206,7 @@ export const Sidebar = React.forwardRef<HTMLHtmlElement, SidebarProps>(
       collapsed,
       toggled,
       onBackdropClick,
+      onBreakPoint,
       width = '250px',
       collapsedWidth = '80px',
       defaultCollapsed,
@@ -217,6 +223,12 @@ export const Sidebar = React.forwardRef<HTMLHtmlElement, SidebarProps>(
     },
     ref,
   ) => {
+    const breakpointCallbackFnRef = React.useRef<(broken: boolean) => void>();
+
+    breakpointCallbackFnRef.current = (broken: boolean) => {
+      onBreakPoint?.(broken);
+    };
+
     const broken = useMediaQuery(
       customBreakPoint ?? (breakPoint ? BREAK_POINTS[breakPoint] : breakPoint),
     );
@@ -238,11 +250,9 @@ export const Sidebar = React.forwardRef<HTMLHtmlElement, SidebarProps>(
       updateSidebarState({ toggled: false });
     };
 
-    /**
-     * TODO: this is causing the sidebar to render twice on initial load, need to fix
-     * using context for this seems an overkill and need to remove it in next major release
-     * we may need to use collapsed / toggled props instead and expose onToggled to update the state by the user
-     * */
+    React.useEffect(() => {
+      breakpointCallbackFnRef.current?.(broken);
+    }, [broken]);
 
     React.useEffect(() => {
       updateSidebarState({ broken, rtl, transitionDuration });
@@ -298,7 +308,7 @@ export const Sidebar = React.forwardRef<HTMLHtmlElement, SidebarProps>(
             />
           )}
 
-          {brokenContext && toggledValue && (
+          {broken && toggledValue && (
             <StyledBackdrop
               data-testid={`${sidebarClasses.backdrop}-test-id`}
               role="button"
