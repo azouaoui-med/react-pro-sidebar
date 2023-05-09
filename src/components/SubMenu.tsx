@@ -129,7 +129,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     title,
     prefix,
     suffix,
-    open: openSubmenu,
+    open: openControlled,
     defaultOpen,
     active = false,
     disabled = false,
@@ -197,10 +197,10 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
   const handleSlideToggle = (): void => {
     if (!(level === 0 && collapsed)) {
       clearTimeout(Number(timer.current));
-      const openValue = openSubmenu ?? open;
+      const openValue = openControlled ?? open;
       openValue ? slideDown() : slideUp();
       onOpenChange?.(!openValue);
-      typeof openSubmenu === 'undefined' && setOpen(!open);
+      typeof openControlled === 'undefined' && setOpen(!open);
     }
   };
 
@@ -218,7 +218,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
 
   const getSubMenuItemStyles = (element: MenuItemElement): CSSObject | undefined => {
     if (menuItemStyles) {
-      const params = { level, disabled, active, isSubmenu: true, open: openSubmenu ?? open };
+      const params = { level, disabled, active, isSubmenu: true, open: openControlled ?? open };
       const {
         root: rootElStyles,
         button: buttonElStyles,
@@ -324,7 +324,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
   const sharedClasses = {
     [menuClasses.active]: active,
     [menuClasses.disabled]: disabled,
-    [menuClasses.open]: openSubmenu ?? open,
+    [menuClasses.open]: openControlled ?? open,
   };
 
   return (
@@ -410,12 +410,12 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
               level,
               disabled,
               active,
-              open: openSubmenu ?? open,
+              open: openControlled ?? open,
             })
           ) : collapsed && level === 0 ? (
             <StyledExpandIconCollapsed />
           ) : (
-            <StyledExpandIcon rtl={rtl} open={openSubmenu ?? open} />
+            <StyledExpandIcon rtl={rtl} open={openControlled ?? open} />
           )}
         </StyledExpandIconWrapper>
       </MenuButton>
@@ -423,10 +423,10 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
       <SubMenuContent
         ref={contentRef}
         openWhenCollapsed={openWhenCollapsed}
-        open={openSubmenu ?? open}
+        open={openControlled ?? open}
         firstLevel={level === 0}
         collapsed={collapsed}
-        defaultOpen={(openSubmenu && !mounted) || defaultOpen}
+        defaultOpen={(openControlled && !mounted) || defaultOpen}
         className={classnames(menuClasses.subMenuContent, sharedClasses)}
         rootStyles={getSubMenuItemStyles('subMenuContent')}
       >
