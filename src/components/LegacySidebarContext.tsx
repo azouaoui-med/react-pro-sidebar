@@ -8,7 +8,7 @@ interface SidebarState {
   transitionDuration?: number;
 }
 
-export interface SidebarContextProps extends SidebarState {
+export interface LegacySidebarContextProps extends SidebarState {
   updateSidebarState: (values: SidebarState) => void;
   updateCollapseState: () => void;
   updateToggleState: () => void;
@@ -18,7 +18,9 @@ interface SidebarProviderProps {
   children?: React.ReactNode;
 }
 
-export const SidebarContext = React.createContext<SidebarContextProps | undefined>(undefined);
+export const LegacySidebarContext = React.createContext<LegacySidebarContextProps | undefined>(
+  undefined,
+);
 
 export const SidebarProvider: React.FC<SidebarProviderProps> = ({ children }) => {
   const [sidebarState, setSidebarState] = React.useState<SidebarState>({
@@ -46,5 +48,7 @@ export const SidebarProvider: React.FC<SidebarProviderProps> = ({ children }) =>
     [sidebarState, updateCollapseState, updateSidebarState, updateToggleState],
   );
 
-  return <SidebarContext.Provider value={providerValue}>{children}</SidebarContext.Provider>;
+  return (
+    <LegacySidebarContext.Provider value={providerValue}>{children}</LegacySidebarContext.Provider>
+  );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { customRender, screen } from './testUtils';
 import { Sidebar } from '../src/components/Sidebar';
-import * as sidebarHooks from '../src/hooks/useSidebar';
+import * as sidebarHooks from '../src/hooks/useLegacySidebar';
 import { sidebarClasses } from '../src/utils/utilityClasses';
 
 describe('Sidebar', () => {

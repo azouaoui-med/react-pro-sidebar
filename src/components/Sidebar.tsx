@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { CSSObject } from '@emotion/styled';
 import classnames from 'classnames';
-import { useSidebar } from '../hooks/useSidebar';
+import { useLegacySidebar } from '../hooks/useLegacySidebar';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { sidebarClasses } from '../utils/utilityClasses';
 import { StyledBackdrop } from '../styles/StyledBackdrop';
@@ -39,6 +39,8 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
   /**
    * initial collapsed status
    * @default ```false```
+   *
+   * @deprecated use ```collapsed``` instead
    */
   defaultCollapsed?: boolean;
 
@@ -235,37 +237,39 @@ export const Sidebar = React.forwardRef<HTMLHtmlElement, SidebarProps>(
 
     const [mounted, setMounted] = React.useState(false);
 
-    const {
-      updateSidebarState,
-      collapsed: collapsedContext,
-      broken: brokenContext,
-      toggled: toggledContext,
-    } = useSidebar();
+    const legacySidebarContext = useLegacySidebar();
 
-    const collapsedValue = collapsed ?? (!mounted && defaultCollapsed ? true : collapsedContext);
-    const toggledValue = toggled ?? toggledContext;
+    const collapsedValue =
+      collapsed ?? (!mounted && defaultCollapsed ? true : legacySidebarContext?.collapsed);
+    const toggledValue = toggled ?? legacySidebarContext?.toggled;
 
     const handleBackdropClick = () => {
       onBackdropClick?.();
-      updateSidebarState({ toggled: false });
+      legacySidebarContext?.updateSidebarState({ toggled: false });
     };
 
     React.useEffect(() => {
       breakpointCallbackFnRef.current?.(broken);
     }, [broken]);
 
+    // TODO: remove in next major version
     React.useEffect(() => {
-      updateSidebarState({ broken, rtl, transitionDuration });
-    }, [broken, updateSidebarState, rtl, transitionDuration]);
+      legacySidebarContext?.updateSidebarState({ broken, rtl, transitionDuration });
 
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [broken, legacySidebarContext?.updateSidebarState, rtl, transitionDuration]);
+
+    // TODO: remove in next major version
     React.useEffect(() => {
       if (!mounted) {
-        updateSidebarState({
+        legacySidebarContext?.updateSidebarState({
           collapsed: defaultCollapsed,
         });
         setMounted(true);
       }
-    }, [defaultCollapsed, mounted, updateSidebarState]);
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [defaultCollapsed, mounted, legacySidebarContext?.updateSidebarState]);
 
     return (
       <SidebarContext.Provider
