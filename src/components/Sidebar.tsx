@@ -81,9 +81,9 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
   toggled?: boolean;
 
   /**
-   * callback function to be called when the sidebar toggle status changes, function is called when backdrop is clicked
+   * callback function to be called when backdrop is clicked
    */
-  onToggle?: (toggled: boolean) => void;
+  onBackdropClick?: () => void;
 
   /**
    * sidebar styles to be applied from the root element
@@ -200,7 +200,7 @@ export const Sidebar = React.forwardRef<HTMLHtmlElement, SidebarProps>(
     {
       collapsed,
       toggled,
-      onToggle,
+      onBackdropClick,
       width = '250px',
       collapsedWidth = '80px',
       defaultCollapsed,
@@ -234,7 +234,7 @@ export const Sidebar = React.forwardRef<HTMLHtmlElement, SidebarProps>(
     const toggledValue = toggled ?? toggledContext;
 
     const handleBackdropClick = () => {
-      onToggle?.(false);
+      onBackdropClick?.();
       updateSidebarState({ toggled: false });
     };
 
