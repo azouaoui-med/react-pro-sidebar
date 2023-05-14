@@ -144,8 +144,12 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
 ) => {
   const level = React.useContext(LevelContext);
 
-  const { collapsed, rtl, transitionDuration } = React.useContext(SidebarContext);
-  const { renderExpandIcon, closeOnClick, menuItemStyles } = useMenu();
+  const {
+    collapsed,
+    rtl,
+    transitionDuration: sidebarTransitionDuration,
+  } = React.useContext(SidebarContext);
+  const { renderExpandIcon, closeOnClick, menuItemStyles, transitionDuration } = useMenu();
 
   const [open, setOpen] = React.useState(!!defaultOpen);
   const [openWhenCollapsed, setOpenWhenCollapsed] = React.useState(false);
@@ -266,13 +270,13 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
   };
 
   React.useEffect(() => {
-    setTimeout(() => popperInstance?.update(), transitionDuration);
+    setTimeout(() => popperInstance?.update(), sidebarTransitionDuration);
     if (collapsed && level === 0) {
       setOpenWhenCollapsed(false);
       // ? if its useful to close first level submenus on collapse sidebar uncomment the code below
       // setOpen(false);
     }
-  }, [collapsed, level, rtl, transitionDuration, popperInstance]);
+  }, [collapsed, level, rtl, sidebarTransitionDuration, popperInstance]);
 
   React.useEffect(() => {
     const handleTogglePopper = (target: Node) => {
@@ -369,7 +373,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         {prefix && (
           <StyledMenuPrefix
             collapsed={collapsed}
-            transitionDuration={transitionDuration}
+            transitionDuration={sidebarTransitionDuration}
             firstLevel={level === 0}
             className={classnames(menuClasses.prefix, sharedClasses)}
             rtl={rtl}
@@ -389,7 +393,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         {suffix && (
           <StyledMenuSuffix
             collapsed={collapsed}
-            transitionDuration={transitionDuration}
+            transitionDuration={sidebarTransitionDuration}
             firstLevel={level === 0}
             className={classnames(menuClasses.suffix, sharedClasses)}
             rootStyles={getSubMenuItemStyles('suffix')}
