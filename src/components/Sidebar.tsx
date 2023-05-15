@@ -6,9 +6,9 @@ import { useMediaQuery } from '../hooks/useMediaQuery';
 import { sidebarClasses } from '../utils/utilityClasses';
 import { StyledBackdrop } from '../styles/StyledBackdrop';
 
-type BreakPoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'always';
+type BreakPoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'always' | 'all';
 
-const BREAK_POINTS: Record<BreakPoint, string> = {
+const BREAK_POINTS = {
   xs: '480px',
   sm: '576px',
   md: '768px',
@@ -16,6 +16,7 @@ const BREAK_POINTS: Record<BreakPoint, string> = {
   xl: '1200px',
   xxl: '1600px',
   always: 'always',
+  all: 'all',
 };
 
 export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
@@ -225,15 +226,37 @@ export const Sidebar = React.forwardRef<HTMLHtmlElement, SidebarProps>(
     },
     ref,
   ) => {
+    const getBreakpointValue = () => {
+      if (customBreakPoint) {
+        return `(max-width: ${customBreakPoint})`;
+      }
+
+      if (breakPoint) {
+        if (['xs', 'sm', 'md', 'lg', 'xl', 'xxl'].includes(breakPoint)) {
+          return `(max-width: ${BREAK_POINTS[breakPoint]})`;
+        }
+
+        if (breakPoint === 'always' || breakPoint === 'all') {
+          if (breakPoint === 'always') {
+            console.warn(
+              'The "always" breakPoint is deprecated and will be removed in future release. ' +
+                'Please use the "all" breakPoint instead.',
+            );
+          }
+          return `screen`;
+        }
+
+        return `(max-width: ${breakPoint})`;
+      }
+    };
+
     const breakpointCallbackFnRef = React.useRef<(broken: boolean) => void>();
 
     breakpointCallbackFnRef.current = (broken: boolean) => {
       onBreakPoint?.(broken);
     };
 
-    const broken = useMediaQuery(
-      customBreakPoint ?? (breakPoint ? BREAK_POINTS[breakPoint] : breakPoint),
-    );
+    const broken = useMediaQuery(getBreakpointValue());
 
     const [mounted, setMounted] = React.useState(false);
 

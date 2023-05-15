@@ -2,12 +2,12 @@ import React from 'react';
 
 export const useMediaQuery = (breakpoint?: string): boolean => {
   const [matches, setMatches] = React.useState(
-    breakpoint === 'always' || window.matchMedia(`(max-width: ${breakpoint})`).matches,
+    !!breakpoint && window.matchMedia(breakpoint).matches,
   );
 
   React.useEffect(() => {
-    if (breakpoint && breakpoint !== 'always') {
-      const media = window.matchMedia(`(max-width: ${breakpoint})`);
+    if (breakpoint) {
+      const media = window.matchMedia(breakpoint);
 
       const handleMatch = () => {
         if (media.matches !== matches) {
@@ -17,8 +17,8 @@ export const useMediaQuery = (breakpoint?: string): boolean => {
 
       handleMatch();
 
-      window.addEventListener('resize', handleMatch);
-      return () => window.removeEventListener('resize', handleMatch);
+      media.addEventListener('change', handleMatch);
+      return () => media.removeEventListener('change', handleMatch);
     }
   }, [matches, breakpoint]);
 
