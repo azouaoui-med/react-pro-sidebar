@@ -184,6 +184,21 @@ For `Menu` component, in addition to `rootStyles` you can also use `menuItemStyl
 </Sidebar>
 ```
 
+## NextJS
+In _app.tsx or _app.js add:
+```
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <>
+    <ProSidebarProvider>
+        <Component {...pageProps} />
+    </ProSidebarProvider>
+    </>
+ )
+}
+
+```
+
 ## API
 
 <table>
