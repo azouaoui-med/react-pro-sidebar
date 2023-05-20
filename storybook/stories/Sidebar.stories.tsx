@@ -1,20 +1,12 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Menu, MenuItem, Sidebar, useProSidebar } from '../../src';
-import { ProSidebarProvider } from '../../src/components/ProSidebarProvider';
+import { Menu, MenuItem, Sidebar } from '../../src';
 
 const StoryParams: ComponentMeta<typeof Sidebar> = {
   title: 'Sidebar',
   component: Sidebar,
   subcomponents: {},
   argTypes: {},
-  decorators: [
-    (Story) => (
-      <ProSidebarProvider>
-        <Story />
-      </ProSidebarProvider>
-    ),
-  ],
 };
 
 export default StoryParams;
@@ -70,23 +62,34 @@ export const Width: ComponentStory<typeof Sidebar> = () => (
 
 Width.storyName = 'width';
 
-export const DefaultCollapsed: ComponentStory<typeof Sidebar> = () => (
-  <div style={{ display: 'flex', height: '100%', minHeight: '400px' }}>
-    <Sidebar defaultCollapsed>
-      <Menu>
-        <MenuItem> Documentation</MenuItem>
-        <MenuItem> Calendar</MenuItem>
-        <MenuItem> E-commerce</MenuItem>
-        <MenuItem> Examples</MenuItem>
-      </Menu>
-    </Sidebar>
-  </div>
-);
-DefaultCollapsed.storyName = 'defaultCollapsed';
+export const Collapsed: ComponentStory<typeof Sidebar> = () => {
+  const [collapsed, setCollapsed] = React.useState(false);
+
+  return (
+    <div style={{ display: 'flex', height: '100%', minHeight: '400px' }}>
+      <Sidebar collapsed={collapsed}>
+        <Menu>
+          <MenuItem> Documentation</MenuItem>
+          <MenuItem> Calendar</MenuItem>
+          <MenuItem> E-commerce</MenuItem>
+          <MenuItem> Examples</MenuItem>
+        </Menu>
+      </Sidebar>
+      <main style={{ padding: 10 }}>
+        <div>
+          <button className="sb-button" onClick={() => setCollapsed(!collapsed)}>
+            Collapse
+          </button>
+        </div>
+      </main>
+    </div>
+  );
+};
+Collapsed.storyName = 'collapsed';
 
 export const CollapsedWidth: ComponentStory<typeof Sidebar> = () => (
   <div style={{ display: 'flex', height: '100%', minHeight: '400px' }}>
-    <Sidebar defaultCollapsed collapsedWidth="60px">
+    <Sidebar collapsed collapsedWidth="60px">
       <Menu>
         <MenuItem> Documentation</MenuItem>
         <MenuItem> Calendar</MenuItem>
@@ -97,6 +100,31 @@ export const CollapsedWidth: ComponentStory<typeof Sidebar> = () => (
   </div>
 );
 CollapsedWidth.storyName = 'collapsedWidth';
+
+export const Toggled: ComponentStory<typeof Sidebar> = () => {
+  const [toggled, setToggled] = React.useState(false);
+
+  return (
+    <div style={{ display: 'flex', height: '100%', minHeight: '400px' }}>
+      <Sidebar onBackdropClick={() => setToggled(false)} toggled={toggled} breakPoint="always">
+        <Menu>
+          <MenuItem> Documentation</MenuItem>
+          <MenuItem> Calendar</MenuItem>
+          <MenuItem> E-commerce</MenuItem>
+          <MenuItem> Examples</MenuItem>
+        </Menu>
+      </Sidebar>
+      <main style={{ display: 'flex', padding: 10 }}>
+        <div>
+          <button className="sb-button" onClick={() => setToggled(!toggled)}>
+            Toggle
+          </button>
+        </div>
+      </main>
+    </div>
+  );
+};
+Toggled.storyName = 'toggled';
 
 export const BackgroundColor: ComponentStory<typeof Sidebar> = () => (
   <div style={{ display: 'flex', height: '100%', minHeight: '400px' }}>
@@ -127,11 +155,11 @@ export const Image: ComponentStory<typeof Sidebar> = () => (
 Image.storyName = 'image';
 
 export const BreakPoint: ComponentStory<typeof Sidebar> = () => {
-  const { toggleSidebar } = useProSidebar();
+  const [toggled, setToggled] = React.useState(false);
 
   return (
     <div style={{ display: 'flex', height: '100%', minHeight: '400px' }}>
-      <Sidebar breakPoint="always">
+      <Sidebar onBackdropClick={() => setToggled(false)} toggled={toggled} breakPoint="always">
         <Menu>
           <MenuItem> Documentation</MenuItem>
           <MenuItem> Calendar</MenuItem>
@@ -141,7 +169,7 @@ export const BreakPoint: ComponentStory<typeof Sidebar> = () => {
       </Sidebar>
       <main style={{ display: 'flex', padding: 10 }}>
         <div>
-          <button className="sb-button" onClick={() => toggleSidebar()}>
+          <button className="sb-button" onClick={() => setToggled(!toggled)}>
             Toggle
           </button>
         </div>
@@ -159,11 +187,12 @@ BreakPoint.parameters = {
 };
 
 export const CustomBreakPoint: ComponentStory<typeof Sidebar> = () => {
-  const { toggleSidebar, broken } = useProSidebar();
+  const [toggled, setToggled] = React.useState(false);
+  const [broken, setBroken] = React.useState(window.matchMedia('(max-width: 800px)').matches);
 
   return (
     <div style={{ display: 'flex', height: '100%', minHeight: '400px' }}>
-      <Sidebar customBreakPoint="800px">
+      <Sidebar toggled={toggled} customBreakPoint="800px" onBreakPoint={setBroken}>
         <Menu>
           <MenuItem> Documentation</MenuItem>
           <MenuItem> Calendar</MenuItem>
@@ -174,7 +203,7 @@ export const CustomBreakPoint: ComponentStory<typeof Sidebar> = () => {
       <main style={{ padding: 10 }}>
         <div>
           {broken && (
-            <button className="sb-button" onClick={() => toggleSidebar()}>
+            <button className="sb-button" onClick={() => setToggled(!toggled)}>
               Toggle
             </button>
           )}
@@ -193,11 +222,11 @@ BreakPoint.parameters = {
 };
 
 export const TransitionDuration: ComponentStory<typeof Sidebar> = () => {
-  const { collapseSidebar } = useProSidebar();
+  const [collapsed, setCollapsed] = React.useState(false);
 
   return (
     <div style={{ display: 'flex', height: '100%', minHeight: '400px' }}>
-      <Sidebar transitionDuration={1000}>
+      <Sidebar collapsed={collapsed} transitionDuration={1000}>
         <Menu>
           <MenuItem> Documentation</MenuItem>
           <MenuItem> Calendar</MenuItem>
@@ -207,7 +236,7 @@ export const TransitionDuration: ComponentStory<typeof Sidebar> = () => {
       </Sidebar>
       <main style={{ padding: 10 }}>
         <div>
-          <button className="sb-button" onClick={() => collapseSidebar()}>
+          <button className="sb-button" onClick={() => setCollapsed(!collapsed)}>
             Collapse
           </button>
         </div>
@@ -218,15 +247,13 @@ export const TransitionDuration: ComponentStory<typeof Sidebar> = () => {
 TransitionDuration.storyName = 'transitionDuration';
 
 export const RTL: ComponentStory<typeof Sidebar> = () => {
-  const { rtl } = useProSidebar();
-
   return (
     <div
       style={{
         display: 'flex',
         height: '100%',
         minHeight: '400px',
-        direction: rtl ? 'rtl' : 'ltr',
+        direction: 'rtl',
       }}
     >
       <Sidebar rtl>

@@ -1,20 +1,12 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Menu, menuClasses, MenuItem, Sidebar, SubMenu } from '../../src';
-import { ProSidebarProvider } from '../../src/components/ProSidebarProvider';
 import { Icon } from '../icons/Icon';
 
 const StoryParams: ComponentMeta<typeof Menu> = {
   title: 'Menu',
   component: Menu,
   argTypes: {},
-  decorators: [
-    (Story) => (
-      <ProSidebarProvider>
-        <Story />
-      </ProSidebarProvider>
-    ),
-  ],
 };
 
 export default StoryParams;
@@ -128,7 +120,7 @@ TransitionDuration.storyName = 'transitionDuration';
 
 export const CloseOnClick: ComponentStory<typeof Menu> = () => (
   <div style={{ display: 'flex', height: '100%' }}>
-    <Sidebar defaultCollapsed>
+    <Sidebar collapsed>
       <Menu closeOnClick>
         <SubMenu label="Charts">
           <MenuItem> Pie charts</MenuItem>

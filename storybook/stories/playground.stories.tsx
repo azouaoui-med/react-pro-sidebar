@@ -1,6 +1,5 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { ProSidebarProvider } from '../../src/components/ProSidebarProvider';
 import { Playground as PlaygroundComponent } from '../Playground';
 
 const StoryParams: ComponentMeta<typeof PlaygroundComponent> = {
@@ -8,13 +7,6 @@ const StoryParams: ComponentMeta<typeof PlaygroundComponent> = {
   component: PlaygroundComponent,
   subcomponents: {},
   argTypes: {},
-  decorators: [
-    (Story) => (
-      <ProSidebarProvider>
-        <Story />
-      </ProSidebarProvider>
-    ),
-  ],
 };
 
 export default StoryParams;
