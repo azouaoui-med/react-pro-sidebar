@@ -43,7 +43,9 @@ export const useProSidebar = (): ProSidebarResult => {
   const legacySidebarContext = useLegacySidebar();
 
   if (legacySidebarContext === undefined) {
-    throw new Error('useProSidebar requires ProSidebarProvider !');
+    throw new Error(
+      'useProSidebar must be used within a ProSidebarProvider. Please wrap your component with a ProSidebarProvider to use this hook.',
+    );
   }
 
   const collapseSidebar = React.useCallback(
