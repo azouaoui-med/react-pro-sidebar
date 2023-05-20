@@ -1,7 +1,7 @@
 import React from 'react';
 import { customRender, screen } from './testUtils';
 import { Sidebar } from '../src/components/Sidebar';
-import * as sidebarHooks from '../src/hooks/useLegacySidebar';
+import * as mediaQueryHook from '../src/hooks/useMediaQuery';
 import { sidebarClasses } from '../src/utils/utilityClasses';
 
 describe('Sidebar', () => {
@@ -83,20 +83,9 @@ describe('Sidebar', () => {
   });
 
   it('should sidebar have a correct positioning when broken', () => {
-    jest.spyOn(sidebarHooks, 'useSidebar').mockImplementation(() => ({
-      updateSidebarState: jest.fn(),
-      updateCollapseState: jest.fn(),
-      updateToggleState: jest.fn(),
-      collapsed: false,
-      fixed: false,
-      width: '250px',
-      collapsedWidth: '80px',
-      broken: true,
-      toggled: false,
-      transitionDuration: 300,
-    }));
+    jest.spyOn(mediaQueryHook, 'useMediaQuery').mockImplementation(() => true);
 
-    customRender(<Sidebar image="some-url">Sidebar</Sidebar>);
+    customRender(<Sidebar breakPoint="all">Sidebar</Sidebar>);
 
     const SidebarElem = screen.getByTestId(`${sidebarClasses.root}-test-id`);
 
@@ -109,20 +98,13 @@ describe('Sidebar', () => {
   });
 
   it('should sidebar have a correct positioning when broken and collapsed', () => {
-    jest.spyOn(sidebarHooks, 'useSidebar').mockImplementation(() => ({
-      updateSidebarState: jest.fn(),
-      updateCollapseState: jest.fn(),
-      updateToggleState: jest.fn(),
-      collapsed: true,
-      fixed: false,
-      width: '250px',
-      collapsedWidth: '80px',
-      broken: true,
-      toggled: false,
-      transitionDuration: 300,
-    }));
+    jest.spyOn(mediaQueryHook, 'useMediaQuery').mockImplementation(() => true);
 
-    customRender(<Sidebar image="some-url">Sidebar</Sidebar>);
+    customRender(
+      <Sidebar breakPoint="all" defaultCollapsed>
+        Sidebar
+      </Sidebar>,
+    );
 
     const SidebarElem = screen.getByTestId(`${sidebarClasses.root}-test-id`);
 
@@ -132,20 +114,13 @@ describe('Sidebar', () => {
   });
 
   it('should display overlay position sidebar to the left when broken and toggled', () => {
-    jest.spyOn(sidebarHooks, 'useSidebar').mockImplementation(() => ({
-      updateSidebarState: jest.fn(),
-      updateCollapseState: jest.fn(),
-      updateToggleState: jest.fn(),
-      collapsed: false,
-      fixed: false,
-      width: '250px',
-      collapsedWidth: '80px',
-      broken: true,
-      toggled: true,
-      transitionDuration: 300,
-    }));
+    jest.spyOn(mediaQueryHook, 'useMediaQuery').mockImplementation(() => true);
 
-    customRender(<Sidebar image="some-url">Sidebar</Sidebar>);
+    customRender(
+      <Sidebar breakPoint="all" toggled>
+        Sidebar
+      </Sidebar>,
+    );
     const SidebarElem = screen.getByTestId(`${sidebarClasses.root}-test-id`);
 
     expect(screen.getByTestId(`${sidebarClasses.backdrop}-test-id`)).toBeInTheDocument();
@@ -156,22 +131,10 @@ describe('Sidebar', () => {
   });
 
   it('should position and hide sidebar to the right when rtl is true and broken', () => {
-    jest.spyOn(sidebarHooks, 'useSidebar').mockImplementation(() => ({
-      updateSidebarState: jest.fn(),
-      updateCollapseState: jest.fn(),
-      updateToggleState: jest.fn(),
-      collapsed: false,
-      fixed: false,
-      width: '250px',
-      collapsedWidth: '80px',
-      broken: true,
-      toggled: false,
-      transitionDuration: 300,
-      rtl: true,
-    }));
+    jest.spyOn(mediaQueryHook, 'useMediaQuery').mockImplementation(() => true);
 
     customRender(
-      <Sidebar rtl image="some-url">
+      <Sidebar rtl breakPoint="all">
         Sidebar
       </Sidebar>,
     );
@@ -183,22 +146,10 @@ describe('Sidebar', () => {
   });
 
   it('should display and position sidebar to the right when rtl is true and broken and toggled', () => {
-    jest.spyOn(sidebarHooks, 'useSidebar').mockImplementation(() => ({
-      updateSidebarState: jest.fn(),
-      updateCollapseState: jest.fn(),
-      updateToggleState: jest.fn(),
-      collapsed: false,
-      fixed: false,
-      width: '250px',
-      collapsedWidth: '80px',
-      broken: true,
-      toggled: true,
-      transitionDuration: 300,
-      rtl: true,
-    }));
+    jest.spyOn(mediaQueryHook, 'useMediaQuery').mockImplementation(() => true);
 
     customRender(
-      <Sidebar rtl image="some-url">
+      <Sidebar rtl breakPoint="all" toggled>
         Sidebar
       </Sidebar>,
     );
