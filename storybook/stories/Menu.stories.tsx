@@ -1,20 +1,12 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Menu, menuClasses, MenuItem, Sidebar, SubMenu } from '../../src';
-import { ProSidebarProvider } from '../../src/components/ProSidebarProvider';
 import { Icon } from '../icons/Icon';
 
 const StoryParams: ComponentMeta<typeof Menu> = {
   title: 'Menu',
   component: Menu,
   argTypes: {},
-  decorators: [
-    (Story) => (
-      <ProSidebarProvider>
-        <Story />
-      </ProSidebarProvider>
-    ),
-  ],
 };
 
 export default StoryParams;
@@ -125,6 +117,25 @@ export const TransitionDuration: ComponentStory<typeof Menu> = () => (
 );
 
 TransitionDuration.storyName = 'transitionDuration';
+
+export const CloseOnClick: ComponentStory<typeof Menu> = () => (
+  <div style={{ display: 'flex', height: '100%' }}>
+    <Sidebar collapsed>
+      <Menu closeOnClick>
+        <SubMenu label="Charts">
+          <MenuItem> Pie charts</MenuItem>
+          <MenuItem> Line charts</MenuItem>
+          <MenuItem> Bar charts</MenuItem>
+        </SubMenu>
+        <MenuItem> Calendar</MenuItem>
+        <MenuItem> E-commerce</MenuItem>
+        <MenuItem> Examples</MenuItem>
+      </Menu>
+    </Sidebar>
+  </div>
+);
+
+CloseOnClick.storyName = 'closeOnClick';
 
 export const RootStyles: ComponentStory<typeof Menu> = () => (
   <div style={{ display: 'flex', height: '100%' }}>

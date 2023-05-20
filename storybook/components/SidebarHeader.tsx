@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { useProSidebar } from '../../src';
 import { Typography } from './Typography';
 
 interface SidebarHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
+  rtl: boolean;
 }
 
 const StyledSidebarHeader = styled.div`
@@ -46,8 +46,7 @@ const StyledLogo = styled.div<{ rtl?: boolean }>`
       `}
 `;
 
-export const SidebarHeader: React.FC<SidebarHeaderProps> = ({ children, ...rest }) => {
-  const { rtl } = useProSidebar();
+export const SidebarHeader: React.FC<SidebarHeaderProps> = ({ children, rtl, ...rest }) => {
   return (
     <StyledSidebarHeader {...rest}>
       <div style={{ display: 'flex', alignItems: 'center' }}>

@@ -1,20 +1,12 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Menu, menuClasses, MenuItem, Sidebar, SubMenu } from '../../src';
-import { ProSidebarProvider } from '../../src/components/ProSidebarProvider';
 import { Icon } from '../icons/Icon';
 
 const StoryParams: ComponentMeta<typeof SubMenu> = {
   title: 'SubMenu',
   component: SubMenu,
   argTypes: {},
-  decorators: [
-    (Story) => (
-      <ProSidebarProvider>
-        <Story />
-      </ProSidebarProvider>
-    ),
-  ],
 };
 
 export default StoryParams;

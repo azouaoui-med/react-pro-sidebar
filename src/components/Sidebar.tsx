@@ -1,14 +1,14 @@
 import React from 'react';
 import styled, { CSSObject } from '@emotion/styled';
 import classnames from 'classnames';
-import { useSidebar } from '../hooks/useSidebar';
+import { useLegacySidebar } from '../hooks/useLegacySidebar';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { sidebarClasses } from '../utils/utilityClasses';
 import { StyledBackdrop } from '../styles/StyledBackdrop';
 
-type BreakPoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'always';
+type BreakPoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl' | 'always' | 'all';
 
-const BREAK_POINTS: Record<BreakPoint, string> = {
+const BREAK_POINTS = {
   xs: '480px',
   sm: '576px',
   md: '768px',
@@ -16,9 +16,15 @@ const BREAK_POINTS: Record<BreakPoint, string> = {
   xl: '1200px',
   xxl: '1600px',
   always: 'always',
+  all: 'all',
 };
 
 export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
+  /**
+   * sidebar collapsed status
+   */
+  collapsed?: boolean;
+
   /**
    * width of the sidebar
    * @default ```250px```
@@ -34,12 +40,14 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
   /**
    * initial collapsed status
    * @default ```false```
+   *
+   * @deprecated use ```collapsed``` instead
    */
   defaultCollapsed?: boolean;
 
   /**
    * set when the sidebar should trigger responsiveness behavior
-   *
+   * @type `xs | sm | md | lg | xl | xxl | all | undefined`
    */
   breakPoint?: BreakPoint;
 
@@ -65,8 +73,29 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
    */
   image?: string;
 
+  /**
+   * sidebar direction
+   */
   rtl?: boolean;
 
+  /**
+   * sidebar toggled status
+   */
+  toggled?: boolean;
+
+  /**
+   * callback function to be called when backdrop is clicked
+   */
+  onBackdropClick?: () => void;
+
+  /**
+   * callback function to be called when sidebar's broken state changes
+   */
+  onBreakPoint?: (broken: boolean) => void;
+
+  /**
+   * sidebar styles to be applied from the root element
+   */
   rootStyles?: CSSObject;
 
   children?: React.ReactNode;
@@ -160,106 +189,165 @@ const StyledSidebarImage = styled.img`
   }
 `;
 
-const SidebarFR: React.ForwardRefRenderFunction<HTMLHtmlElement, SidebarProps> = (
-  {
-    width = '250px',
-    collapsedWidth = '80px',
-    defaultCollapsed = false,
-    className,
-    children,
-    breakPoint,
-    customBreakPoint,
-    backgroundColor = 'rgb(249, 249, 249, 0.7)',
-    transitionDuration = 300,
-    image,
-    rtl,
-    rootStyles,
-    ...rest
-  },
-  ref,
-) => {
-  const broken = useMediaQuery(
-    customBreakPoint ?? (breakPoint ? BREAK_POINTS[breakPoint] : breakPoint),
-  );
+interface SidebarContextProps {
+  collapsed?: boolean;
+  toggled?: boolean;
+  rtl?: boolean;
+  transitionDuration?: number;
+}
 
-  const {
-    updateSidebarState,
-    collapsed: collapsedContext,
-    width: widthContext,
-    collapsedWidth: collapsedWidthContext,
-    broken: brokenContext,
-    toggled: toggledContext,
-    transitionDuration: transitionDurationContext,
-    rtl: rtlContext,
-  } = useSidebar();
+export const SidebarContext = React.createContext<SidebarContextProps>({
+  collapsed: false,
+  toggled: false,
+  rtl: false,
+  transitionDuration: 300,
+});
 
-  const handleBackdropClick = () => {
-    updateSidebarState({ toggled: false });
-  };
+export const Sidebar = React.forwardRef<HTMLHtmlElement, SidebarProps>(
+  (
+    {
+      collapsed,
+      toggled,
+      onBackdropClick,
+      onBreakPoint,
+      width = '250px',
+      collapsedWidth = '80px',
+      defaultCollapsed,
+      className,
+      children,
+      breakPoint,
+      customBreakPoint,
+      backgroundColor = 'rgb(249, 249, 249, 0.7)',
+      transitionDuration = 300,
+      image,
+      rtl,
+      rootStyles,
+      ...rest
+    },
+    ref,
+  ) => {
+    const getBreakpointValue = () => {
+      if (customBreakPoint) {
+        return `(max-width: ${customBreakPoint})`;
+      }
 
-  React.useEffect(() => {
-    updateSidebarState({ width, collapsedWidth, broken, rtl });
-  }, [width, collapsedWidth, broken, updateSidebarState, rtl]);
+      if (breakPoint) {
+        if (['xs', 'sm', 'md', 'lg', 'xl', 'xxl'].includes(breakPoint)) {
+          return `(max-width: ${BREAK_POINTS[breakPoint]})`;
+        }
 
-  React.useEffect(() => {
-    updateSidebarState({
-      collapsed: defaultCollapsed,
-      transitionDuration,
-      toggled: false,
-    });
-  }, [defaultCollapsed, transitionDuration, updateSidebarState]);
+        if (breakPoint === 'always' || breakPoint === 'all') {
+          if (breakPoint === 'always') {
+            console.warn(
+              'The "always" breakPoint is deprecated and will be removed in future release. ' +
+                'Please use the "all" breakPoint instead.',
+            );
+          }
+          return `screen`;
+        }
 
-  return (
-    <StyledSidebar
-      ref={ref}
-      data-testid={`${sidebarClasses.root}-test-id`}
-      rtl={rtlContext}
-      rootStyles={rootStyles}
-      width={widthContext}
-      collapsedWidth={collapsedWidthContext}
-      transitionDuration={transitionDurationContext ?? 300}
-      className={classnames(
-        sidebarClasses.root,
-        {
-          [sidebarClasses.collapsed]: collapsedContext,
-          [sidebarClasses.toggled]: toggledContext,
-          [sidebarClasses.broken]: brokenContext,
-          [sidebarClasses.rtl]: rtlContext,
-        },
-        className,
-      )}
-      {...rest}
-    >
-      <StyledSidebarContainer
-        data-testid={`${sidebarClasses.container}-test-id`}
-        className={sidebarClasses.container}
-        backgroundColor={backgroundColor}
+        return `(max-width: ${breakPoint})`;
+      }
+    };
+
+    const breakpointCallbackFnRef = React.useRef<(broken: boolean) => void>();
+
+    breakpointCallbackFnRef.current = (broken: boolean) => {
+      onBreakPoint?.(broken);
+    };
+
+    const broken = useMediaQuery(getBreakpointValue());
+
+    const [mounted, setMounted] = React.useState(false);
+
+    const legacySidebarContext = useLegacySidebar();
+
+    const collapsedValue =
+      collapsed ?? (!mounted && defaultCollapsed ? true : legacySidebarContext?.collapsed);
+    const toggledValue = toggled ?? legacySidebarContext?.toggled;
+
+    const handleBackdropClick = () => {
+      onBackdropClick?.();
+      legacySidebarContext?.updateSidebarState({ toggled: false });
+    };
+
+    React.useEffect(() => {
+      breakpointCallbackFnRef.current?.(broken);
+    }, [broken]);
+
+    // TODO: remove in next major version
+    React.useEffect(() => {
+      legacySidebarContext?.updateSidebarState({ broken, rtl, transitionDuration });
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [broken, legacySidebarContext?.updateSidebarState, rtl, transitionDuration]);
+
+    // TODO: remove in next major version
+    React.useEffect(() => {
+      if (!mounted) {
+        legacySidebarContext?.updateSidebarState({
+          collapsed: defaultCollapsed,
+        });
+        setMounted(true);
+      }
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [defaultCollapsed, mounted, legacySidebarContext?.updateSidebarState]);
+
+    return (
+      <SidebarContext.Provider
+        value={{ collapsed: collapsedValue, toggled: toggledValue, rtl, transitionDuration }}
       >
-        {children}
-      </StyledSidebarContainer>
+        <StyledSidebar
+          ref={ref}
+          data-testid={`${sidebarClasses.root}-test-id`}
+          rtl={rtl}
+          rootStyles={rootStyles}
+          width={width}
+          collapsedWidth={collapsedWidth}
+          transitionDuration={transitionDuration}
+          className={classnames(
+            sidebarClasses.root,
+            {
+              [sidebarClasses.collapsed]: collapsedValue,
+              [sidebarClasses.toggled]: toggledValue,
+              [sidebarClasses.broken]: broken,
+              [sidebarClasses.rtl]: rtl,
+            },
+            className,
+          )}
+          {...rest}
+        >
+          <StyledSidebarContainer
+            data-testid={`${sidebarClasses.container}-test-id`}
+            className={sidebarClasses.container}
+            backgroundColor={backgroundColor}
+          >
+            {children}
+          </StyledSidebarContainer>
 
-      {image && (
-        <StyledSidebarImage
-          data-testid={`${sidebarClasses.image}-test-id`}
-          src={image}
-          alt="sidebar background"
-          className={sidebarClasses.image}
-        />
-      )}
+          {image && (
+            <StyledSidebarImage
+              data-testid={`${sidebarClasses.image}-test-id`}
+              src={image}
+              alt="sidebar background"
+              className={sidebarClasses.image}
+            />
+          )}
 
-      {brokenContext && toggledContext && (
-        <StyledBackdrop
-          data-testid={`${sidebarClasses.backdrop}-test-id`}
-          role="button"
-          tabIndex={0}
-          aria-label="backdrop"
-          onClick={handleBackdropClick}
-          onKeyPress={handleBackdropClick}
-          className={sidebarClasses.backdrop}
-        />
-      )}
-    </StyledSidebar>
-  );
-};
-
-export const Sidebar = React.forwardRef<HTMLHtmlElement, SidebarProps>(SidebarFR);
+          {broken && toggledValue && (
+            <StyledBackdrop
+              data-testid={`${sidebarClasses.backdrop}-test-id`}
+              role="button"
+              tabIndex={0}
+              aria-label="backdrop"
+              onClick={handleBackdropClick}
+              onKeyPress={handleBackdropClick}
+              className={sidebarClasses.backdrop}
+            />
+          )}
+        </StyledSidebar>
+      </SidebarContext.Provider>
+    );
+  },
+);

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-expressions */
 import React from 'react';
 import styled, { CSSObject } from '@emotion/styled';
 import { StyledUl } from '../styles/StyledUl';
@@ -15,8 +14,6 @@ interface SubMenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
   rootStyles?: CSSObject;
   children?: React.ReactNode;
 }
-
-let timer: NodeJS.Timer;
 
 const StyledSubMenuContent = styled.div<SubMenuContentProps>`
   display: none;
@@ -39,7 +36,7 @@ const StyledSubMenuContent = styled.div<SubMenuContentProps>`
   ${({ collapsed, firstLevel, openWhenCollapsed }) =>
     collapsed && firstLevel
       ? `
-    
+      position: fixed;
       padding-left: 0px;
       width: 200px;
       border-radius: 4px;
@@ -57,55 +54,11 @@ const StyledSubMenuContent = styled.div<SubMenuContentProps>`
 `;
 
 const SubMenuContentFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuContentProps> = (
-  { children, open, openWhenCollapsed, firstLevel, collapsed, ...rest },
+  { children, open, openWhenCollapsed, firstLevel, collapsed, defaultOpen, ...rest },
   ref,
 ) => {
   const { transitionDuration } = useMenu();
-  const SubMenuContentRef = ref as React.MutableRefObject<HTMLDivElement>;
-
-  const [mounted, setMounted] = React.useState(false);
-
-  React.useEffect(() => {
-    clearTimeout(timer);
-    if (mounted) {
-      if (open) {
-        const target = SubMenuContentRef?.current;
-        if (target) {
-          target.style.display = 'block';
-          target.style.overflow = 'hidden';
-          target.style.height = 'auto';
-          const height = target.offsetHeight;
-          target.style.height = '0px';
-          target.offsetHeight;
-          target.style.height = `${height}px`;
-
-          timer = setTimeout(() => {
-            target.style.overflow = 'auto';
-            target.style.height = 'auto';
-          }, transitionDuration);
-        }
-      } else {
-        const target = SubMenuContentRef?.current;
-        if (target) {
-          target.style.overflow = 'hidden';
-          target.style.height = `${target.offsetHeight}px`;
-          target.offsetHeight;
-          target.style.height = '0px';
-
-          timer = setTimeout(() => {
-            target.style.overflow = 'auto';
-            target.style.display = 'none';
-          }, transitionDuration);
-        }
-      }
-    }
-    return () => clearTimeout(timer);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open, SubMenuContentRef]);
-
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
+  const [defaultOpenState] = React.useState(defaultOpen);
 
   return (
     <StyledSubMenuContent
@@ -116,6 +69,7 @@ const SubMenuContentFR: React.ForwardRefRenderFunction<HTMLDivElement, SubMenuCo
       open={open}
       openWhenCollapsed={openWhenCollapsed}
       transitionDuration={transitionDuration}
+      defaultOpen={defaultOpenState}
       {...rest}
     >
       <StyledUl>{children}</StyledUl>

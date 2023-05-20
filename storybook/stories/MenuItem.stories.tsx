@@ -1,20 +1,12 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Menu, menuClasses, MenuItem, Sidebar } from '../../src';
-import { ProSidebarProvider } from '../../src/components/ProSidebarProvider';
 import { Icon } from '../icons/Icon';
 
 const StoryParams: ComponentMeta<typeof MenuItem> = {
   title: 'MenuItem',
   component: MenuItem,
   argTypes: {},
-  decorators: [
-    (Story) => (
-      <ProSidebarProvider>
-        <Story />
-      </ProSidebarProvider>
-    ),
-  ],
 };
 
 export default StoryParams;

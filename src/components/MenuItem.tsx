@@ -4,26 +4,53 @@ import classnames from 'classnames';
 import { StyledMenuLabel } from '../styles/StyledMenuLabel';
 import { StyledMenuIcon } from '../styles/StyledMenuIcon';
 import { StyledMenuPrefix } from '../styles/StyledMenuPrefix';
-import { useSidebar } from '../hooks/useSidebar';
 import { useMenu } from '../hooks/useMenu';
 import { StyledMenuSuffix } from '../styles/StyledMenuSuffix';
 import { menuClasses } from '../utils/utilityClasses';
 import { MenuButton, menuButtonStyles } from './MenuButton';
+import { LevelContext } from './Menu';
+import { SidebarContext } from './Sidebar';
 
 export interface MenuItemProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'prefix'> {
-  icon?: React.ReactNode;
-  prefix?: React.ReactNode;
-  suffix?: React.ReactNode;
-  active?: boolean;
-  disabled?: boolean;
-  children?: React.ReactNode;
-  component?: string | React.ReactElement;
-  rootStyles?: CSSObject;
   /**
-   * @ignore
+   * The icon to be displayed in the menu item
    */
-  level?: number;
+  icon?: React.ReactNode;
+
+  /**
+   * The prefix to be displayed in the menu item
+   */
+  prefix?: React.ReactNode;
+
+  /**
+   * The suffix to be displayed in the menu item
+   */
+  suffix?: React.ReactNode;
+
+  /**
+   * If set to true, the menu item will have an active state
+   * @default ```false```
+   */
+  active?: boolean;
+
+  /**
+   * If set to true, the menu item will be disabled
+   * @default ```false```
+   */
+  disabled?: boolean;
+
+  /**
+   * The component to be rendered as the menu item button
+   */
+  component?: string | React.ReactElement;
+
+  /**
+   * Apply styles from the root element
+   */
+  rootStyles?: CSSObject;
+
+  children?: React.ReactNode;
 }
 
 interface StyledMenuItemProps extends Pick<MenuItemProps, 'rootStyles' | 'active' | 'disabled'> {
@@ -37,7 +64,6 @@ interface StyledMenuItemProps extends Pick<MenuItemProps, 'rootStyles' | 'active
 type MenuItemElement = 'root' | 'button' | 'label' | 'prefix' | 'suffix' | 'icon';
 
 const StyledMenuItem = styled.li<StyledMenuItemProps>`
-  display: inline-block;
   width: 100%;
   position: relative;
 
@@ -66,7 +92,6 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
     className,
     prefix,
     suffix,
-    level = 0,
     active = false,
     disabled = false,
     component,
@@ -75,7 +100,8 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
   },
   ref,
 ) => {
-  const { collapsed, transitionDuration, rtl } = useSidebar();
+  const level = React.useContext(LevelContext);
+  const { collapsed, rtl, transitionDuration } = React.useContext(SidebarContext);
   const { menuItemStyles } = useMenu();
 
   const getMenuItemStyles = (element: MenuItemElement): CSSObject | undefined => {
@@ -119,8 +145,6 @@ export const MenuItemFR: React.ForwardRefRenderFunction<HTMLLIElement, MenuItemP
     [menuClasses.active]: active,
     [menuClasses.disabled]: disabled,
   };
-
-  // console.log('level - ', children, ' - ', level);
 
   return (
     <StyledMenuItem

@@ -46,18 +46,6 @@ npm install react-pro-sidebar
 
 ## Usage
 
-First you need to make sure that your components are wrapped within a `<ProSidebarProvider>` component
-
-```jsx
-import { ProSidebarProvider } from 'react-pro-sidebar';
-
-<ProSidebarProvider>
-  <App />
-</ProSidebarProvider>;
-```
-
-Then in your layout component you can add sidebar navigation
-
 ```jsx
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 
@@ -73,55 +61,6 @@ import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 </Sidebar>;
 ```
 
-## Hook
-
-The library comes with a `useProSidebar` hook that lets you access and manage sidebar state
-
-### API
-
-```jsx
-const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } = useProSidebar();
-```
-
-**Returns**
-
-- `collapseSidebar: (collapsed?: boolean) => void` : A function that enables you to update the sidebar's collapsed state
-
-- `toggleSidebar: (toggled?: boolean) => void` : A function that enables you to update the sidebar's toggled state
-
-- `collapsed: boolean` : Sidebar collapsed state
-
-- `toggled: boolean` : Sidebar toggled state
-
-- `broken: boolean` : Sidebar breakPoint state
-
-- `rtl: boolean` : Sidebar direction state
-
-**Example Usage**
-
-```jsx
-import { Sidebar, Menu, MenuItem, useProSidebar } from 'react-pro-sidebar';
-
-function Layout() {
-  const { collapseSidebar } = useProSidebar();
-
-  return (
-    <div style={{ display: 'flex', height: '100%' }}>
-      <Sidebar>
-        <Menu>
-          <MenuItem> Documentation</MenuItem>
-          <MenuItem> Calendar</MenuItem>
-          <MenuItem> E-commerce</MenuItem>
-        </Menu>
-      </Sidebar>
-      <main>
-        <button onClick={() => collapseSidebar()}>Collapse</button>
-      </main>
-    </div>
-  );
-}
-```
-
 ## Using React Router
 
 You can make use of the `component` prop to integrate [React Router](https://reactrouter.com/en/main) link
@@ -133,7 +72,18 @@ import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
 
 <Sidebar>
-  <Menu>
+  <Menu
+    menuItemStyles={{
+      button: {
+        // the active class will be added automatically by react router
+        // so we can use it to style the active menu item
+        [`&.active`]: {
+          backgroundColor: '#13395e',
+          color: '#b6c8d9',
+        },
+      },
+    }}
+  >
     <MenuItem component={<Link to="/documentation" />}> Documentation</MenuItem>
     <MenuItem component={<Link to="/calendar" />}> Calendar</MenuItem>
     <MenuItem component={<Link to="/e-commerce" />}> E-commerce</MenuItem>
@@ -162,6 +112,23 @@ its recommended using utility classes (`sidebarClasses`, `menuClasses`) for sele
 ```
 
 For `Menu` component, in addition to `rootStyles` you can also use `menuItemStyles` prop for customizing all `MenuItem` & `SubMenu` components and their children
+
+**Type definition**
+
+```jsx
+interface MenuItemStyles {
+  root?: ElementStyles;
+  button?: ElementStyles;
+  label?: ElementStyles;
+  prefix?: ElementStyles;
+  suffix?: ElementStyles;
+  icon?: ElementStyles;
+  subMenuContent?: ElementStyles;
+  SubMenuExpandIcon?: ElementStyles;
+}
+
+type ElementStyles = CSSObject | ((params: MenuItemStylesParams) => CSSObject | undefined);
+```
 
 **Example usage**
 
@@ -198,10 +165,22 @@ For `Menu` component, in addition to `rootStyles` you can also use `menuItemStyl
     </thead>
     <tbody>
         <tr>
-            <td rowspan=10>Sidebar</td>
+            <td rowspan=13>Sidebar</td>
             <td >defaultCollapsed</td>
             <td><code>boolean</code></td>
             <td>Initial collapsed status</td>
+            <td><code>false</code></td>
+        </tr>
+        <tr>
+            <td>collapsed</td>
+            <td><code>boolean</code></td>
+            <td>Sidebar collapsed state</td>
+            <td><code>false</code></td>
+        </tr>
+        <tr>
+            <td>toggled</td>
+            <td><code>boolean</code></td>
+            <td>Sidebar toggled state</td>
             <td><code>false</code></td>
         </tr>
         <tr>
@@ -230,7 +209,7 @@ For `Menu` component, in addition to `rootStyles` you can also use `menuItemStyl
         </tr>
         <tr>
             <td>breakPoint</td>
-            <td><code>xs</code> | <code>sm</code> | <code>md</code> | <code>lg</code> | <code>xl</code> | <code>xxl</code> | <code>always</code></td>
+            <td><code>xs</code> | <code>sm</code> | <code>md</code> | <code>lg</code> | <code>xl</code> | <code>xxl</code> | <code>all</code></td>
             <td>Set when the sidebar should trigger responsiveness behavior </td>
             <td>-</td>
         </tr>
@@ -258,11 +237,17 @@ For `Menu` component, in addition to `rootStyles` you can also use `menuItemStyl
             <td>Apply styles to sidebar element</td>
             <td>-</td>
         </tr>
+        <tr>
+            <td>onBackdropClick</td>
+            <td><code>() => void</code></td>
+            <td>Callback function to be called when backdrop is clicked</td>
+            <td>-</td>
+        </tr>
          <tr>
             <td rowspan=5>Menu</td>
             <td>closeOnClick</td>
             <td><code>boolean</code></td>
-            <td>If <code>true</code>, submenu popper will close when clicking on MenuItem</td>
+            <td>If <code>true</code> and sidebar is in collapsed state, submenu popper will automatically close on MenuItem click</td>
             <td><code>false</code></td>
         </tr>
          <tr>
@@ -357,7 +342,7 @@ For `Menu` component, in addition to `rootStyles` you can also use `menuItemStyl
             <td>Set open value if you want to control the state</td>
             <td>-</td>
         </tr>
-                <tr>
+        <tr>
             <td>active</td>
             <td><code>boolean</code></td>
             <td>If <code>true</code>, the component is active</td>

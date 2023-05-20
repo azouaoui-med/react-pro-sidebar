@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Sidebar,
-  Menu,
-  MenuItem,
-  SubMenu,
-  useProSidebar,
-  menuClasses,
-  MenuItemStyles,
-} from '../src';
+import { Sidebar, Menu, MenuItem, SubMenu, menuClasses, MenuItemStyles } from '../src';
 import { Switch } from './components/Switch';
 import { SidebarHeader } from './components/SidebarHeader';
 import { Diamond } from './icons/Diamond';
@@ -72,15 +64,16 @@ const hexToRgba = (hex: string, alpha: number) => {
 };
 
 export const Playground: React.FC = () => {
-  const { toggleSidebar, collapseSidebar, broken, collapsed } = useProSidebar();
-
-  const [isRTL, setIsRTL] = React.useState<boolean>(false);
-  const [hasImage, setHasImage] = React.useState<boolean>(false);
+  const [collapsed, setCollapsed] = React.useState(false);
+  const [toggled, setToggled] = React.useState(false);
+  const [broken, setBroken] = React.useState(false);
+  const [rtl, setRtl] = React.useState(false);
+  const [hasImage, setHasImage] = React.useState(false);
   const [theme, setTheme] = React.useState<Theme>('light');
 
   // handle on RTL change event
   const handleRTLChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setIsRTL(e.target.checked);
+    setRtl(e.target.checked);
   };
 
   // handle on theme change event
@@ -128,18 +121,22 @@ export const Playground: React.FC = () => {
   };
 
   return (
-    <div style={{ display: 'flex', height: '100%', direction: isRTL ? 'rtl' : 'ltr' }}>
+    <div style={{ display: 'flex', height: '100%', direction: rtl ? 'rtl' : 'ltr' }}>
       <Sidebar
+        collapsed={collapsed}
+        toggled={toggled}
+        onBackdropClick={() => setToggled(false)}
+        onBreakPoint={setBroken}
         image="https://user-images.githubusercontent.com/25878302/144499035-2911184c-76d3-4611-86e7-bc4e8ff84ff5.jpg"
-        rtl={isRTL}
-        breakPoint="lg"
+        rtl={rtl}
+        breakPoint="md"
         backgroundColor={hexToRgba(themes[theme].sidebar.backgroundColor, hasImage ? 0.9 : 1)}
         rootStyles={{
           color: themes[theme].sidebar.color,
         }}
       >
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-          <SidebarHeader style={{ marginBottom: '24px', marginTop: '16px' }} />
+          <SidebarHeader rtl={rtl} style={{ marginBottom: '24px', marginTop: '16px' }} />
           <div style={{ flex: 1, marginBottom: '32px' }}>
             <div style={{ padding: '0 24px', marginBottom: '8px' }}>
               <Typography
@@ -219,7 +216,7 @@ export const Playground: React.FC = () => {
         <div style={{ padding: '16px 24px', color: '#44596e' }}>
           <div style={{ marginBottom: '16px' }}>
             {broken && (
-              <button className="sb-button" onClick={() => toggleSidebar()}>
+              <button className="sb-button" onClick={() => setToggled(!toggled)}>
                 Toggle
               </button>
             )}
@@ -240,13 +237,13 @@ export const Playground: React.FC = () => {
               <Switch
                 id="collapse"
                 checked={collapsed}
-                onChange={() => collapseSidebar()}
+                onChange={() => setCollapsed(!collapsed)}
                 label="Collapse"
               />
             </div>
 
             <div style={{ marginBottom: 16 }}>
-              <Switch id="rtl" checked={isRTL} onChange={handleRTLChange} label="RTL" />
+              <Switch id="rtl" checked={rtl} onChange={handleRTLChange} label="RTL" />
             </div>
 
             <div style={{ marginBottom: 16 }}>

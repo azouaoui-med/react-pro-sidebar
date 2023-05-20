@@ -1,6 +1,6 @@
 import React from 'react';
 import { createPopper } from '@popperjs/core';
-import { useSidebar } from './useSidebar';
+import { SidebarContext } from '../components/Sidebar';
 
 interface PopperOptions {
   level: number;
@@ -15,7 +15,7 @@ interface PopperResult {
 export const usePopper = (options: PopperOptions): PopperResult => {
   const { level, buttonRef, contentRef } = options;
 
-  const { collapsed, transitionDuration, toggled } = useSidebar();
+  const { collapsed, toggled, transitionDuration } = React.useContext(SidebarContext);
   const popperInstanceRef = React.useRef<ReturnType<typeof createPopper> | undefined>();
 
   /**

@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0-alpha.1] - 2023-05-20
+
+### Added
+
+- [Sidebar] Added `collapsed` prop
+- [Sidebar] Added `toggled` prop
+- [Sidebar] Added `onBackdropClick` prop
+- [Sidebar] Added `onBreakPoint` prop
+
+### Updated
+
+- Deprecated `ProSidebarProvider` and made it optional
+- Deprecated `useProSidebar`
+- Updated BreakPoint type to use `all` and deprecate `always`
+
+### Fixed
+
+- Fixed `closeOnClick` triggering close on nested SubMenu click
+- Fixed sidebar default states not being applied correctly when using `ProSidebarProvider` and `useProSidebar`
+- Fixed Menu's `transitionDuration` collision with Sidebar's `transitionDuration`
+
 ## [1.0.0] - 2023-01-21
 
 React Pro Sidebar 1.0.0 is here 🎉

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSidebar } from './useSidebar';
+import { useLegacySidebar } from './useLegacySidebar';
 
 interface ProSidebarResult {
   /**
@@ -12,48 +12,72 @@ interface ProSidebarResult {
    */
   toggleSidebar: (toggled?: boolean) => void;
 
+  /**
+   * sidebar breakpoint status
+   * value is set to true when screen size reaches the breakpoint
+   */
   broken: boolean;
 
+  /**
+   * sidebar collapsed status
+   */
   collapsed: boolean;
 
+  /**
+   * sidebar toggled status
+   */
   toggled: boolean;
 
+  /**
+   * sidebar rtl status
+   */
   rtl: boolean;
 }
 
+/**
+ * @deprecated
+ * `useProSidebar` is deprecated and will be removed in the next major release.
+ *  please use Sidebar props instead.
+ */
 export const useProSidebar = (): ProSidebarResult => {
-  const {
-    updateSidebarState,
-    updateCollapseState,
-    updateToggleState,
-    collapsed,
-    toggled,
-    broken,
-    rtl,
-  } = useSidebar();
+  const legacySidebarContext = useLegacySidebar();
+
+  if (legacySidebarContext === undefined) {
+    throw new Error(
+      'useProSidebar must be used within a ProSidebarProvider. Please wrap your component with a ProSidebarProvider to use this hook.',
+    );
+  }
 
   const collapseSidebar = React.useCallback(
     (value?: boolean) => {
-      if (value === undefined) updateCollapseState();
-      else updateSidebarState({ collapsed: value });
+      if (value === undefined) legacySidebarContext.updateCollapseState();
+      else legacySidebarContext.updateSidebarState({ collapsed: value });
     },
-    [updateCollapseState, updateSidebarState],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [legacySidebarContext.updateCollapseState, legacySidebarContext.updateSidebarState],
   );
 
   const toggleSidebar = React.useCallback(
     (value?: boolean) => {
-      if (value === undefined) updateToggleState();
-      else updateSidebarState({ toggled: value });
+      if (value === undefined) legacySidebarContext.updateToggleState();
+      else legacySidebarContext.updateSidebarState({ toggled: value });
     },
-    [updateToggleState, updateSidebarState],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [legacySidebarContext.updateToggleState, legacySidebarContext.updateSidebarState],
   );
+
+  React.useEffect(() => {
+    console.warn(
+      'useProSidebar is deprecated and will be removed in the next major release. Please use Sidebar props instead.',
+    );
+  }, []);
 
   return {
     collapseSidebar,
     toggleSidebar,
-    collapsed: !!collapsed,
-    broken: !!broken,
-    toggled: !!toggled,
-    rtl: !!rtl,
+    collapsed: !!legacySidebarContext.collapsed,
+    broken: !!legacySidebarContext.broken,
+    toggled: !!legacySidebarContext.toggled,
+    rtl: !!legacySidebarContext.rtl,
   };
 };
