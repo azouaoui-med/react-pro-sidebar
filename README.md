@@ -46,18 +46,6 @@ npm install react-pro-sidebar
 
 ## Usage
 
-First you need to make sure that your components are wrapped within a `<ProSidebarProvider>` component
-
-```jsx
-import { ProSidebarProvider } from 'react-pro-sidebar';
-
-<ProSidebarProvider>
-  <App />
-</ProSidebarProvider>;
-```
-
-Then in your layout component you can add sidebar navigation
-
 ```jsx
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 
@@ -71,55 +59,6 @@ import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
     <MenuItem> Calendar </MenuItem>
   </Menu>
 </Sidebar>;
-```
-
-## Hook
-
-The library comes with a `useProSidebar` hook that lets you access and manage sidebar state
-
-### API
-
-```jsx
-const { collapseSidebar, toggleSidebar, collapsed, toggled, broken, rtl } = useProSidebar();
-```
-
-**Returns**
-
-- `collapseSidebar: (collapsed?: boolean) => void` : A function that enables you to update the sidebar's collapsed state
-
-- `toggleSidebar: (toggled?: boolean) => void` : A function that enables you to update the sidebar's toggled state
-
-- `collapsed: boolean` : Sidebar collapsed state
-
-- `toggled: boolean` : Sidebar toggled state
-
-- `broken: boolean` : Sidebar breakPoint state
-
-- `rtl: boolean` : Sidebar direction state
-
-**Example Usage**
-
-```jsx
-import { Sidebar, Menu, MenuItem, useProSidebar } from 'react-pro-sidebar';
-
-function Layout() {
-  const { collapseSidebar } = useProSidebar();
-
-  return (
-    <div style={{ display: 'flex', height: '100%' }}>
-      <Sidebar>
-        <Menu>
-          <MenuItem> Documentation</MenuItem>
-          <MenuItem> Calendar</MenuItem>
-          <MenuItem> E-commerce</MenuItem>
-        </Menu>
-      </Sidebar>
-      <main>
-        <button onClick={() => collapseSidebar()}>Collapse</button>
-      </main>
-    </div>
-  );
-}
 ```
 
 ## Using React Router
@@ -226,10 +165,22 @@ type ElementStyles = CSSObject | ((params: MenuItemStylesParams) => CSSObject | 
     </thead>
     <tbody>
         <tr>
-            <td rowspan=10>Sidebar</td>
+            <td rowspan=13>Sidebar</td>
             <td >defaultCollapsed</td>
             <td><code>boolean</code></td>
             <td>Initial collapsed status</td>
+            <td><code>false</code></td>
+        </tr>
+        <tr>
+            <td>collapsed</td>
+            <td><code>boolean</code></td>
+            <td>Sidebar collapsed state</td>
+            <td><code>false</code></td>
+        </tr>
+        <tr>
+            <td>toggled</td>
+            <td><code>boolean</code></td>
+            <td>Sidebar toggled state</td>
             <td><code>false</code></td>
         </tr>
         <tr>
@@ -258,7 +209,7 @@ type ElementStyles = CSSObject | ((params: MenuItemStylesParams) => CSSObject | 
         </tr>
         <tr>
             <td>breakPoint</td>
-            <td><code>xs</code> | <code>sm</code> | <code>md</code> | <code>lg</code> | <code>xl</code> | <code>xxl</code> | <code>always</code></td>
+            <td><code>xs</code> | <code>sm</code> | <code>md</code> | <code>lg</code> | <code>xl</code> | <code>xxl</code> | <code>all</code></td>
             <td>Set when the sidebar should trigger responsiveness behavior </td>
             <td>-</td>
         </tr>
@@ -284,6 +235,12 @@ type ElementStyles = CSSObject | ((params: MenuItemStylesParams) => CSSObject | 
             <td>rootStyles</td>
             <td><code>CSSObject</code></td>
             <td>Apply styles to sidebar element</td>
+            <td>-</td>
+        </tr>
+        <tr>
+            <td>onBackdropClick</td>
+            <td><code>() => void</code></td>
+            <td>Callback function to be called when backdrop is clicked</td>
             <td>-</td>
         </tr>
          <tr>
