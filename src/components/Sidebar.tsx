@@ -47,7 +47,7 @@ export interface SidebarProps extends React.HTMLAttributes<HTMLHtmlElement> {
 
   /**
    * set when the sidebar should trigger responsiveness behavior
-   *
+   * @type `xs | sm | md | lg | xl | xxl | all | undefined`
    */
   breakPoint?: BreakPoint;
 
