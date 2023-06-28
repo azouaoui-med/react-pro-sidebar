@@ -201,10 +201,10 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
   const handleSlideToggle = (): void => {
     if (!(level === 0 && collapsed)) {
       clearTimeout(Number(timer.current));
-      const openValue = openControlled ?? open;
+      const openValue = open;
       openValue ? slideDown() : slideUp();
       onOpenChange?.(!openValue);
-      typeof openControlled === 'undefined' && setOpen(!open);
+      setOpen(!openValue);
     }
   };
 
@@ -222,7 +222,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
 
   const getSubMenuItemStyles = (element: MenuItemElement): CSSObject | undefined => {
     if (menuItemStyles) {
-      const params = { level, disabled, active, isSubmenu: true, open: openControlled ?? open };
+      const params = { level, disabled, active, isSubmenu: true, open };
       const {
         root: rootElStyles,
         button: buttonElStyles,
@@ -325,10 +325,23 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     setMounted(true);
   }, []);
 
+  React.useEffect(() => {
+    if (openControlled !== undefined && openControlled !== open) {
+      if (!(level === 0 && collapsed)) {
+        clearTimeout(Number(timer.current));
+
+        !openControlled ? slideDown() : slideUp();
+        setOpen(openControlled);
+      }
+    }
+    // Excluded slideUp and slideDown from deps because they are not supposed to change
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [openControlled, open, level, collapsed, transitionDuration]);
+
   const sharedClasses = {
     [menuClasses.active]: active,
     [menuClasses.disabled]: disabled,
-    [menuClasses.open]: openControlled ?? open,
+    [menuClasses.open]: open,
   };
 
   return (
@@ -414,12 +427,12 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
               level,
               disabled,
               active,
-              open: openControlled ?? open,
+              open,
             })
           ) : collapsed && level === 0 ? (
             <StyledExpandIconCollapsed />
           ) : (
-            <StyledExpandIcon rtl={rtl} open={openControlled ?? open} />
+            <StyledExpandIcon rtl={rtl} open={open} />
           )}
         </StyledExpandIconWrapper>
       </MenuButton>
@@ -427,7 +440,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
       <SubMenuContent
         ref={contentRef}
         openWhenCollapsed={openWhenCollapsed}
-        open={openControlled ?? open}
+        open={open}
         firstLevel={level === 0}
         collapsed={collapsed}
         defaultOpen={(openControlled && !mounted) || defaultOpen}
