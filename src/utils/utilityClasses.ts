@@ -23,4 +23,5 @@ export const menuClasses = {
   disabled: 'ps-disabled',
   active: 'ps-active',
   open: 'ps-open',
+  openWhenCollapsed: 'ps-open-when-collapsed',
 };

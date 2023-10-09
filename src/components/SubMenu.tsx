@@ -329,6 +329,7 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     [menuClasses.active]: active,
     [menuClasses.disabled]: disabled,
     [menuClasses.open]: openControlled ?? open,
+    [menuClasses.openWhenCollapsed]: openWhenCollapsed,
   };
 
   return (
