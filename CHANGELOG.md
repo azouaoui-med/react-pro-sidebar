@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0-alpha.2] - 2024-01-22
+
+### Fixed
+
+- Fixed window is undefined from [@thiagobrito](https://github.com/thiagobrito)
+
 ## [1.1.0-alpha.1] - 2023-05-20
 
 ### Added

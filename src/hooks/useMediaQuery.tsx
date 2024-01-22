@@ -2,7 +2,7 @@ import React from 'react';
 
 export const useMediaQuery = (breakpoint?: string): boolean => {
   const [matches, setMatches] = React.useState(
-    !!breakpoint && (typeof window !== "undefined" && window.matchMedia(breakpoint).matches),
+    !!breakpoint && typeof window !== 'undefined' && window.matchMedia(breakpoint).matches,
   );
 
   React.useEffect(() => {
