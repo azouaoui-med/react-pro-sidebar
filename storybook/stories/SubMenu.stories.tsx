@@ -230,6 +230,51 @@ export const DefaultOpen: ComponentStory<typeof SubMenu> = () => (
 );
 DefaultOpen.storyName = 'defaultOpen';
 
+export const Open: ComponentStory<typeof SubMenu> = () => {
+  const [open, setOpen] = React.useState<'charts' | 'maps' | 'theme' | undefined>();
+
+  const handleOpenSubMenu = (key: 'charts' | 'maps' | 'theme') => {
+    if (open === key) {
+      setOpen(undefined);
+    } else {
+      setOpen(key);
+    }
+  };
+
+  return (
+    <div style={{ display: 'flex', height: '100%' }}>
+      <Sidebar>
+        <Menu>
+          <Menu>
+            <SubMenu
+              onClick={() => handleOpenSubMenu('charts')}
+              open={open === 'charts'}
+              label="Charts"
+            >
+              <MenuItem> Pie charts</MenuItem>
+              <MenuItem> Line charts</MenuItem>
+              <MenuItem> Bar charts</MenuItem>
+            </SubMenu>
+            <SubMenu onClick={() => handleOpenSubMenu('maps')} open={open === 'maps'} label="Maps">
+              <MenuItem> Google maps</MenuItem>
+              <MenuItem> Open street maps</MenuItem>
+            </SubMenu>
+            <SubMenu
+              onClick={() => handleOpenSubMenu('theme')}
+              open={open === 'theme'}
+              label="Theme"
+            >
+              <MenuItem> Dark</MenuItem>
+              <MenuItem> Light</MenuItem>
+            </SubMenu>
+          </Menu>
+        </Menu>
+      </Sidebar>
+    </div>
+  );
+};
+Open.storyName = 'open';
+
 export const RootStyles: ComponentStory<typeof MenuItem> = () => (
   <div style={{ display: 'flex', height: '100%' }}>
     <Sidebar>
