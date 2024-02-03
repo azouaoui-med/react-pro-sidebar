@@ -16,7 +16,7 @@ interface SubMenuContentProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const StyledSubMenuContent = styled.div<SubMenuContentProps>`
-  display: none;
+  height: 0px;
   overflow: hidden;
   z-index: 999;
   transition: height ${({ transitionDuration }) => transitionDuration}ms;

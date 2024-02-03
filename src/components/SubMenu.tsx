@@ -165,15 +165,11 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
     contentRef,
   });
 
-  const slideUp = () => {
+  const expandContent = React.useCallback(() => {
     const target = contentRef.current;
     if (target) {
-      target.style.display = 'block';
+      const height = target?.querySelector(`.${menuClasses.subMenuContent} > ul`)?.clientHeight;
       target.style.overflow = 'hidden';
-      target.style.height = 'auto';
-      const height = target.offsetHeight;
-      target.style.height = '0px';
-      target.offsetHeight;
       target.style.height = `${height}px`;
 
       timer.current = setTimeout(() => {
@@ -181,32 +177,40 @@ export const SubMenuFR: React.ForwardRefRenderFunction<HTMLLIElement, SubMenuPro
         target.style.height = 'auto';
       }, transitionDuration);
     }
-  };
+  }, [transitionDuration]);
 
-  const slideDown = () => {
+  const collapseContent = () => {
     const target = contentRef.current;
+
     if (target) {
+      const height = target?.querySelector(`.${menuClasses.subMenuContent} > ul`)?.clientHeight;
       target.style.overflow = 'hidden';
-      target.style.height = `${target.offsetHeight}px`;
+      target.style.height = `${height}px`;
       target.offsetHeight;
       target.style.height = '0px';
-
-      timer.current = setTimeout(() => {
-        target.style.overflow = 'auto';
-        target.style.display = 'none';
-      }, transitionDuration);
     }
   };
 
   const handleSlideToggle = (): void => {
     if (!(level === 0 && collapsed)) {
-      clearTimeout(Number(timer.current));
-      const openValue = openControlled ?? open;
-      openValue ? slideDown() : slideUp();
-      onOpenChange?.(!openValue);
-      typeof openControlled === 'undefined' && setOpen(!open);
+      if (typeof openControlled === 'undefined') {
+        clearTimeout(Number(timer.current));
+        open ? collapseContent() : expandContent();
+        onOpenChange?.(!open);
+        setOpen(!open);
+      } else {
+        onOpenChange?.(!openControlled);
+      }
     }
   };
+
+  React.useEffect(() => {
+    if (!(level === 0 && collapsed) && typeof openControlled !== 'undefined' && mounted) {
+      clearTimeout(Number(timer.current));
+      !openControlled ? collapseContent() : expandContent();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [collapsed, expandContent, label, level, onOpenChange, openControlled]);
 
   const handleOnClick = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     onClick?.(event);
