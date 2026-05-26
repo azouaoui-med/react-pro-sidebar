@@ -1,59 +1,142 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><title>Webpack App</title><meta name="viewport" content="width=device-width,initial-scale=1"/><style>html, body {
-    overflow: hidden;
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-  }
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
 
-  * {
-    box-sizing: border-box;
-  }</style><script>/* globals window */
-  /* eslint-disable no-underscore-dangle */
-  try {
-    if (window.top !== window) {
-      window.__REACT_DEVTOOLS_GLOBAL_HOOK__ = window.top.__REACT_DEVTOOLS_GLOBAL_HOOK__;
-    }
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.warn('unable to connect to top frame for connecting dev tools');
-  }
+    <title>storybook - Storybook</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  window.onerror = function onerror(message, source, line, column, err) {
-    if (window.CONFIG_TYPE !== 'DEVELOPMENT') return;
-    // eslint-disable-next-line no-var, vars-on-top
-    var xhr = new window.XMLHttpRequest();
-    xhr.open('POST', '/runtime-error');
-    xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-    xhr.send(
-      JSON.stringify({
-        /* eslint-disable object-shorthand */
-        message: message,
-        source: source,
-        line: line,
-        column: column,
-        error: err && { message: err.message, name: err.name, stack: err.stack },
-        origin: 'manager',
-        /* eslint-enable object-shorthand */
-      })
-    );
-  };</script><style>#root[hidden],
-      #docs-root[hidden] {
+    
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    
+    <style>
+      @font-face {
+        font-family: 'Nunito Sans';
+        font-style: normal;
+        font-weight: 400;
+        font-display: swap;
+        src: url('./sb-common-assets/nunito-sans-regular.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Nunito Sans';
+        font-style: italic;
+        font-weight: 400;
+        font-display: swap;
+        src: url('./sb-common-assets/nunito-sans-italic.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Nunito Sans';
+        font-style: normal;
+        font-weight: 700;
+        font-display: swap;
+        src: url('./sb-common-assets/nunito-sans-bold.woff2') format('woff2');
+      }
+
+      @font-face {
+        font-family: 'Nunito Sans';
+        font-style: italic;
+        font-weight: 700;
+        font-display: swap;
+        src: url('./sb-common-assets/nunito-sans-bold-italic.woff2') format('woff2');
+      }
+    </style>
+
+    <link href="./sb-manager/runtime.js" rel="modulepreload" />
+
+    
+    <link href="./sb-addons/storybook-core-server-presets-0/common-manager-bundle.js" rel="modulepreload" />
+    
+    <link href="./sb-addons/docs-1/manager-bundle.js" rel="modulepreload" />
+       
+
+    <style>
+      #storybook-root[hidden] {
         display: none !important;
-      }</style></head><body><div id="root"></div><div id="docs-root"></div><script>window['CONFIG_TYPE'] = "PRODUCTION";
-          
+      }
+    </style>
+
+    
+  </head>
+  <body>
+    <div id="root"></div>
+
+    
+    <script>
       
-          
-            window['LOGLEVEL'] = "info";
-          
+        
+          window['FEATURES'] = {
+  "actions": true,
+  "argTypeTargetsV7": true,
+  "backgrounds": true,
+  "changeDetection": true,
+  "componentsManifest": false,
+  "controls": true,
+  "disallowImplicitActionsInRenderV8": true,
+  "highlight": true,
+  "interactions": true,
+  "legacyDecoratorFileOrder": false,
+  "measure": true,
+  "outline": true,
+  "sidebarOnboardingChecklist": true,
+  "viewport": true
+};
+        
       
-          
-            window['FEATURES'] = {"postcss":true,"emotionAlias":true};
-          
+        
+          window['REFS'] = {};
+        
       
-          
+        
+          window['LOGLEVEL'] = "info";
+        
       
-          
+        
+          window['DOCS_OPTIONS'] = {
+  "defaultName": "Docs"
+};
+        
       
-          
-            window['DOCS_MODE'] = false;</script><script src="runtime~main.e0399a3738ca5069ea2e.manager.bundle.js"></script><script src="vendors~main.0467f1c2cb306207d8fb.manager.bundle.js"></script><script src="main.785e03e35eb6a849454d.manager.bundle.js"></script></body></html>
+        
+          window['CONFIG_TYPE'] = "PRODUCTION";
+        
+      
+        
+      
+        
+      
+        
+          window['TAGS_OPTIONS'] = {};
+        
+      
+        
+          window['STORYBOOK_BUILDER'] = "vite";
+        
+      
+        
+          window['STORYBOOK_FRAMEWORK'] = "react-vite";
+        
+      
+        
+          window['STORYBOOK_RENDERER'] = "react";
+        
+      
+        
+      
+    </script>
+    
+
+    <script type="module">
+      import './sb-manager/globals-runtime.js';
+
+      
+        import './sb-addons/storybook-core-server-presets-0/common-manager-bundle.js';
+      
+        import './sb-addons/docs-1/manager-bundle.js';
+      
+
+      import './sb-manager/runtime.js';
+    </script>
+  </body>
+</html>
